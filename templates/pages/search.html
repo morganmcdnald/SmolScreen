@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} | Search Results {% endblock %}
+
+{% block content %}
+<!-- Search Results -->
+<section id="results">
+    <div class="container">
+        <div id="movies" class="row"></div>
+    </div>
+</section>
+
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(() => {
+        getMovies();
+        $('#searchForm').on('submit', (e) => {
+            let searchText = $('#searchText').val();
+            movieSearched(searchText);
+            e.preventDefault();
+        });
+    });
+</script>
+{% endblock %}

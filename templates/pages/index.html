@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block title %} | Welcome {% endblock %}
 
 {% block content %}
@@ -27,12 +29,17 @@
     </div>
 </section>
 
-<section id="results">
-    <div class="container">
-        <div id="movies" class="row"></div>
-    </div>
-</section>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
 <script type="text/javascript">
+    $(document).ready(() => {
+        getHot();
+        getMovie();
+        $('#searchForm').on('submit', (e) => {
+            let searchText = $('#searchText').val();
+            movieSearched(searchText);
+            e.preventDefault();
+        });
+    });
     
 </script>
 {% endblock %}

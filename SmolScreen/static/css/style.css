@@ -1,9 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap");
 
 body {
-    background-color: #1b1b1b;
-    color: #fff;
-    font-size: 16px;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -51,4 +48,13 @@ body {
 
 #whats-hot {
     text-transform: uppercase;
+}
+
+.dark-bg {
+    background-color: #1b1b1b !important;
+}
+
+.tagline {
+    color: #616161 !important;
+    margin-top: -.5rem;
 }

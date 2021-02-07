@@ -1,8 +1,8 @@
 $(document).ready(() => {
-    getHot();
+    getMovie();
     $('#searchForm').on('submit', (e) => {
         let searchText = $('#searchText').val();
-        getMovies(searchText);
+        movieSearched(searchText);
         e.preventDefault();
     });
 });
@@ -10,12 +10,20 @@ $(document).ready(() => {
 const date = new Date();
 document.querySelector('.year').innerHTML = date.getFullYear();
 
-function getMovies(searchText) {
+function getMovies() {
+    let searchText = sessionStorage.getItem('searchEntry');
     axios.get('https://api.themoviedb.org/3/search/multi?api_key=994d34ea949ad278ddad346696fea280&language=en-US&query='+searchText+'&page=1&include_adult=false').then((response) => {
         console.log(response);
         let movies = response.data.results;
         let output = '';
         let title = '';
+
+        output = `
+        <div class="col-md-12">
+            <h3>You searched for "${searchText}"</h3>
+            <br>
+        </div>
+        `;
         $.each(movies, (index, movie) => {
             if ((movie.media_type == 'tv') && (movie.poster_path != null)) {
                 output += `
@@ -62,13 +70,20 @@ function getMovies(searchText) {
 function movieSelected(id, media_type) {
     sessionStorage.setItem('movieId', id);
     sessionStorage.setItem('type', media_type);
-    window.location = 'movie.html';
+    window.location = 'result';
+    return false;
+}
+
+function movieSearched(entry) {
+    sessionStorage.setItem('searchEntry', entry);
+    window.location = 'search';
     return false;
 }
 
 function getMovie() {
     let movieId = sessionStorage.getItem('movieId');
     let movieType = sessionStorage.getItem('type');
+    let lastSearched = sessionStorage.getItem('searchEntry');
     if (movieType == 'movie') {
         axios.get('https://api.themoviedb.org/3/movie/'+movieId+'?api_key=994d34ea949ad278ddad346696fea280&language=en-US&append_to_response=credits').then((response) => {
         console.log(response);
@@ -80,6 +95,7 @@ function getMovie() {
         let actorPath =response.data.credits.cast;
         let actors = [];
         let genres = [];
+        let output = "";
         $.each(genrePath, (index, genre) => {
             genres.push(" " + genre.name);
         });
@@ -91,13 +107,24 @@ function getMovie() {
         $.each(actorPath, (index, actor) => {
             actors.push(" " + actor.name);
         });
-        let output = `
+        if (lastSearched == "") {
+            output = `<div class="row">
+                <div class="col-md-4">
+                    <br>
+                    <a href="/" class="btn btn-secondary">Back to Home</a>
+                </div>  
+            </div>`;
+        }
+        else {
+            output = `
             <div class="row">
                 <div class="col-md-4">
                     <br>
-                    <a href="index.html" class="btn btn-default">Back to Search</a>
+                    <a onclick="movieSearched('${lastSearched}')" class="btn btn-secondary">Back to Search</a>
                 </div>  
-            </div>
+            </div>`;
+        }
+        output += `
             <div class="row">
                 <div class="col-md-4">
                     <br>
@@ -106,7 +133,7 @@ function getMovie() {
                 <div class="col-md-8">
                     <br>
                     <h2>${movie.title}</h2>
-                    <h6>${movie.tagline}</h6>
+                    <h5 class="tagline">${movie.tagline}</h5>
                     <ul class="list-group">
                         <li class="list-group-item"><strong>Genre:</strong> ${genres}</li>
                         <li class="list-group-item"><strong>Released:</strong> ${movie.release_date}</li>
@@ -196,7 +223,7 @@ function getMovie() {
             <div class="row">
                 <div class="col-md-4">
                     <br>
-                    <a href="index.html" class="btn btn-default">Back to Search</a>
+                    <a href="/" class="btn btn-secondary">Back to Search</a>
                 </div>  
             </div>
             <div class="row">
@@ -207,7 +234,7 @@ function getMovie() {
                 <div class="col-md-8">
                     <br>
                     <h2>${movie.name}</h2>
-                    <h6>${movie.tagline}</h6>
+                    <h5>${movie.tagline}</h5>
                     <ul class="list-group">
                         <li class="list-group-item"><strong>Genre:</strong> ${genres}</li>
                         <li class="list-group-item"><strong>Released:</strong> ${movie.first_air_date}</li>
@@ -296,7 +323,7 @@ function getMovie() {
             <div class="row">
                 <div class="col-md-4">
                     <br>
-                    <a href="index.html" class="btn btn-default">Back to Search</a>
+                    <a href="/" class="btn btn-secondary">Back to Search</a>
                 </div>  
             </div>
             <div class="row">
@@ -380,6 +407,7 @@ function getMovie() {
 }
 
 function getHot() {
+    sessionStorage.setItem('searchEntry', "");
     axios.get('https://api.themoviedb.org/3/trending/all/week?api_key=994d34ea949ad278ddad346696fea280').then(response => {
         console.log(response);
         let movies = response.data.results;
