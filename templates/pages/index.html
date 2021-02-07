@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %} | Welcome {% endblock %}
+
+{% block content %}
+<!-- Showcase -->
+<section id="showcase">
+      <div class="container text-center">
+          <div class="search-box">
+            <h1>Keep Track of TV and Film</h1>
+            <h4>Favourite Movies? Reommendations? Challenges?</h4>
+            <button class="btn btn-primary btn-home">Create New List</button>
+            <br>
+            <br>
+            <form id="searchForm">
+                <input type="text" class="form-control" id="searchText" placeholder="Search..." autocomplete="off">
+            </form>
+          </div>
+      </div>
+</section>
+
+<section id="whats-hot">
+    <div class="container text-center">
+        <h4>What's Hot</h4>
+        <br>
+        <div id="hot" class="row"></div>
+    </div>
+</section>
+
+<section id="results">
+    <div class="container">
+        <div id="movies" class="row"></div>
+    </div>
+</section>
+<script type="text/javascript">
+    
+</script>
+{% endblock %}

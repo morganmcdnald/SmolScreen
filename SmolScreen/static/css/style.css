@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap");
+
+body {
+    background-color: #1b1b1b;
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.navbar-brand {
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.navbar-brand span {
+    font-weight: 300;
+}
+
+.text-blue {
+    color: #6ab7eb !important;
+}
+
+#showcase {
+    background: url(../img/eo17.png) no-repeat top center;
+    background-size: cover;
+    min-height: 50rem;
+    color: #fff;
+}
+
+.search-box {
+    margin-top: 30rem;
+    text-transform: uppercase;
+}
+
+.btn-home {
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 1.25rem;
+    border-radius: 10px;
+    margin-top: .5rem;
+}
+
+#movies img, #movie img, #hot img {
+    width: 100%;
+}
+
+#movies .col-md-3 .well, #hot .col-md-3 .well {
+    min-height: 550px;
+}
+
+#whats-hot {
+    text-transform: uppercase;
+}
