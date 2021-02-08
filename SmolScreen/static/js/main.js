@@ -163,7 +163,7 @@ function getMovie() {
                 output += `
                 <div class="col-md-3">
                     <div class="well text-center">
-                        <img src="https://image.tmdb.org/t/p/w342${actor.profile_path}" alt="Default Profile Pic">
+                        <img src="https://image.tmdb.org/t/p/w342${actor.profile_path}" alt="Profile Pic">
                         <br>
                         <h4>${actor.name}</h4>
                         <h6>${actor.character}</h6>
@@ -178,7 +178,7 @@ function getMovie() {
                 output += `
                 <div class="col-md-3">
                     <div class="well text-center">
-                        <img src="/assets/DefaultProfilePic.png">
+                        <img src="https://i.imgur.com/5E6Su16.png" alt="Default Profile Pic">
                         <br>
                         <h4>${actor.name}</h4>
                         <h6>${actor.character}</h6>
@@ -278,7 +278,7 @@ function getMovie() {
                 output += `
                 <div class="col-md-3">
                     <div class="well text-center">
-                        <img src="https://image.tmdb.org/t/p/w342${actor.profile_path}" alt="Default Profile Pic">
+                        <img src="https://image.tmdb.org/t/p/w342${actor.profile_path}" alt="Profile Pic">
                         <br>
                         <h4>${actor.name}</h4>
                         <h6>${actor.character}</h6>
@@ -293,7 +293,7 @@ function getMovie() {
                 output += `
                 <div class="col-md-3">
                     <div class="well text-center">
-                        <img src="/assets/DefaultProfilePic.png">
+                        <img src="https://i.imgur.com/5E6Su16.png" alt="Default Profile Pic">
                         <br>
                         <h4>${actor.name}</h4>
                         <h6>${actor.character}</h6>
@@ -352,7 +352,40 @@ function getMovie() {
                 </div>  
             </div>`;
         }
-        output += `
+        if (movie.profile_path == null) {
+            output += `
+            <div class="row">
+                <div class="col-md-4">
+                    <br>
+                    <img src="https://i.imgur.com/5E6Su16.png" class="thumbnail">
+                </div>
+                <div class="col-md-8">
+                    <br>
+                    <h2>${movie.name}</h2>
+                    <br>
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Birthday:</strong> ${movie.birthday}</li>
+                        <li class="list-group-item"><strong>Birth Place:</strong> ${movie.place_of_birth}</li>
+                    </ul>
+                    <br>
+                    <a href="https://imdb.com/name/${movie.imdb_id}" target="_blank" class="btn btn-primary">View on IMDB</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="well">
+                    <br>
+                    <h3>Biography</h3>
+                    <hr>
+                    ${movie.biography}
+                    <hr>
+                </div>
+            </div>
+            <h3>Credits</h3>
+            <div class="row">
+        `;
+        }
+        else if (movie.profile_path != null) {
+            output += `
             <div class="row">
                 <div class="col-md-4">
                     <br>
@@ -382,6 +415,8 @@ function getMovie() {
             <h3>Credits</h3>
             <div class="row">
         `;
+        }
+
         $.each(sortedCredits.slice(0,8), (index, credit) => {
             if ((credit.media_type == 'movie') && (credit.poster_path != null)) {
             output += `
