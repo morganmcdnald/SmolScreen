@@ -1,76 +1,150 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap");
 
 body {
-    font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .navbar-brand {
-    font-weight: 500;
-    text-transform: uppercase;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
 .navbar-brand span {
-    font-weight: 300;
+  font-weight: 300;
 }
 
 .text-blue {
-    color: #6ab7eb !important;
+  color: #6ab7eb !important;
 }
 
 #showcase {
-    background: url(../img/eo17.png) no-repeat top center;
-    background-size: cover;
-    min-height: 50rem;
-    color: #fff;
+  background: url(../img/eo17.png) no-repeat top center;
+  background-size: cover;
+  min-height: 50rem;
+  color: #fff;
 }
 
 .search-box {
-    margin-top: 30rem;
-    text-transform: uppercase;
+  margin-top: 30rem;
+  text-transform: uppercase;
 }
 
 .btn-home {
-    font-weight: 500;
-    text-transform: uppercase;
-    color: #fff;
-    font-size: 1.25rem;
-    border-radius: 10px;
-    margin-top: .5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 1.25rem;
+  border-radius: 10px;
+  margin-top: 0.5rem;
 }
 
-#movies img, #movie img, #hot img {
-    width: 100%;
+#movies img,
+#movie img,
+#hot img {
+  width: 100%;
 }
 
-#movies .col-md-3 .well, #hot .col-md-3 .well {
-    min-height: 575px;
+#movies .col-md-3 .well,
+#hot .col-md-3 .well {
+  min-height: 575px;
 }
 
 #whats-hot {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .dark-bg {
-    background-color: #1b1b1b !important;
+  background-color: #1b1b1b !important;
 }
 
 .tagline {
-    color: #616161 !important;
-    margin-top: -.5rem;
+  color: #616161 !important;
+  margin-top: -0.5rem;
 }
 
 .search-img h5 {
-    padding-top: 1rem !important;
+  padding-top: 1rem !important;
 }
 
 .search-img h6 {
-    color: #616161 !important;
+  color: #616161 !important;
 }
 
 #results {
-    min-height: 100vh !important;
+  min-height: 100vh !important;
 }
 
 #whats-hot a {
-    margin-top: .75rem !important;
+  margin-top: 0.75rem !important;
+}
+
+#login {
+  min-height: 60vh;
+}
+
+.login-content {
+  margin-top: 25vh !important;
+}
+
+.reg-content {
+  padding-top: 15vh !important;
+  padding-bottom: 20vh !important;
+}
+
+#account {
+  min-height: 100vh !important;
+}
+
+#showcase-inner {
+  background: url(../img/Uncharted-The-Lost-Legacy-header.jpg) no-repeat center center;
+  background-size: 100vw;
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+}
+
+#showcase-inner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 100%;
+  width: 100%;
+  background: rgba(7, 75, 107, 0.7);
+}
+
+.profilePic {
+    max-width: 135px;
+    border-radius: 100px;
+}
+
+#showcase-inner h4 {
+    font-size: 2.25rem;
+}
+
+#showcase-inner span {
+    font-size: 1rem !important;
+}
+
+#showcase-inner p {
+    font-size: .85rem;
+}
+
+.tooltip .tooltiptext {
+  width: 120px;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+.account-header a {
+  transition: all .3s;
+  font-size: .9rem;
+  text-decoration: none;
+}
+
+.account-header a:hover {
+  font-size: 1rem;
+  color: rgb(217, 244, 252) !important;
+  text-decoration: none;
 }

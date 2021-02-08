@@ -1,4 +1,5 @@
 $(document).ready(() => {
+    $('[data-toggle="tooltip"]').tooltip();
     getMovie();
     $('#searchForm').on('submit', (e) => {
         let searchText = $('#searchText').val();
@@ -7,8 +8,13 @@ $(document).ready(() => {
     });
 });
 
+
 const date = new Date();
 document.querySelector('.year').innerHTML = date.getFullYear();
+
+setTimeout(function() {
+    $('#message').fadeOut('slow');
+}, 2500);
 
 function getMovies() {
     let searchText = sessionStorage.getItem('searchEntry');
