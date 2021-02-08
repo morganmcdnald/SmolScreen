@@ -8,6 +8,10 @@
 <!-- Search Results -->
 <section id="results">
     <div class="container">
+        <form id="searchForm">
+            <input type="text" class="form-control" id="searchText" placeholder="Search..." autocomplete="off">
+        </form>
+        <br>
         <div id="movies" class="row"></div>
     </div>
 </section>
@@ -15,6 +19,8 @@
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
 <script type="text/javascript">
     $(document).ready(() => {
+        let prevSearch = sessionStorage.getItem('searchEntry');
+        $("#searchText").val(prevSearch);
         getMovies();
         $('#searchForm').on('submit', (e) => {
             let searchText = $('#searchText').val();
@@ -22,5 +28,6 @@
             e.preventDefault();
         });
     });
+   
 </script>
 {% endblock %}

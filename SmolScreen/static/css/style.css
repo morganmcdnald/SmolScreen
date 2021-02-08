@@ -43,7 +43,7 @@ body {
 }
 
 #movies .col-md-3 .well, #hot .col-md-3 .well {
-    min-height: 550px;
+    min-height: 575px;
 }
 
 #whats-hot {
@@ -57,4 +57,20 @@ body {
 .tagline {
     color: #616161 !important;
     margin-top: -.5rem;
+}
+
+.search-img h5 {
+    padding-top: 1rem !important;
+}
+
+.search-img h6 {
+    color: #616161 !important;
+}
+
+#results {
+    min-height: 100vh !important;
+}
+
+#whats-hot a {
+    margin-top: .75rem !important;
 }

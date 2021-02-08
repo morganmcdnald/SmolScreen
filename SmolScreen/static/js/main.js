@@ -28,10 +28,11 @@ function getMovies() {
             if ((movie.media_type == 'tv') && (movie.poster_path != null)) {
                 output += `
                 <div class="col-md-3">
-                    <div class="well text-center">
+                    <div class="well text-center search-img">
                         <img src="https://image.tmdb.org/t/p/w342${movie.poster_path}">
                         <h5>${movie.name}</h5>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}')" class="btn btn-primary" href="#">TV Show Details</a>
+                        <h6>TV Show</h6>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}')" class="btn btn-primary" href="#">Details</a>
                     </div>
                 </div>
             `;
@@ -39,10 +40,11 @@ function getMovies() {
             else if ((movie.media_type == 'movie') && (movie.poster_path != null)) {
                 output += `
                 <div class="col-md-3">
-                    <div class="well text-center">
+                    <div class="well text-center search-img">
                         <img src="https://image.tmdb.org/t/p/w185${movie.poster_path}">
                         <h5>${movie.title}</h5>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}')" class="btn btn-primary" href="#">Movie Details</a>
+                        <h6>Movie</h6>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}')" class="btn btn-primary" href="#">Details</a>
                     </div>
                 </div>
             `;
@@ -50,9 +52,10 @@ function getMovies() {
             else if ((movie.media_type == 'person') && (movie.profile_path != null) && (movie.known_for_department == 'Acting')) {
                 output += `
                 <div class="col-md-3">
-                    <div class="well text-center">
+                    <div class="well text-center search-img">
                         <img src="https://image.tmdb.org/t/p/w185${movie.profile_path}">
                         <h5>${movie.name}</h5>
+                        <h6>Actor</h6>
                         <a onclick="movieSelected('${movie.id}', '${movie.media_type}')" class="btn btn-primary" href="#">Profile</a>
                     </div>
                 </div>
@@ -213,19 +216,31 @@ function getMovie() {
         let actorPath =response.data.credits.cast;
         let actors = [];
         let genres = [];
+        let output = "";
         $.each(genrePath, (index, genre) => {
             genres.push(" " + genre.name);
         });
         $.each(actorPath, (index, actor) => {
             actors.push(" " + actor.name);
         });
-        let output = `
+        if (lastSearched == "") {
+            output = `<div class="row">
+                <div class="col-md-4">
+                    <br>
+                    <a href="/" class="btn btn-secondary">Back to Home</a>
+                </div>  
+            </div>`;
+        }
+        else {
+            output = `
             <div class="row">
                 <div class="col-md-4">
                     <br>
-                    <a href="/" class="btn btn-secondary">Back to Search</a>
+                    <a onclick="movieSearched('${lastSearched}')" class="btn btn-secondary">Back to Search</a>
                 </div>  
-            </div>
+            </div>`;
+        }
+        output += `
             <div class="row">
                 <div class="col-md-4">
                     <br>
@@ -314,18 +329,30 @@ function getMovie() {
         let movie = response.data;
         let creditsPath = response.data.combined_credits.cast;
         let credits = [];
+        let output = "";
         $.each(creditsPath, (index, credit) => {
             credits.push(credit);
         });
         var sortedCredits = credits.sort((a, b) => b.vote_count - a.vote_count);
         console.log(sortedCredits);
-        let output = `
+        if (lastSearched == "") {
+            output = `<div class="row">
+                <div class="col-md-4">
+                    <br>
+                    <a href="/" class="btn btn-secondary">Back to Home</a>
+                </div>  
+            </div>`;
+        }
+        else {
+            output = `
             <div class="row">
                 <div class="col-md-4">
                     <br>
-                    <a href="/" class="btn btn-secondary">Back to Search</a>
+                    <a onclick="movieSearched('${lastSearched}')" class="btn btn-secondary">Back to Search</a>
                 </div>  
-            </div>
+            </div>`;
+        }
+        output += `
             <div class="row">
                 <div class="col-md-4">
                     <br>
@@ -417,10 +444,12 @@ function getHot() {
             if ((movie.media_type == 'tv') && (movie.poster_path != null)) {
                 output += `
                 <div class="col-md-3">
-                    <div class="well text-center">
+                    <div class="well text-center search-img">
                         <img src="https://image.tmdb.org/t/p/w342${movie.poster_path}">
                         <h5>${movie.name}</h5>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}')" class="btn btn-primary" href="#">TV Show Details</a>
+                        <h6>TV Show</6>
+                        <br>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}')" class="btn btn-primary" href="#">Details</a>
                     </div>
                 </div>
             `;
@@ -428,10 +457,12 @@ function getHot() {
             else if ((movie.media_type == 'movie') && (movie.poster_path != null)) {
                 output += `
                 <div class="col-md-3">
-                    <div class="well text-center">
+                    <div class="well text-center search-img">
                         <img src="https://image.tmdb.org/t/p/w185${movie.poster_path}">
                         <h5>${movie.title}</h5>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}')" class="btn btn-primary" href="#">Movie Details</a>
+                        <h6>Movie</6>
+                        <br>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}')" class="btn btn-primary" href="#">Details</a>
                     </div>
                 </div>
             `;
@@ -439,9 +470,11 @@ function getHot() {
             else if ((movie.media_type == 'person') && (movie.profile_path != null) && (movie.known_for_department == 'Acting')) {
                 output += `
                 <div class="col-md-3">
-                    <div class="well text-center">
+                    <div class="well text-center search-img">
                         <img src="https://image.tmdb.org/t/p/w185${movie.profile_path}">
                         <h5>${movie.name}</h5>
+                        <h6>Actor</6>
+                        <br>
                         <a onclick="movieSelected('${movie.id}', '${movie.media_type}')" class="btn btn-primary" href="#">Profile</a>
                     </div>
                 </div>
