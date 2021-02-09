@@ -17,4 +17,4 @@ def review(request):
         review.save()
 
         messages.success(request, 'Your review was added successfully')
-        return redirect('account')
+        return redirect('result')

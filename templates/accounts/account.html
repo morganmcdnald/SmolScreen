@@ -51,6 +51,35 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
+          {% if reviews %}
+          <br>
+            <p>Here are the reviews that you have left:</p>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Review</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for review in reviews %}
+                  <tr>
+                    <td>{{ review.media_title }}</td>
+                    <td>{{ review.review_title }}</td>
+                    <td>
+                      <a class="btn btn-light" style="float: right;" href="{% url 'result' %}">View Title</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+          <br>
+            <p><strong>You have not left any reviews yet.</strong></p>
+          {% endif %}
+          <br>
+          <br>
         </div>
       </div>
     </div>
@@ -58,4 +87,5 @@
 </div>
 
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+
 {% endblock %}

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from users.forms import UserUpdateForm, ProfileUpdateForm
+from reviews.models import Review
 
 # Create your views here.
 def register(request):
@@ -63,7 +64,11 @@ def logout(request):
         return redirect('index')
 
 def account(request):
-    return render(request, 'accounts/account.html')
+    user_reviews = Review.objects.order_by('-review_date').filter(user_id=request.user.id)
+    context = {
+        'reviews': user_reviews
+    }
+    return render(request, 'accounts/account.html', context)
 
 def editDetails(request):
     if request.method == 'POST':
@@ -72,7 +77,7 @@ def editDetails(request):
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            messages.success(request, f'Your details were updated successfully')
+            messages.success(request, 'Your details were updated successfully')
             return redirect('account')
     else:
         u_form = UserUpdateForm(instance=request.user)
