@@ -17,7 +17,7 @@ setTimeout(function() {
 }, 2500);
 
 function getMovies() {
-    let searchText = sessionStorage.getItem('searchEntry');
+    let searchText = localStorage.getItem('searchEntry');
     axios.get('https://api.themoviedb.org/3/search/multi?api_key=994d34ea949ad278ddad346696fea280&language=en-US&query='+searchText+'&page=1&include_adult=false').then((response) => {
         console.log(response);
         let movies = response.data.results;
@@ -79,20 +79,24 @@ function getMovies() {
 function movieSelected(id, media_type) {
     sessionStorage.setItem('movieId', id);
     sessionStorage.setItem('type', media_type);
+    localStorage.setItem('movieId', id);
+    localStorage.setItem('type', media_type);
+    document.cookie = 'movieId=' + id + '; expires=Wed, 1 Jan 2070 13:47:11 UTC; path=/';
     window.location = 'result';
     return false;
 }
 
 function movieSearched(entry) {
     sessionStorage.setItem('searchEntry', entry);
+    localStorage.setItem('searchEntry', entry);
     window.location = 'search';
     return false;
 }
 
 function getMovie() {
-    let movieId = sessionStorage.getItem('movieId');
-    let movieType = sessionStorage.getItem('type');
-    let lastSearched = sessionStorage.getItem('searchEntry');
+    let movieId = localStorage.getItem('movieId');
+    let movieType = localStorage.getItem('type');
+    let lastSearched = localStorage.getItem('searchEntry');
     if (movieType == 'movie') {
         axios.get('https://api.themoviedb.org/3/movie/'+movieId+'?api_key=994d34ea949ad278ddad346696fea280&language=en-US&append_to_response=credits').then((response) => {
         console.log(response);
@@ -476,6 +480,7 @@ function getMovie() {
 
 function getHot() {
     sessionStorage.setItem('searchEntry', "");
+    localStorage.setItem('searchEntry', "");
     axios.get('https://api.themoviedb.org/3/trending/all/week?api_key=994d34ea949ad278ddad346696fea280').then(response => {
         console.log(response);
         let movies = response.data.results;

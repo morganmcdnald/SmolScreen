@@ -96,7 +96,7 @@ body {
 }
 
 #showcase-inner {
-  background: url(../img/Uncharted-The-Lost-Legacy-header.jpg) no-repeat center center;
+  background: no-repeat center center;
   background-size: 100vw;
   position: relative;
   overflow: hidden;

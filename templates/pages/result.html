@@ -1,13 +1,40 @@
-{% extends "base.html" %}
-
-{% block title %} | Welcome {% endblock %}
+{% extends "base.html" %} 
+{% block title %} | Welcome {% endblock %} 
 
 {% block content %}
 <!-- Showcase -->
 
 <div class="container">
-    <div id="movie" class="well"></div>
+  <div id="movie" class="well"></div>
 </div>
-<script type="text/javascript">
-</script>
+
+<section id="reviews" class="py-5">
+  <div class="container">
+    <h3 class="mb-3">Reviews</h3>
+    <div class="container">
+      {% if reviews %} {% for review in reviews %}
+      <div class="row">
+        <img
+            class="profilePic"
+            src="{{ review.user_id.profile.image.url }}"
+            alt=""
+          />
+        <em
+          >By {{ review.username }}| {{ review.review_date | timesince }}
+          ago</em
+        >
+        <br />
+        <div class="col-12">{{ review.review_content }}</div>
+      </div>
+      <br />
+      {% endfor %} {% else %}
+      <div class="col-md-12">
+        <p>No Reviews Yet.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script type="text/javascript"></script>
 {% endblock %}
