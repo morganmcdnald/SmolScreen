@@ -3,6 +3,7 @@ from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from users.forms import UserUpdateForm, ProfileUpdateForm
 from reviews.models import Review
+from favourites.models import Favourite
 
 # Create your views here.
 def register(request):
@@ -65,8 +66,10 @@ def logout(request):
 
 def account(request):
     user_reviews = Review.objects.order_by('-review_date').filter(user_id=request.user.id)
+    user_favourites = Favourite.objects.order_by('id').filter(user_id=request.user.id)
     context = {
-        'reviews': user_reviews
+        'reviews': user_reviews,
+        'favourites': user_favourites
     }
     return render(request, 'accounts/account.html', context)
 

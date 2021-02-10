@@ -87,6 +87,40 @@
           {% endif %}
           <br>
           <br>
+          {% if favourites %}
+          <br>
+            <p>Here are the titles in your favourites:</p>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Title</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for favourite in favourites %}
+                <script type="text/javascript">
+                  function resetValues{{favourite.media_id}}() {
+                    localStorage.setItem('movieId', "{{favourite.media_id}}");
+                    localStorage.setItem('title', "{{favourite.media_title}}");
+                    localStorage.setItem('type', "{{ favourite.media_type }}");
+                  }
+                </script>
+                  <tr>
+                    <td>{{ favourite.media_title }}</td>
+                    <td>
+                      <a class="btn btn-info" style="float: right;" onclick="resetValues{{favourite.media_id}}()" href="{% url 'result' %}">View Title</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+          <br>
+            <p><strong>You have not favourited any titles yet.</strong></p>
+          {% endif %}
+          <br>
+          <br>
         </div>
       </div>
     </div>
