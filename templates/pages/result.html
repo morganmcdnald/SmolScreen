@@ -42,6 +42,7 @@
           
           <input type="hidden" name="media_id" id="media_id"/>
           <input type="hidden" name="media_title" id="media_title" />
+          <input type="hidden" name="media_type" id="type" />
 
           <div class="form-group">
             <label for="review_title">Title: </label>
@@ -84,6 +85,7 @@
   let titleId = sessionStorage.getItem('movieId');
   document.getElementById("media_id").value = titleId;
   document.getElementById("media_title").value = title;
+  document.getElementById("media_type").value = movieType;
   if (movieType == 'person') {
     document.getElementById('reviews').innerHTML = "";
   }

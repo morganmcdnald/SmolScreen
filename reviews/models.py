@@ -5,6 +5,7 @@ from datetime import datetime
 class Review(models.Model):
     media_title = models.CharField(max_length=200)
     media_id = models.IntegerField()
+    media_type = models.CharField(max_length=100, blank=True)
     username = models.CharField(max_length=200)
     review_title = models.CharField(max_length=200)
     review_content = models.TextField()

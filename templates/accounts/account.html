@@ -64,11 +64,18 @@
               </thead>
               <tbody>
                 {% for review in reviews %}
+                <script type="text/javascript">
+                  function resetValues{{review.media_id}}() {
+                    localStorage.setItem('movieId', "{{review.media_id}}");
+                    localStorage.setItem('title', "{{review.media_title}}");
+                    localStorage.setItem('type', "{{ review.media_type }}");
+                  }
+                </script>
                   <tr>
                     <td>{{ review.media_title }}</td>
                     <td>{{ review.review_title }}</td>
                     <td>
-                      <a class="btn btn-light" style="float: right;" href="{% url 'result' %}">View Title</a>
+                      <a class="btn btn-info" style="float: right;" onclick="resetValues{{review.media_id}}()" href="{% url 'result' %}">View Title</a>
                     </td>
                   </tr>
                 {% endfor %}
@@ -87,5 +94,7 @@
 </div>
 
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script>
+</script>
 
 {% endblock %}
