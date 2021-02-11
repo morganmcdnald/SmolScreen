@@ -11,6 +11,10 @@ def favourite(request):
         username = request.POST['username']
         user_id = request.POST['user_id']
 
+        if Favourite.objects.filter(user_id=user_id, media_id=media_id).exists():
+            messages.error(request, 'You have already liked this title.')
+            return redirect('result')
+
         favourite = Favourite(media_title=media_title, media_id=media_id, media_type=media_type, username=username, user_id=user_id)
         favourite.save()
 
