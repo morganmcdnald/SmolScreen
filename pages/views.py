@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from reviews.models import Review
+from favourites.models import Favourite
 from http import cookies
 import os
 import requests
@@ -12,9 +13,11 @@ def index(request):
 def result(request):
     cookie = request.COOKIES['movieId']
     reviews = Review.objects.order_by('-review_date').filter(media_id=cookie)
+    is_liked = Favourite.objects.filter(media_id=cookie, user_id=request.user.id).exists()
     context = {
         'reviews': reviews,
-        'rating_choices': rating_choices
+        'rating_choices': rating_choices,
+        'is_liked': is_liked
     }
     return render(request, 'pages/result.html', context)
 

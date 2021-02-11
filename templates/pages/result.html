@@ -9,6 +9,25 @@
   {% include 'partials/_alerts.html' %}
   <div id="movie" class="well"></div>
   <div class="col-md-2">
+    {% if is_liked %}
+    <form action="{% url 'unlike' %}" method="POST">
+      {% csrf_token %} {% if user.is_authenticated %}
+      <input type="hidden" name="user_id" value="{{ user.id }}" />
+      <input type="hidden" name="media_id" id="media_id"/>
+      <input type="hidden" name="media_title" id="media_title" />
+      <input type="hidden" name="media_type" id="media_type" />
+      <input type="hidden" name="media_poster" id="media_poster" />
+      <input type="hidden" name="username" value="{{ user.username }}" />
+  
+      <input
+        type="submit"
+        value="Unlike Title"
+        class="btn btn-block btn-info"
+        style="margin-top: -7px;"
+      />
+      {% endif %}
+    </form>
+    {% else %}
     <form action="{% url 'favourite' %}" method="POST">
       {% csrf_token %} {% if user.is_authenticated %}
       <input type="hidden" name="user_id" value="{{ user.id }}" />
@@ -26,6 +45,7 @@
       />
       {% endif %}
     </form>
+    {% endif %}
   </div>
 </div>
 

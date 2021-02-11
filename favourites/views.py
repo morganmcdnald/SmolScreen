@@ -21,3 +21,14 @@ def favourite(request):
 
         messages.success(request, 'Your like was added successfully.')
         return redirect('result')
+
+def unlike(request):
+    if request.method == 'POST':
+        media_id = request.POST['media_id']
+        user_id = request.POST['user_id']
+
+        item = Favourite.objects.get(media_id=media_id)
+        if request.user.id == item.user_id:
+            Favourite.objects.filter(media_id=media_id).delete()
+            messages.success(request, 'Your like was removed successfully.')
+            return redirect('result')

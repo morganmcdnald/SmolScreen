@@ -67,7 +67,7 @@
                         localStorage.setItem('type', "{{ favourite.media_type }}");
                       }
                     </script>
-                    <a class="favouritesBtn" onclick="resetValues{{favourite.media_id}}()" href="{% url 'result' %}">{{ favourite.media_title }}</a>
+                    <a class="favouritesBtn" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}">{{ favourite.media_title }}</a>
                   </div>
                 </div>
               </div>
