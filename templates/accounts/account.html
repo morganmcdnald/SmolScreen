@@ -78,76 +78,36 @@
             <p><strong>You have favourited any titles yet.</strong></p>
           {% endif %}
 
+          <br>
+          <br>
+
           {% if reviews %}
-          <br>
-            <p>Here are the reviews that you have left:</p>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Title</th>
-                  <th scope="col">Review</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for review in reviews %}
-                <script type="text/javascript">
-                  function resetValues{{review.media_id}}() {
-                    localStorage.setItem('movieId', "{{review.media_id}}");
-                    localStorage.setItem('title', "{{review.media_title}}");
-                    localStorage.setItem('type', "{{ review.media_type }}");
-                  }
-                </script>
-                  <tr>
-                    <td>{{ review.media_title }}</td>
-                    <td>{{ review.review_title }}</td>
-                    <td>
-                      <a class="btn btn-info" style="float: right;" onclick="resetValues{{review.media_id}}()" href="{% url 'result' %}">View Title</a>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+            <!-- Reviews -->
+            <h3 class="text-center mb-3">Your Reviews</h3>
+            <div class="reviews-slider">
+              {% for review in reviews %}
+              <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card listing-preview">
+                    <img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ review.media_poster }}" alt="" />
+                  <div class="card-body-fav text-center">
+                    <script type="text/javascript">
+                      function resetValues{{review.media_id}}() {
+                        localStorage.setItem('movieId', "{{review.media_id}}");
+                        localStorage.setItem('title', "{{review.media_title}}");
+                        localStorage.setItem('type', "{{ review.media_type }}");
+                      }
+                    </script>
+                    <a class="favouritesBtn" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}">{{ review.media_title }}</a>
+                    <p>{{ review.review_title }}</p>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
           {% else %}
-          <br>
-            <p><strong>You have not left any reviews yet.</strong></p>
+            <br>
+            <p><strong>You have reviewed any titles yet.</strong></p>
           {% endif %}
-          <br>
-          <br>
-          <!-- {% if favourites %}
-          <br>
-            <p>Here are the titles in your favourites:</p>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Title</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for favourite in favourites %}
-                <script type="text/javascript">
-                  function resetValues{{favourite.media_id}}() {
-                    localStorage.setItem('movieId', "{{favourite.media_id}}");
-                    localStorage.setItem('title', "{{favourite.media_title}}");
-                    localStorage.setItem('type', "{{ favourite.media_type }}");
-                  }
-                </script>
-                  <tr>
-                    <td>{{ favourite.media_title }}</td>
-                    <td>
-                      <a class="btn btn-info" style="float: right;" onclick="resetValues{{favourite.media_id}}()" href="{% url 'result' %}">View Title</a>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          {% else %}
-          <br>
-            <p><strong>You have not favourited any titles yet.</strong></p>
-          {% endif %} -->
-          <br>
-          <br>
         </div>
       </div>
     </div>

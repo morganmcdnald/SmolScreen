@@ -56,11 +56,20 @@
     <div class="container">
       {% if reviews %} {% for review in reviews %}
       <div class="row">
-        <div class="col-md-12" style="display: inline-flex;">
-          <h4>{{ review.review_title }}</h4> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>{{ review.username }} | {{ review.review_date | timesince }} ago &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ review.rating }} / 5</em>
+          <img
+              class="reviewPic"
+              src="{{ review.user_image_url }}"
+              alt=""
+            />
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-md-12" style="display: inline-flex;">
+              <h4>{{ review.review_title }}</h4> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>{{ review.username }} | {{ review.review_date | timesince }} ago &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ review.rating }} / 5</em>
+            </div>
+            <br />
+            <div class="col-12">{{ review.review_content }}</div>
+          </div>
         </div>
-        <br />
-        <div class="col-12">{{ review.review_content }}</div>
       </div>
       <br />
       <hr>
@@ -78,19 +87,21 @@
           <p>Leave a Review:</p>
           <input type="hidden" name="user_id" value="{{ user.id }}" />
           <input type="hidden" name="username" value="{{ user.username }}" />
+          <input type="hidden" name="user_image_url" value="{{ user.profile.image.url }}" />
           
-          <input type="hidden" name="media_id" id="media_id"/>
-          <input type="hidden" name="media_title" id="media_title" />
-          <input type="hidden" name="media_type" id="media_type" />
+          <input type="hidden" name="media_id" id="media_id_review" />
+          <input type="hidden" name="media_title" id="media_title_review" />
+          <input type="hidden" name="media_type" id="media_type_review" />
+          <input type="hidden" name="media_poster" id="media_poster_review" />
 
           <div class="form-group">
             <label for="review_title">Title: </label>
-            <input type="text" name="review_title" class="form-control" />
+            <input type="text" name="review_title" class="form-control" autocomplete="off" />
           </div>
 
           <div class="form-group">
             <label for="review_content">Review: </label>
-            <textarea name="review_content" class="form-control"></textarea>
+            <textarea name="review_content" class="form-control" autocomplete="off"></textarea>
           </div>
 
           <div class="form-group">
@@ -121,12 +132,16 @@
 <script type="text/javascript">
   let movieType = localStorage.getItem('type');
   let title = localStorage.getItem('title');
-  let titleId = sessionStorage.getItem('movieId');
-  let titlePoster = sessionStorage.getItem('poster');
+  let titleId = localStorage.getItem('movieId');
+  let titlePoster = localStorage.getItem('poster');
   document.getElementById("media_id").value = titleId;
   document.getElementById("media_title").value = title;
   document.getElementById("media_type").value = movieType;
   document.getElementById("media_poster").value = titlePoster;
+  document.getElementById("media_id_review").value = titleId;
+  document.getElementById("media_title_review").value = title;
+  document.getElementById("media_type_review").value = movieType;
+  document.getElementById("media_poster_review").value = titlePoster;
   if (movieType == 'person') {
     document.getElementById('reviews').innerHTML = "";
   }
