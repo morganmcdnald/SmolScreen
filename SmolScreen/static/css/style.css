@@ -148,3 +148,15 @@ body {
   color: rgb(217, 244, 252) !important;
   text-decoration: none;
 }
+
+.favouritesBtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all .3s;
+  color: #6ab7eb;
+}
+
+.favouritesBtn:hover {
+  text-decoration: none;
+}

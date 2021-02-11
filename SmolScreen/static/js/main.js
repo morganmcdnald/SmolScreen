@@ -38,7 +38,7 @@ function getMovies() {
                         <img src="https://image.tmdb.org/t/p/w342${movie.poster_path}">
                         <h5>${movie.name}</h5>
                         <h6>TV Show</h6>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}')" class="btn btn-primary" href="#">Details</a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}', '${movie.poster_path}')" class="btn btn-primary" href="#">Details</a>
                     </div>
                 </div>
             `;
@@ -50,7 +50,7 @@ function getMovies() {
                         <img src="https://image.tmdb.org/t/p/w185${movie.poster_path}">
                         <h5>${movie.title}</h5>
                         <h6>Movie</h6>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.title}')" class="btn btn-primary" href="#">Details</a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.title}', '${movie.poster_path}')" class="btn btn-primary" href="#">Details</a>
                     </div>
                 </div>
             `;
@@ -62,7 +62,7 @@ function getMovies() {
                         <img src="https://image.tmdb.org/t/p/w185${movie.profile_path}">
                         <h5>${movie.name}</h5>
                         <h6>Actor</h6>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.title}')" class="btn btn-primary" href="#">Profile</a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.title}', '${movie.profile_path}')" class="btn btn-primary" href="#">Profile</a>
                     </div>
                 </div>
             `;
@@ -76,13 +76,15 @@ function getMovies() {
     });
 }
 
-function movieSelected(id, media_type, media_title) {
+function movieSelected(id, media_type, media_title, media_poster) {
     sessionStorage.setItem('movieId', id);
     sessionStorage.setItem('type', media_type);
     sessionStorage.setItem('title', media_title);
+    sessionStorage.setItem('poster', media_poster);
     localStorage.setItem('movieId', id);
     localStorage.setItem('type', media_type);
     localStorage.setItem('title', media_title);
+    localStorage.setItem('poster', media_poster);
     document.cookie = 'movieId=' + id + '; expires=Wed, 1 Jan 2070 13:47:11 UTC; path=/';
     window.location = 'result';
     return false;
@@ -497,7 +499,7 @@ function getHot() {
                         <h5>${movie.name}</h5>
                         <h6>TV Show</6>
                         <br>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}')" class="btn btn-primary" href="#">Details</a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}', '${movie.poster_path}')" class="btn btn-primary" href="#">Details</a>
                     </div>
                 </div>
             `;
@@ -510,7 +512,7 @@ function getHot() {
                         <h5>${movie.title}</h5>
                         <h6>Movie</6>
                         <br>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.title}')" class="btn btn-primary" href="#">Details</a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.title}', '${movie.poster_path}')" class="btn btn-primary" href="#">Details</a>
                     </div>
                 </div>
             `;
@@ -523,7 +525,7 @@ function getHot() {
                         <h5>${movie.name}</h5>
                         <h6>Actor</6>
                         <br>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}')" class="btn btn-primary" href="#">Profile</a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}', '${movie.profile_path}')" class="btn btn-primary" href="#">Profile</a>
                     </div>
                 </div>
             `;

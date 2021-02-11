@@ -51,6 +51,33 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
+          {% if favourites %}
+            <!-- Favourites -->
+            <h3 class="text-center mb-3">Your Favourites</h3>
+            <div class="favourites-slider">
+              {% for favourite in favourites %}
+              <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card listing-preview">
+                    <img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ favourite.media_poster }}" alt="" />
+                  <div class="card-body-fav text-center">
+                    <script type="text/javascript">
+                      function resetValues{{favourite.media_id}}() {
+                        localStorage.setItem('movieId', "{{favourite.media_id}}");
+                        localStorage.setItem('title', "{{favourite.media_title}}");
+                        localStorage.setItem('type', "{{ favourite.media_type }}");
+                      }
+                    </script>
+                    <a class="favouritesBtn" onclick="resetValues{{favourite.media_id}}()" href="{% url 'result' %}">{{ favourite.media_title }}</a>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <br>
+            <p><strong>You have favourited any titles yet.</strong></p>
+          {% endif %}
+
           {% if reviews %}
           <br>
             <p>Here are the reviews that you have left:</p>
@@ -87,7 +114,7 @@
           {% endif %}
           <br>
           <br>
-          {% if favourites %}
+          <!-- {% if favourites %}
           <br>
             <p>Here are the titles in your favourites:</p>
             <table class="table">
@@ -118,7 +145,7 @@
           {% else %}
           <br>
             <p><strong>You have not favourited any titles yet.</strong></p>
-          {% endif %}
+          {% endif %} -->
           <br>
           <br>
         </div>

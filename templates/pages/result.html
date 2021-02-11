@@ -15,6 +15,7 @@
       <input type="hidden" name="media_id" id="media_id"/>
       <input type="hidden" name="media_title" id="media_title" />
       <input type="hidden" name="media_type" id="media_type" />
+      <input type="hidden" name="media_poster" id="media_poster" />
       <input type="hidden" name="username" value="{{ user.username }}" />
   
       <input
@@ -60,7 +61,7 @@
           
           <input type="hidden" name="media_id" id="media_id"/>
           <input type="hidden" name="media_title" id="media_title" />
-          <input type="hidden" name="media_type" id="type" />
+          <input type="hidden" name="media_type" id="media_type" />
 
           <div class="form-group">
             <label for="review_title">Title: </label>
@@ -101,9 +102,11 @@
   let movieType = localStorage.getItem('type');
   let title = localStorage.getItem('title');
   let titleId = sessionStorage.getItem('movieId');
+  let titlePoster = sessionStorage.getItem('poster');
   document.getElementById("media_id").value = titleId;
   document.getElementById("media_title").value = title;
   document.getElementById("media_type").value = movieType;
+  document.getElementById("media_poster").value = titlePoster;
   if (movieType == 'person') {
     document.getElementById('reviews').innerHTML = "";
   }

@@ -5,6 +5,7 @@ class Favourite(models.Model):
     media_title = models.CharField(max_length=200)
     media_id = models.IntegerField()
     media_type = models.CharField(max_length=100, blank=True)
+    media_poster = models.CharField(max_length=200, blank=True)
     username = models.CharField(max_length=200)
     user_id = models.IntegerField()
     def __str__(self):
