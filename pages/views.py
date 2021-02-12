@@ -12,7 +12,7 @@ def index(request):
 
 def result(request):
     cookie = request.COOKIES['movieId']
-    reviews = Review.objects.order_by('-review_date').filter(media_id=cookie)
+    reviews = Review.objects.order_by('-review_date').filter(media_id=cookie)[:3]
     is_liked = Favourite.objects.filter(media_id=cookie, user_id=request.user.id).exists()
     context = {
         'reviews': reviews,

@@ -27,7 +27,7 @@ def unlike(request):
         media_id = request.POST['media_id']
         user_id = request.POST['user_id']
 
-        item = Favourite.objects.get(media_id=media_id)
+        item = Favourite.objects.get(media_id=media_id, user_id=request.user.id)
         if request.user.id == item.user_id:
             Favourite.objects.filter(media_id=media_id).delete()
             messages.success(request, 'Your like was removed successfully.')

@@ -64,7 +64,11 @@
         <div class="col-md-10">
           <div class="row">
             <div class="col-md-12" style="display: inline-flex;">
-              <h4>{{ review.review_title }}</h4> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>{{ review.username }} | {{ review.review_date | timesince }} ago &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ review.rating }} / 5</em>
+              {% if review.user_id == user.id %}
+              <h4>{{ review.review_title }}</h4> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em><a href="{% url 'account' %}">{{ review.username }}</a> | {{ review.review_date | timesince }} ago &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ review.rating }} / 5</em>
+              {% else %}
+              <h4>{{ review.review_title }}</h4> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em><a href="{% url 'profile' review.user_id %}">{{ review.username }}</a> | {{ review.review_date | timesince }} ago &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ review.rating }} / 5</em>
+              {% endif %}
             </div>
             <br />
             <div class="col-12">{{ review.review_content }}</div>
