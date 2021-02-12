@@ -27,6 +27,7 @@
           <p class="lead">
             {{ user.profile.bio }}
           </p>
+          <p>Followers: {{ followers_count }} &nbsp;&nbsp;&nbsp; Following: {{ following_count }}</p>
           <a href="{% url 'editDetails' %}" class="text-white">Edit Details</a>
         </div>
       </div>

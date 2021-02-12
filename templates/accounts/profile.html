@@ -23,12 +23,57 @@
               />
             </div>
             <div class="col-md-10 account-header">
-              <div style="display: inline-flex">
-                <h4>{{viewuser.user.username}} &nbsp;<span>Member Since February 2021</span></h4>
+              <div class="container">
+                <div style="display: inline-flex">
+                  <h4>{{viewuser.user.username}} &nbsp;<span>Member Since February 2021</span></h4>
+                </div>
+                <p class="lead">
+                  {{ viewuser.user.profile.bio }}
+                </p>
+                <p>Followers: {{ followers_count }} &nbsp;&nbsp;&nbsp; Following: {{ following_count }}</p>
+  
+                {% if does_follow %}
+                <div class="col-md-2">
+                  <form action="{% url 'unfollow' %}" method="POST">
+                    {% csrf_token %} {% if user.is_authenticated %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}" />
+                    <input type="hidden" name="following_user_id" value="{{ viewuser.user.id }}"/>
+                    <input type="hidden" name="username" value="{{ user.username }}" />
+                    <input type="hidden" name="following_username" value="{{ viewuser.user.username }}" />
+                    <input type="hidden" name="picture" value="{{ user.profile.image.url }}" />
+                    <input type="hidden" name="following_picture" value="{{ viewuser.user.profile.image.url }}" />
+                
+                    <input
+                      type="submit"
+                      value="Unfollow"
+                      class="btn btn-block btn-outline-primary"
+                      style="margin-top: -7px;"
+                    />
+                    {% endif %}
+                  </form>
+                </div>
+                {% else %}
+                <div class="col-md-2">
+                  <form action="{% url 'follow' %}" method="POST">
+                    {% csrf_token %} {% if user.is_authenticated %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}" />
+                    <input type="hidden" name="following_user_id" value="{{ viewuser.user.id }}"/>
+                    <input type="hidden" name="username" value="{{ user.username }}" />
+                    <input type="hidden" name="following_username" value="{{ viewuser.user.username }}" />
+                    <input type="hidden" name="picture" value="{{ user.profile.image.url }}" />
+                    <input type="hidden" name="following_picture" value="{{ viewuser.user.profile.image.url }}" />
+                
+                    <input
+                      type="submit"
+                      value="Follow"
+                      class="btn btn-block btn-outline-primary"
+                      style="margin-top: -7px;"
+                    />
+                    {% endif %}
+                  </form>
+                </div>
+                {% endif %}
               </div>
-              <p class="lead">
-                {{ viewuser.user.profile.bio }}
-              </p>
             </div>
           </div>
         </div>

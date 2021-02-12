@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'reviews.apps.ReviewsConfig',
     'favourites.apps.FavouritesConfig',
+    'follows.apps.FollowsConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',

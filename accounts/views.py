@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from users.forms import UserUpdateForm, ProfileUpdateForm
 from reviews.models import Review
 from favourites.models import Favourite
+from follows.models import Follow
 
 # Create your views here.
 def register(request):
@@ -67,9 +68,17 @@ def logout(request):
 def account(request):
     user_reviews = Review.objects.order_by('-review_date').filter(user_id=request.user.id)
     user_favourites = Favourite.objects.order_by('id').filter(user_id=request.user.id)
+    following = Follow.objects.order_by('-created').filter(user_id=request.user.id)
+    following_count = Follow.objects.order_by('-created').filter(user_id=request.user.id).count()
+    followers = Follow.objects.order_by('-created').filter(following_user_id=request.user.id)
+    followers_count = Follow.objects.order_by('-created').filter(following_user_id=request.user.id).count()
     context = {
         'reviews': user_reviews,
-        'favourites': user_favourites
+        'favourites': user_favourites,
+        'following': following,
+        'followers': followers,
+        'following_count': following_count,
+        'followers_count': followers_count
     }
     return render(request, 'accounts/account.html', context)
 
