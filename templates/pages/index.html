@@ -25,9 +25,18 @@
 
 <section id="whats-hot">
     <div class="container text-center">
-        <h4>What's Hot</h4>
+        <h4>Hot Movies</h4>
         <br>
-        <div id="hot" class="row"></div>
+        <div class="hot-slider" id="hot"></div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="container text-center">
+        <h4>Hot TV Shows</h4>
+        <br>
+        <div id="hotTV" class="hotTV-slider"></div>
     </div>
 </section>
 
@@ -35,6 +44,7 @@
 <script type="text/javascript">
     $(document).ready(() => {
         getHot();
+        getHotTV();
         getMovie();
         $('#searchForm').on('submit', (e) => {
             let searchText = $('#searchText').val();

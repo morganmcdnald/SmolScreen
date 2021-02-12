@@ -33,7 +33,7 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="{% static 'js/main.js' %}"></script>
-    <script type="text/javascript">
+    <script defer type="text/javascript">
         $('.favourites-slider').slick({
             centerMode: true,
             centerPadding: '60px',
@@ -86,6 +86,64 @@
                 }
               }
             ]
+          });
+
+          $(document).ready(() => {
+            setTimeout(() => {
+              $('.hot-slider').slick({
+                centerMode: true,
+                centerPadding: '60px',
+                slidesToShow: 3,
+                arrows: true,
+                responsive: [
+                  {
+                    breakpoint: 768,
+                    settings: {
+                      arrows: true,
+                      centerMode: true,
+                      centerPadding: '40px',
+                      slidesToShow: 2
+                    }
+                  },
+                  {
+                    breakpoint: 480,
+                    settings: {
+                      arrows: true,
+                      centerMode: true,
+                      centerPadding: '40px',
+                      slidesToShow: 1
+                    }
+                  }
+                ]
+              });
+    
+              $('.hotTV-slider').slick({
+                centerMode: true,
+                centerPadding: '60px',
+                slidesToShow: 3,
+                arrows: true,
+                responsive: [
+                  {
+                    breakpoint: 768,
+                    settings: {
+                      arrows: true,
+                      centerMode: true,
+                      centerPadding: '40px',
+                      slidesToShow: 2
+                    }
+                  },
+                  {
+                    breakpoint: 480,
+                    settings: {
+                      arrows: true,
+                      centerMode: true,
+                      centerPadding: '40px',
+                      slidesToShow: 1
+                    }
+                  }
+                ]
+              });
+            }, 200);
           });
     </script>
 </body>

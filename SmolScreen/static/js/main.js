@@ -499,54 +499,55 @@ function getMovie() {
 function getHot() {
     sessionStorage.setItem('searchEntry', "");
     localStorage.setItem('searchEntry', "");
-    axios.get('https://api.themoviedb.org/3/trending/all/week?api_key=994d34ea949ad278ddad346696fea280').then(response => {
+    axios.get('https://api.themoviedb.org/3/trending/movie/week?api_key=994d34ea949ad278ddad346696fea280').then(response => {
         console.log(response);
         let movies = response.data.results;
         let output = '';
         let title = '';
-        $.each(movies.slice(0,4), (index, movie) => {
-            if ((movie.media_type == 'tv') && (movie.poster_path != null)) {
+        $.each(movies.slice(0,8), (index, movie) => {
+            if (movie.poster_path != null) {
                 output += `
-                <div class="col-md-3">
-                    <div class="well text-center search-img">
-                        <img src="https://image.tmdb.org/t/p/w342${movie.poster_path}">
-                        <h5>${movie.name}</h5>
-                        <h6>TV Show</6>
-                        <br>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}', '${movie.poster_path}')" class="btn btn-primary" href="#">Details</a>
-                    </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card listing-preview">
+                    <img class="card-img-top" src="https://image.tmdb.org/t/p/w342${movie.poster_path}" />
+                  <div class="card-body-fav text-center">
+                    <a class="favouritesBtn" onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.title}', '${movie.poster_path}')">${movie.title}</a>
+                  </div>
                 </div>
+              </div>
             `;
             }
-            else if ((movie.media_type == 'movie') && (movie.poster_path != null)) {
-                output += `
-                <div class="col-md-3">
-                    <div class="well text-center search-img">
-                        <img src="https://image.tmdb.org/t/p/w185${movie.poster_path}">
-                        <h5>${movie.title}</h5>
-                        <h6>Movie</6>
-                        <br>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.title}', '${movie.poster_path}')" class="btn btn-primary" href="#">Details</a>
-                    </div>
-                </div>
-            `;
-            }
-            else if ((movie.media_type == 'person') && (movie.profile_path != null) && (movie.known_for_department == 'Acting')) {
-                output += `
-                <div class="col-md-3">
-                    <div class="well text-center search-img">
-                        <img src="https://image.tmdb.org/t/p/w185${movie.profile_path}">
-                        <h5>${movie.name}</h5>
-                        <h6>Actor</6>
-                        <br>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}', '${movie.profile_path}')" class="btn btn-primary" href="#">Profile</a>
-                    </div>
-                </div>
-            `;
-            }
-            
         });
         $('#hot').html(output);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+}
+
+function getHotTV() {
+    sessionStorage.setItem('searchEntry', "");
+    localStorage.setItem('searchEntry', "");
+    axios.get('https://api.themoviedb.org/3/trending/tv/week?api_key=994d34ea949ad278ddad346696fea280').then(response => {
+        console.log(response);
+        let movies = response.data.results;
+        let output = '';
+        let title = '';
+        $.each(movies.slice(0,8), (index, movie) => {
+            if (movie.poster_path != null) {
+                output += `
+                <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card listing-preview">
+                    <img class="card-img-top" src="https://image.tmdb.org/t/p/w342${movie.poster_path}" />
+                  <div class="card-body-fav text-center">
+                    <a class="favouritesBtn" onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}', '${movie.poster_path}')">${movie.name}</a>
+                  </div>
+                </div>
+              </div>
+            `;
+            }
+        });
+        $('#hotTV').html(output);
     })
     .catch((err) => {
         console.log(err);

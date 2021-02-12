@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
+{% load humanize %}
 {% block title %} | Account {%endblock %}
 
 {% block content %}
@@ -22,12 +23,12 @@
         </div>
         <div class="col-md-10 account-header">
           <div style="display: inline-flex">
-            <h4>{{user.username}} &nbsp;<span>Member Since February 2021</span></h4>
+            <h4>{{user.username}} &nbsp;<span>Member Since {{ user.date_joined | date:"d F Y" }}</span></h4>
           </div>
           <p class="lead">
             {{ user.profile.bio }}
           </p>
-          <p>Followers: {{ followers_count }} &nbsp;&nbsp;&nbsp; Following: {{ following_count }}</p>
+          <p>Followers: {{ followers_count }} &nbsp;&nbsp;&nbsp; Following: {{ following_count }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Last active {{ user.last_login | timesince }} ago</em></p>
           <a href="{% url 'editDetails' %}" class="text-white">Edit Details</a>
         </div>
       </div>
