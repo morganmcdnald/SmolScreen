@@ -55,8 +55,9 @@ function getMovies() {
                 </div>
             `;
             }
-            else if ((movie.media_type == 'person') && (movie.profile_path != null) && (movie.known_for_department == 'Acting')) {
-                output += `
+            else if ((movie.media_type == 'person') && (movie.known_for_department == 'Acting')) {
+                if (movie.profile_path != null) {
+                    output += `
                 <div class="col-md-3">
                     <div class="well text-center search-img">
                         <img src="https://image.tmdb.org/t/p/w185${movie.profile_path}">
@@ -66,6 +67,19 @@ function getMovies() {
                     </div>
                 </div>
             `;
+                }
+                else {
+                    output += `
+                <div class="col-md-3">
+                    <div class="well text-center search-img">
+                        <img src="https://i.imgur.com/5E6Su16.png">
+                        <h5>${movie.name}</h5>
+                        <h6>Actor</h6>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.title}', '${movie.profile_path}')" class="btn btn-primary" href="#">Profile</a>
+                    </div>
+                </div>
+            `;
+                }
             }
             
         });
@@ -440,7 +454,7 @@ function getMovie() {
                         <br>
                         <h4>${credit.title}</h4>
                         <h6>${credit.character}</h6>
-                        <a onclick="movieSelected('${credit.id}', '${credit.media_type}')" class="btn btn-primary" href="#">View Page</a>
+                        <a onclick="movieSelected('${credit.id}', '${credit.media_type}', '${credit.title}', '${credit.poster_path}')" class="btn btn-primary" href="#">View Page</a>
                         <br>
                         <br>
                     </div>
@@ -455,7 +469,7 @@ function getMovie() {
                             <br>
                             <h4>${credit.name}</h4>
                             <h6>${credit.character}</h6>
-                            <a onclick="movieSelected('${credit.id}', '${credit.media_type}')" class="btn btn-primary" href="#">View Page</a>
+                            <a onclick="movieSelected('${credit.id}', '${credit.media_type}', '${credit.name}', '${credit.poster_path}')" class="btn btn-primary" href="#">View Page</a>
                             <br>
                             <br>
                         </div>

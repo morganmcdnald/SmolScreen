@@ -8,7 +8,7 @@
   <!-- Alerts -->
   {% include 'partials/_alerts.html' %}
   <div id="movie" class="well"></div>
-  <div class="col-md-2">
+  <div class="col-md-2" id="likeBtn">
     {% if is_liked %}
     <form action="{% url 'unlike' %}" method="POST">
       {% csrf_token %} {% if user.is_authenticated %}
@@ -148,6 +148,7 @@
   document.getElementById("media_poster_review").value = titlePoster;
   if (movieType == 'person') {
     document.getElementById('reviews').innerHTML = "";
+    document.getElementById('likeBtn').innerHTML = "";
   }
 </script>
 {% endblock %}
