@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'users.apps.UsersConfig',
     'reviews.apps.ReviewsConfig',
+    'lists.apps.ListsConfig',
     'favourites.apps.FavouritesConfig',
     'follows.apps.FollowsConfig',
     'crispy_forms',
