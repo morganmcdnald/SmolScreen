@@ -120,6 +120,15 @@ body {
     border-radius: 100px;
 }
 
+.followersList {
+  max-width: 75px;
+  border-radius: 100px;
+}
+
+.follower-user, .follower-btn {
+  margin: auto !important;
+}
+
 .reviewPic {
   max-width: 100px;
 }
@@ -150,7 +159,7 @@ body {
   text-decoration: none;
 }
 
-.account-header a:hover {
+.edit-details a:hover {
   font-size: 1rem;
   color: rgb(217, 244, 252) !important;
   text-decoration: none;

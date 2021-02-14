@@ -29,5 +29,5 @@ def unfollow(request):
 
         item = Follow.objects.get(following_user_id=following_user_id, user_id=request.user.id)
         if request.user.id == item.user_id:
-            Follow.objects.filter(following_user_id=following_user_id).delete()
+            Follow.objects.filter(following_user_id=following_user_id, user_id=request.user.id).delete()
             return redirect('profile', following_user_id)

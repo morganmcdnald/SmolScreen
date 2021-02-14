@@ -28,8 +28,11 @@
           <p class="lead">
             {{ user.profile.bio }}
           </p>
-          <p>Followers: {{ followers_count }} &nbsp;&nbsp;&nbsp; Following: {{ following_count }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Last active {{ user.last_login | timesince }} ago</em></p>
-          <a href="{% url 'editDetails' %}" class="text-white">Edit Details</a>
+          <p><a href="{% url 'view_followers' %}" class="text-white followers-link">Followers: {{ followers_count }}</a> &nbsp;&nbsp;&nbsp; <a href="{% url 'view_following' %}" class="text-white followers-link">Following: {{ following_count }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Last active {{ user.last_login | timesince }} ago</em></p>
+          <div class="edit-details">
+            <a href="{% url 'editDetails' %}" class="text-white">Edit Details</a>
+          </div>
+          <!-- add this to both following and followers display count for link to new page -->
         </div>
       </div>
     </div>

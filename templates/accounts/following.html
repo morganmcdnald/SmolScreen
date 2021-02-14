@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %} | Account {%endblock %}
+
+{% block content %}
+<div id="account">
+  <section id="showcase-inner" class="py-5 text-white" style="background: url('{{ user.profile.header.url }}') no-repeat center center; background-size: 100vw;
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;">
+    <div class="container">
+          <!-- Alerts -->
+      {% include 'partials/_alerts.html' %}
+      <div class="row">
+        <div class="col-md-2">
+          <img
+            class="profilePic"
+            src="{{ user.profile.image.url }}"
+            alt=""
+          />
+        </div>
+        <div class="col-md-10 account-header">
+          <div style="display: inline-flex">
+            <h4>{{user.username}} &nbsp;<span>Member Since {{ user.date_joined | date:"d F Y" }}</span></h4>
+          </div>
+          <p class="lead">
+            {{ user.profile.bio }}
+          </p>
+          <p><a href="{% url 'view_followers' %}" class="text-white followers-link">Followers: {{ followers_count }}</a> &nbsp;&nbsp;&nbsp; <a href="{% url 'view_following' %}" class="text-white followers-link">Following: {{ following_count }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Last active {{ user.last_login | timesince }} ago</em></p>
+          <a href="{% url 'editDetails' %}" class="text-white">Edit Details</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="dashboard" class="py-4">
+    <div class="container">
+        <a href="{% url 'account' %}" class="btn btn-dark mb-4">Back To Profile</a>
+      <div class="row">
+        <div class="col-md-12">
+            {% if following %}
+          <br>
+          <h3 class="text-center mb-3">Your Following</h3>
+          <br>
+          <br>
+                {% for follow in following %}
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{ follow.following_picture }}" class="followersList" alt="">
+                    </div>
+                    <div class="col-md-8 follower-user">
+                        <h5>{{ follow.following_username }}</h5>
+                    </div>
+                    <div class="col-md-2 follower-btn">
+                        <a class="btn btn-outline-primary" href="{% url 'profile' follow.following_user_id %}">View Profile</a>
+                    </div>
+                </div>
+                <br>
+                <br>
+                {% endfor %}
+          {% else %}
+          <br>
+            <p><strong>You are not following any users yet.</strong></p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+{% endblock %}

@@ -68,10 +68,10 @@ def logout(request):
 def account(request):
     user_reviews = Review.objects.order_by('-review_date').filter(user_id=request.user.id)
     user_favourites = Favourite.objects.order_by('id').filter(user_id=request.user.id)
-    following = Follow.objects.order_by('-created').filter(user_id=request.user.id)
-    following_count = Follow.objects.order_by('-created').filter(user_id=request.user.id).count()
-    followers = Follow.objects.order_by('-created').filter(following_user_id=request.user.id)
-    followers_count = Follow.objects.order_by('-created').filter(following_user_id=request.user.id).count()
+    following = Follow.objects.order_by('created').filter(user_id=request.user.id)
+    following_count = Follow.objects.order_by('created').filter(user_id=request.user.id).count()
+    followers = Follow.objects.order_by('created').filter(following_user_id=request.user.id)
+    followers_count = Follow.objects.order_by('created').filter(following_user_id=request.user.id).count()
     context = {
         'reviews': user_reviews,
         'favourites': user_favourites,
@@ -83,6 +83,10 @@ def account(request):
     return render(request, 'accounts/account.html', context)
 
 def editDetails(request):
+    following = Follow.objects.order_by('created').filter(user_id=request.user.id)
+    following_count = Follow.objects.order_by('created').filter(user_id=request.user.id).count()
+    followers = Follow.objects.order_by('created').filter(following_user_id=request.user.id)
+    followers_count = Follow.objects.order_by('created').filter(following_user_id=request.user.id).count()
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
@@ -97,6 +101,36 @@ def editDetails(request):
 
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'following': following,
+        'followers': followers,
+        'following_count': following_count,
+        'followers_count': followers_count
     }
     return render(request, 'accounts/editDetails.html', context)
+
+def view_followers(request):
+    followers = Follow.objects.order_by('created').filter(following_user_id=request.user.id)
+    followers_count = Follow.objects.order_by('created').filter(following_user_id=request.user.id).count()
+    following = Follow.objects.order_by('created').filter(user_id=request.user.id)
+    following_count = Follow.objects.order_by('created').filter(user_id=request.user.id).count()
+    context = {
+        'following': following,
+        'followers': followers,
+        'following_count': following_count,
+        'followers_count': followers_count
+    }
+    return render(request, 'accounts/followers.html', context)
+
+def view_following(request):
+    followers = Follow.objects.order_by('created').filter(following_user_id=request.user.id)
+    followers_count = Follow.objects.order_by('created').filter(following_user_id=request.user.id).count()
+    following = Follow.objects.order_by('created').filter(user_id=request.user.id)
+    following_count = Follow.objects.order_by('created').filter(user_id=request.user.id).count()
+    context = {
+        'following': following,
+        'followers': followers,
+        'following_count': following_count,
+        'followers_count': followers_count
+    }
+    return render(request, 'accounts/following.html', context)
