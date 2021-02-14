@@ -1,14 +1,14 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
 {% load static %}
 {% load humanize %}
 {% block title %} | Account {% endblock %}
 
 {% block content %}
-<div id="account">
-  {% if viewusers %}
-    {% for viewuser in viewusers %}
-      <section id="showcase-inner" class="py-5 text-white" style="background: url('{{ viewuser.user.profile.header.url }}') no-repeat center center; background-size: 100vw;
+
+<div id="followers">
+  {% if selected_user %}
+    {% for u in selected_user %}
+      <section id="showcase-inner" class="py-5 text-white" style="background: url('{{ u.user.profile.header.url }}') no-repeat center center; background-size: 100vw;
       position: relative;
       overflow: hidden;
       min-height: 200px;">
@@ -19,62 +19,54 @@
             <div class="col-md-2">
               <img
                 class="profilePic"
-                src="{{ viewuser.user.profile.image.url }}"
+                src="{{ u.user.profile.image.url }}"
                 alt=""
               />
             </div>
             <div class="col-md-10 account-header">
               <div class="container">
                 <div style="display: inline-flex">
-                  <h4>{{viewuser.user.username}} &nbsp;<span>Member Since {{ viewuser.user.date_joined | date:"d F Y" }}</span></h4>
+                  <h4>{{u.user.username}} &nbsp;<span>Member Since {{ u.user.date_joined | date:"d F Y" }}</span></h4>
                 </div>
                 <p class="lead">
-                  {{ viewuser.user.profile.bio }}
+                  {{ u.user.profile.bio }}
                 </p>
-                <p><a href="{% url 'view_user_followers' viewuser.user.id %}" class="text-white followers-link">Followers: {{ followers_count }}</a> &nbsp;&nbsp;&nbsp; <a href="{% url 'view_user_following' viewuser.user.id %}" class="text-white followers-link">Following: {{ following_count }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Last active {{ viewuser.user.last_login | timesince }} ago</em></p>
-  
-                {% if does_follow %}
-                <div class="col-md-2">
-                  <form action="{% url 'unfollow' %}" method="POST">
-                    {% csrf_token %} {% if user.is_authenticated %}
-                    <input type="hidden" name="user_id" value="{{ user.id }}" />
-                    <input type="hidden" name="following_user_id" value="{{ viewuser.user.id }}"/>
-                    <input type="hidden" name="username" value="{{ user.username }}" />
-                    <input type="hidden" name="following_username" value="{{ viewuser.user.username }}" />
-                    <input type="hidden" name="picture" value="{{ user.profile.image.url }}" />
-                    <input type="hidden" name="following_picture" value="{{ viewuser.user.profile.image.url }}" />
-                
-                    <input
-                      type="submit"
-                      value="Unfollow"
-                      class="btn btn-block btn-outline-primary"
-                      style="margin-top: -7px;"
-                    />
-                    {% endif %}
-                  </form>
-                </div>
-                {% else %}
-                <div class="col-md-2">
-                  <form action="{% url 'follow' %}" method="POST">
-                    {% csrf_token %} {% if user.is_authenticated %}
-                    <input type="hidden" name="user_id" value="{{ user.id }}" />
-                    <input type="hidden" name="following_user_id" value="{{ viewuser.user.id }}"/>
-                    <input type="hidden" name="username" value="{{ user.username }}" />
-                    <input type="hidden" name="following_username" value="{{ viewuser.user.username }}" />
-                    <input type="hidden" name="picture" value="{{ user.profile.image.url }}" />
-                    <input type="hidden" name="following_picture" value="{{ viewuser.user.profile.image.url }}" />
-                
-                    <input
-                      type="submit"
-                      value="Follow"
-                      class="btn btn-block btn-outline-primary"
-                      style="margin-top: -7px;"
-                    />
-                    {% endif %}
-                  </form>
-                </div>
-                {% endif %}
+                <p><a href="{% url 'view_user_followers' u.user.id %}" class="text-white followers-link">Followers: {{ followers_count }}</a> &nbsp;&nbsp;&nbsp; <a href="{% url 'view_user_following' u.user.id %}" class="text-white followers-link">Following: {{ following_count }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Last active {{ u.user.last_login | timesince }} ago</em></p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="dashboard" class="py-4">
+        <div class="container">
+            <a href="{% url 'profile' u.user.id %}" class="btn btn-dark mb-4">Back To Profile</a>
+          <div class="row">
+            <div class="col-md-12">
+                {% if followers %}
+              <br>
+              <h3 class="text-center mb-3"> {{u.user.username}}'s Followers</h3>
+              <br>
+              <br>
+                    {% for follower in followers %}
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="{{ follower.picture }}" class="followersList" alt="">
+                        </div>
+                        <div class="col-md-8 follower-user">
+                            <h5>{{ follower.username }}</h5>
+                        </div>
+                        <div class="col-md-2 follower-btn">
+                            <a class="btn btn-outline-primary" href="{% url 'profile' follower.user_id %}">View Profile</a>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    {% endfor %}
+              {% else %}
+              <br>
+                <p><strong>{{u.user.username}} does not have any followers yet.</strong></p>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -83,40 +75,6 @@
   {% else %}
     <h1>No User Info to Show</h1>
   {% endif %}
-
-  <section id="dashboard" class="py-4">
-    <div class="container">
-        <a href="{% url 'profile' {{ viewuser.user.id }} %}" class="btn btn-dark mb-4">Back To Profile</a>
-      <div class="row">
-        <div class="col-md-12">
-            {% if followers %}
-          <br>
-          <h3 class="text-center mb-3">Your Followers</h3>
-          <br>
-          <br>
-                {% for follower in followers %}
-                <div class="row">
-                    <div class="col-md-2">
-                        <img src="{{ follower.picture }}" class="followersList" alt="">
-                    </div>
-                    <div class="col-md-8 follower-user">
-                        <h5>{{ follower.username }}</h5>
-                    </div>
-                    <div class="col-md-2 follower-btn">
-                        <a class="btn btn-outline-primary" href="{% url 'profile' follower.user_id %}">View Profile</a>
-                    </div>
-                </div>
-                <br>
-                <br>
-                {% endfor %}
-          {% else %}
-          <br>
-            <p><strong>You have not have any followers yet.</strong></p>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  </section>
 </div>
 
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>

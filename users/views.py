@@ -4,6 +4,9 @@ from .models import Profile
 from reviews.models import Review
 from favourites.models import Favourite
 from follows.models import Follow
+from http import cookies
+import os
+import requests
 
 # Create your views here.
 def profile(request, user_id):
@@ -28,28 +31,26 @@ def profile(request, user_id):
     return render(request, 'accounts/profile.html', context)
 
 def view_user_followers(request, user_id):
-    viewusers = Profile.objects.filter(user_id=user_id)
-    following_count = Follow.objects.order_by('-created').filter(user_id=viewusers.user_id).count()
-    followers = Follow.objects.order_by('-created').filter(following_user_id=viewusers.user_id)
-    followers_count = Follow.objects.order_by('-created').filter(following_user_id=viewusers.user_id).count()
+    selected_user = Profile.objects.filter(user_id=user_id)
+    following_count = Follow.objects.order_by('-created').filter(user_id=user_id).count()
+    followers = Follow.objects.order_by('-created').filter(following_user_id=user_id)
+    followers_count = Follow.objects.order_by('-created').filter(following_user_id=user_id).count()
     context = {
-        'viewusers': viewusers,
+        'selected_user': selected_user,
         'followers': followers,
         'following_count': following_count,
         'followers_count': followers_count
     }
-    return render(request, 'accounts/user_followers.html')
+    return render(request, 'accounts/user_followers.html', context)
 
 def view_user_following(request, user_id):
-    viewusers = Profile.objects.filter(user_id=user_id)
-    followers = Follow.objects.order_by('created').filter(following_user_id=user_id)
-    followers_count = Follow.objects.order_by('created').filter(following_user_id=user_id).count()
-    following = Follow.objects.order_by('created').filter(user_id=user_id)
-    following_count = Follow.objects.order_by('created').filter(user_id=user_id).count()
+    selected_user = Profile.objects.filter(user_id=user_id)
+    following_count = Follow.objects.order_by('-created').filter(user_id=user_id).count()
+    following = Follow.objects.order_by('-created').filter(user_id=user_id)
+    followers_count = Follow.objects.order_by('-created').filter(following_user_id=user_id).count()
     context = {
-        'viewusers': viewusers,
+        'selected_user': selected_user,
         'following': following,
-        'followers': followers,
         'following_count': following_count,
         'followers_count': followers_count
     }

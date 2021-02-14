@@ -31,7 +31,7 @@
                 <p class="lead">
                   {{ viewuser.user.profile.bio }}
                 </p>
-                <p><a href="{% url 'view_user_followers' viewuser.user.id %}" class="text-white followers-link">Followers: {{ followers_count }}</a> &nbsp;&nbsp;&nbsp; <a href="" class="text-white followers-link">Following: {{ following_count }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Last active {{ viewuser.user.last_login | timesince }} ago</em></p>
+                <p><a href="{% url 'view_user_followers' viewuser.user.id %}" onclick="setCookie()" class="text-white followers-link">Followers: {{ followers_count }}</a> &nbsp;&nbsp;&nbsp; <a href="{% url 'view_user_following' viewuser.user.id %}" class="text-white followers-link">Following: {{ following_count }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Last active {{ viewuser.user.last_login | timesince }} ago</em></p>
   
                 {% if does_follow %}
                 <div class="col-md-2">
@@ -174,7 +174,5 @@
 </div>
 
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-<script>
-</script>
 
 {% endblock %}
