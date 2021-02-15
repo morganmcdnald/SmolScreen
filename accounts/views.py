@@ -140,3 +140,10 @@ def view_following(request):
         'followers_count': followers_count
     }
     return render(request, 'accounts/following.html', context)
+
+def view_list(request, list_name):
+    chosen_list = List.objects.order_by('id').filter(owner_id=request.user.id, list_name=list_name)
+    context = {
+        'chosen_list': chosen_list
+    }
+    return render(request, 'accounts/view_list.html', context)

@@ -17,4 +17,4 @@ def list(request):
         userList.save()
 
         messages.success(request, 'Added to list successfully')
-        return redirect('account')
+        return redirect('result')

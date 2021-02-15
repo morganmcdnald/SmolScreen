@@ -41,13 +41,15 @@ body {
 #movies img,
 #movie img,
 #hot img,
-#hotTV img {
+#hotTV img,
+#view-list img {
   width: 100%;
 }
 
 #movies .col-md-3 .well,
 #hot .col-md-3 .well,
-#hotTV .col-md-3 .well {
+#hotTV .col-md-3 .well,
+#view-list .col-md-3 .well {
   min-height: 575px;
 }
 

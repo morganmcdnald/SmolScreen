@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} | Search Results {% endblock %}
+
+{% block content %}
+<!-- Search Results -->
+<section id="results">
+    <div class="container">
+        <div id="view-list" class="row">
+            <div class="row">
+                <div class="col-md-12">
+                    <br>
+                    <a href="/" class="btn btn-secondary">Back to Home</a>
+                </div>  
+            </div>
+
+            <br>
+            {% if chosen_list %}
+                <div class="col-md-12 text-center">
+                    <br>
+                    {% with chosen_list.all|first as i %}
+                        <h3>{{ i.list_name }} by {{ i.owner_username }}</h3>
+                    {% endwith %}
+                    <br>
+                </div>
+
+                {% for item in chosen_list %}
+                    <div class="col-md-3">
+                        <div class="well text-center search-img">
+                            <img src="https://image.tmdb.org/t/p/w342{{item.title_poster}}">
+                            <h5>{{ item.title_name }}</h5>
+                            <script type="text/javascript">
+                                function resetValues{{list.id}}() {
+                                  localStorage.setItem('movieId', "{{item.title_id}}");
+                                  localStorage.setItem('title', "{{item.title_name}}");
+                                  localStorage.setItem('type', "{{item.title_type}}");
+                                }
+                            </script>
+                            <a onclick="resetValues{{list.id}}();movieSelected('{{item.title_id}}', '{{item.title_type}}', '{{item.title_name}}', '{{item.title_poster}}');" class="btn btn-primary" href="{% url 'result' %}">Details</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h5 class="text-center">There are no items in this list.</h5>
+            {% endif %}
+
+        </div>
+    </div>
+</section>
+
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script type="text/javascript">
+   
+</script>
+{% endblock %}

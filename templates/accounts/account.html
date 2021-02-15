@@ -102,7 +102,7 @@
                         localStorage.setItem('type', "{{list.title_type}}");
                       }
                     </script>
-                    <a class="favouritesBtn" onclick="resetValues{{list.id}}();movieSelected('{{list.title_id}}', '{{list.title_type}}', '{{list.title_name}}', '{{list.title_poster}}');" href="{% url 'result' %}">{{ list.list_name }}</a>
+                    <a class="favouritesBtn" href="{% url 'view_list' list.list_name %}">{{ list.list_name }}</a>
                   </div>
                 </div>
               </div>

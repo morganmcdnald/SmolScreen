@@ -8,5 +8,6 @@ urlpatterns = [
     path('account', views.account, name='account'),
     path('editDetails', views.editDetails, name='editDetails'),
     path('view_followers', views.view_followers, name='view_followers'),
-    path('view_following', views.view_following, name='view_following')
+    path('view_following', views.view_following, name='view_following'),
+    path('<str:list_name>/view_list', views.view_list, name='view_list')
 ]
