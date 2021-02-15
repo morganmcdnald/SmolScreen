@@ -4,6 +4,7 @@ from .models import Profile
 from reviews.models import Review
 from favourites.models import Favourite
 from follows.models import Follow
+from actors.models import Actor
 from http import cookies
 import os
 import requests
@@ -13,6 +14,7 @@ def profile(request, user_id):
     viewusers = Profile.objects.filter(user_id=user_id)
     reviews = Review.objects.order_by('-review_date').filter(user_id=user_id)
     favourites = Favourite.objects.order_by('id').filter(user_id=user_id)
+    user_actors = Actor.objects.order_by('id').filter(user_id=user_id)
     does_follow = Follow.objects.filter(following_user_id=user_id, user_id=request.user.id).exists()
     following = Follow.objects.order_by('-created').filter(user_id=user_id)
     following_count = Follow.objects.order_by('-created').filter(user_id=user_id).count()
@@ -22,6 +24,7 @@ def profile(request, user_id):
         'viewusers': viewusers,
         'reviews': reviews,
         'favourites': favourites,
+        'actors': user_actors,
         'does_follow': does_follow,
         'following': following,
         'followers': followers,

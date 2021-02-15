@@ -63,7 +63,7 @@ function getMovies() {
                         <img src="https://image.tmdb.org/t/p/w185${movie.profile_path}">
                         <h5>${movie.name}</h5>
                         <h6>Actor</h6>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.title}', '${movie.profile_path}')" class="btn btn-primary" href="#">Profile</a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}', '${movie.profile_path}')" class="btn btn-primary" href="#">Profile</a>
                     </div>
                 </div>
             `;
@@ -75,7 +75,7 @@ function getMovies() {
                         <img src="https://i.imgur.com/5E6Su16.png">
                         <h5>${movie.name}</h5>
                         <h6>Actor</h6>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.title}', '${movie.profile_path}')" class="btn btn-primary" href="#">Profile</a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}', 'https://i.imgur.com/5E6Su16.png')" class="btn btn-primary" href="#">Profile</a>
                     </div>
                 </div>
             `;
@@ -195,7 +195,7 @@ function getMovie() {
                         <br>
                         <h4>${actor.name}</h4>
                         <h6>${actor.character}</h6>
-                        <a onclick="movieSelected('${actor.id}', 'person')" class="btn btn-primary" href="#">View Profile</a>
+                        <a onclick="movieSelected('${actor.id}', 'person', '${actor.name}', '${actor.profile_path}')" class="btn btn-primary" href="#">View Profile</a>
                         <br>
                         <br>
                     </div>
@@ -210,7 +210,7 @@ function getMovie() {
                         <br>
                         <h4>${actor.name}</h4>
                         <h6>${actor.character}</h6>
-                        <a onclick="movieSelected('${actor.id}', 'person')" class="btn btn-primary" href="#">View Profile</a>
+                        <a onclick="movieSelected('${actor.id}', 'person', '${actor.name}', 'https://i.imgur.com/5E6Su16.png')" class="btn btn-primary" href="#">View Profile</a>
                         <br>
                         <br>
                     </div>
@@ -310,7 +310,7 @@ function getMovie() {
                         <br>
                         <h4>${actor.name}</h4>
                         <h6>${actor.character}</h6>
-                        <a onclick="movieSelected('${actor.id}', 'person')" class="btn btn-primary" href="#">View Profile</a>
+                        <a onclick="movieSelected('${actor.id}', 'person', '${actor.name}', '${actor.profile_path}')" class="btn btn-primary" href="#">View Profile</a>
                         <br>
                         <br>
                     </div>
@@ -325,7 +325,7 @@ function getMovie() {
                         <br>
                         <h4>${actor.name}</h4>
                         <h6>${actor.character}</h6>
-                        <a onclick="movieSelected('${actor.id}', 'person')" class="btn btn-primary" href="#">View Profile</a>
+                        <a onclick="movieSelected('${actor.id}', 'person', '${actor.name}', 'https://i.imgur.com/5E6Su16.png')" class="btn btn-primary" href="#">View Profile</a>
                         <br>
                         <br>
                     </div>

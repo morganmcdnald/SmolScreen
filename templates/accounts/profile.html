@@ -167,6 +167,37 @@
             <p><strong>{{ viewuser.user.username }} has not reviewed any titles yet.</strong></p>
             {% endfor %}
           {% endif %}
+
+          {% if actors %}
+            <!-- Reviews -->
+            {% for viewuser in viewusers %}
+            <h3 class="text-center mb-3">{{ viewuser.user.username }}'s Favourite Actors</h3>
+            {% endfor %}
+            <div class="actors-slider">
+              {% for actor in actors %}
+              <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card listing-preview">
+                    <img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ actor.actor_picture }}" alt="" />
+                  <div class="card-body-fav text-center">
+                    <script type="text/javascript">
+                      function resetValues{{actor.actor_id}}() {
+                        localStorage.setItem('movieId', "{{actor.actor_id}}");
+                        localStorage.setItem('title', "{{actor.actor_name}}");
+                        localStorage.setItem('type', "person");
+                      }
+                    </script>
+                    <a class="favouritesBtn" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}">{{ actor.actor_name }}</a>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          {% else %}  
+            <br>
+            {% for viewuser in viewusers %}
+            <p><strong>{{ viewuser.user.username }} has not liked any actors yet.</strong></p>
+            {% endfor %}
+          {% endif %}
         </div>
       </div>
     </div>
