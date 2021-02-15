@@ -29,8 +29,6 @@
                 {% for item in chosen_list %}
                     <div class="col-md-3">
                         <div class="well text-center search-img">
-                            <img src="https://image.tmdb.org/t/p/w342{{item.title_poster}}">
-                            <h5>{{ item.title_name }}</h5>
                             <script type="text/javascript">
                                 function resetValues{{list.id}}() {
                                   localStorage.setItem('movieId', "{{item.title_id}}");
@@ -38,7 +36,9 @@
                                   localStorage.setItem('type', "{{item.title_type}}");
                                 }
                             </script>
-                            <a onclick="resetValues{{list.id}}();movieSelected('{{item.title_id}}', '{{item.title_type}}', '{{item.title_name}}', '{{item.title_poster}}');" class="btn btn-primary" href="{% url 'result' %}">Details</a>
+                            <a onclick="resetValues{{list.id}}();movieSelected('{{item.title_id}}', '{{item.title_type}}', '{{item.title_name}}', '{{item.title_poster}}');" href="{% url 'result' %}"><img src="https://image.tmdb.org/t/p/w342{{item.title_poster}}"></a>
+                            <br>
+                            <a onclick="resetValues{{list.id}}();movieSelected('{{item.title_id}}', '{{item.title_type}}', '{{item.title_name}}', '{{item.title_poster}}');" class="favouritesBtn text-white" href="{% url 'result' %}">{{ item.title_name }}</a>
                         </div>
                     </div>
                 {% endfor %}

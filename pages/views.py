@@ -10,7 +10,13 @@ from reviews.choices import rating_choices
 
 # Create your views here.
 def index(request):
-    return render(request, 'pages/index.html')
+    lists = List.objects.distinct('list_name')[:8]
+    reviews = Review.objects.distinct('media_title')[:8]
+    context = {
+        'lists': lists,
+        'reviews': reviews
+    }
+    return render(request, 'pages/index.html', context)
 
 def result(request):
     cookie = request.COOKIES['movieId']

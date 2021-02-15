@@ -38,6 +38,72 @@
         <br>
         <div id="hotTV" class="hotTV-slider"></div>
     </div>
+
+    <br>
+    <br>
+
+    <div class="container text-center">
+        <h4>Recently Reviewed</h4>
+        <br>
+        {% if reviews %}
+            <!-- Reviews -->
+            <div class="recentReviews-slider">
+              {% for review in reviews %}
+              <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card listing-preview">
+                  <script type="text/javascript">
+                    function resetValues{{review.media_id}}() {
+                      localStorage.setItem('movieId', "{{review.media_id}}");
+                      localStorage.setItem('title', "{{review.media_title}}");
+                      localStorage.setItem('type', "{{review.media_type}}");
+                    }
+                  </script>
+                  <a class="favouritesBtn" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ review.media_poster }}" alt="" /></a>
+                  <div class="card-body-fav text-center">
+                    <a class="favouritesBtn text-white" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}">{{ review.media_title }}</a>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          {% else %}  
+            <br>
+            <p class="text-center"><strong>There are no recently reviewed titles.</strong></p>
+          {% endif %}
+    </div>
+
+    <br>
+    <br>
+
+    <div class="container text-center">
+        <h4>Recent Lists</h4>
+        <br>
+        {% if lists %}
+            <!-- Reviews -->
+            <div class="recentLists-slider">
+              {% for list in lists %}
+              <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card listing-preview">
+                  <script type="text/javascript">
+                    function resetValues{{list.id}}() {
+                        localStorage.setItem('movieId', "{{list.title_id}}");
+                        localStorage.setItem('title', "{{list.title_name}}");
+                        localStorage.setItem('type', "{{list.title_type}}");
+                    }
+                  </script>
+                  <a class="favouritesBtn" href="{% url 'view_list' list.list_name %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ list.title_poster }}" alt="" /></a>
+                  <div class="card-body-fav text-center">
+                    <a class="favouritesBtn text-white" href="{% url 'view_list' list.list_name %}">{{ list.list_name }}</a>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          {% else %}  
+            <br>
+            <p class="text-center"><strong>There are no recently reviewed titles.</strong></p>
+          {% endif %}
+    </div>
 </section>
 
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>

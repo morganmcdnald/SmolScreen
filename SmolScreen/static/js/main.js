@@ -32,30 +32,42 @@ function getMovies() {
         `;
         $.each(movies, (index, movie) => {
             if ((movie.media_type == 'tv') && (movie.poster_path != null)) {
+                let movieName = movie.name;
+                console.log(movieName);
+                let newMovieName = movieName.replace(/[']+/g, '');
+                console.log(newMovieName);
                 output += `
                 <div class="col-md-3">
                     <div class="well text-center search-img">
                         <img src="https://image.tmdb.org/t/p/w342${movie.poster_path}">
                         <h5>${movie.name}</h5>
                         <h6>TV Show</h6>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}', '${movie.poster_path}')" class="btn btn-primary" href="#">Details</a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', '${movie.poster_path}')" class="btn btn-primary" href="#">Details</a>
                     </div>
                 </div>
             `;
             }
             else if ((movie.media_type == 'movie') && (movie.poster_path != null)) {
+                let movieName = movie.title;
+                console.log(movieName);
+                let newMovieName = movieName.replace(/[']+/g, '');
+                console.log(newMovieName);
                 output += `
                 <div class="col-md-3">
                     <div class="well text-center search-img">
                         <img src="https://image.tmdb.org/t/p/w185${movie.poster_path}">
                         <h5>${movie.title}</h5>
                         <h6>Movie</h6>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.title}', '${movie.poster_path}')" class="btn btn-primary" href="#">Details</a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', '${movie.poster_path}')" class="btn btn-primary" href="#">Details</a>
                     </div>
                 </div>
             `;
             }
             else if ((movie.media_type == 'person') && (movie.known_for_department == 'Acting')) {
+                let movieName = movie.name;
+                console.log(movieName);
+                let newMovieName = movieName.replace(/[']+/g, '');
+                console.log(newMovieName);
                 if (movie.profile_path != null) {
                     output += `
                 <div class="col-md-3">
@@ -63,19 +75,23 @@ function getMovies() {
                         <img src="https://image.tmdb.org/t/p/w185${movie.profile_path}">
                         <h5>${movie.name}</h5>
                         <h6>Actor</h6>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}', '${movie.profile_path}')" class="btn btn-primary" href="#">Profile</a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', '${movie.profile_path}')" class="btn btn-primary" href="#">Profile</a>
                     </div>
                 </div>
             `;
                 }
                 else {
+                    let movieName = movie.name;
+                    console.log(movieName);
+                    let newMovieName = movieName.replace(/[']+/g, '');
+                    console.log(newMovieName);
                     output += `
                 <div class="col-md-3">
                     <div class="well text-center search-img">
                         <img src="https://i.imgur.com/5E6Su16.png">
                         <h5>${movie.name}</h5>
                         <h6>Actor</h6>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}', 'https://i.imgur.com/5E6Su16.png')" class="btn btn-primary" href="#">Profile</a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', 'https://i.imgur.com/5E6Su16.png')" class="btn btn-primary" href="#">Profile</a>
                     </div>
                 </div>
             `;

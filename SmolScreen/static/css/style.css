@@ -178,3 +178,8 @@ body {
 .favouritesBtn:hover {
   text-decoration: none;
 }
+
+.reviewTitleAcc {
+  font-size: .95rem !important;
+  color: rgb(163, 163, 163);
+}
