@@ -12,7 +12,7 @@ def list(request):
         title_name = request.POST['title_name']
         title_type = request.POST['title_type']
         title_poster = request.POST['title_poster']
-
+        
         userList = List(list_name=list_name, owner_id=owner_id, owner_username=owner_username, title_id=title_id, title_name=title_name, title_type=title_type, title_poster=title_poster)
         userList.save()
 

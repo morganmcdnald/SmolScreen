@@ -56,9 +56,9 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
+          <h3 class="text-center mb-3">Your Favourites</h3>
           {% if favourites %}
             <!-- Favourites -->
-            <h3 class="text-center mb-3">Your Favourites</h3>
             <div class="favourites-slider">
               {% for favourite in favourites %}
               <div class="col-md-6 col-lg-4 mb-4">
@@ -80,15 +80,45 @@
             </div>
           {% else %}
             <br>
-            <p><strong>You have not favourited any titles yet.</strong></p>
+            <p class="text-center"><strong>You have not favourited any titles yet.</strong></p>
+          {% endif %}
+
+          <br>
+          <br>
+        
+          <h3 class="text-center mb-3">Your Lists</h3>
+          {% if lists %}
+            <!-- Lists -->
+            <div class="lists-slider">
+              {% for list in lists %}
+              <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card listing-preview">
+                    <img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ list.title_poster }}" alt="" />
+                  <div class="card-body-fav text-center">
+                    <script type="text/javascript">
+                      function resetValues{{list.id}}() {
+                        localStorage.setItem('movieId', "{{list.title_id}}");
+                        localStorage.setItem('title', "{{list.title_name}}");
+                        localStorage.setItem('type', "{{list.title_type}}");
+                      }
+                    </script>
+                    <a class="favouritesBtn" onclick="resetValues{{list.id}}();movieSelected('{{list.title_id}}', '{{list.title_type}}', '{{list.title_name}}', '{{list.title_poster}}');" href="{% url 'result' %}">{{ list.list_name }}</a>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          {% else %}  
+            <br>
+            <p class="text-center"><strong>You have not created any lists yet.</strong></p>
           {% endif %}
 
           <br>
           <br>
 
+          <h3 class="text-center mb-3">Your Reviews</h3>
           {% if reviews %}
             <!-- Reviews -->
-            <h3 class="text-center mb-3">Your Reviews</h3>
             <div class="reviews-slider">
               {% for review in reviews %}
               <div class="col-md-6 col-lg-4 mb-4">
@@ -111,12 +141,15 @@
             </div>
           {% else %}
             <br>
-            <p><strong>You have not reviewed any titles yet.</strong></p>
+            <p class="text-center"><strong>You have not reviewed any titles yet.</strong></p>
+            <br>
           {% endif %}
 
+          <br>
+
+          <h3 class="text-center mb-3">Your Favourite Actors</h3>
           {% if actors %}
-            <!-- Reviews -->
-            <h3 class="text-center mb-3">Your Favourite Actors</h3>
+            <!-- Actors -->
             <div class="actors-slider">
               {% for actor in actors %}
               <div class="col-md-6 col-lg-4 mb-4">
@@ -138,7 +171,7 @@
             </div>
           {% else %}  
             <br>
-            <p><strong>You have not liked any actors yet.</strong></p>
+            <p class="text-center"><strong>You have not liked any actors yet.</strong></p>
           {% endif %}
         </div>
       </div>

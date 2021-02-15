@@ -6,6 +6,7 @@ from reviews.models import Review
 from favourites.models import Favourite
 from follows.models import Follow
 from actors.models import Actor
+from lists.models import List
 
 # Create your views here.
 def register(request):
@@ -70,6 +71,7 @@ def account(request):
     user_reviews = Review.objects.order_by('-review_date').filter(user_id=request.user.id)
     user_favourites = Favourite.objects.order_by('id').filter(user_id=request.user.id)
     user_actors = Actor.objects.order_by('id').filter(user_id=request.user.id)
+    lists = List.objects.filter(owner_id=request.user.id).distinct('list_name')
     following = Follow.objects.order_by('created').filter(user_id=request.user.id)
     following_count = Follow.objects.order_by('created').filter(user_id=request.user.id).count()
     followers = Follow.objects.order_by('created').filter(following_user_id=request.user.id)
@@ -78,6 +80,7 @@ def account(request):
         'reviews': user_reviews,
         'favourites': user_favourites,
         'actors': user_actors,
+        'lists': lists,
         'following': following,
         'followers': followers,
         'following_count': following_count,

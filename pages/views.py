@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from reviews.models import Review
 from favourites.models import Favourite
+from lists.models import List
 from actors.models import Actor
 from http import cookies
 import os
@@ -16,11 +17,13 @@ def result(request):
     reviews = Review.objects.order_by('-review_date').filter(media_id=cookie)[:3]
     is_liked = Favourite.objects.filter(media_id=cookie, user_id=request.user.id).exists()
     actor_is_liked = Actor.objects.filter(user_id=request.user.id, actor_id=cookie).exists()
+    lists = List.objects.filter(owner_id=request.user.id).distinct('list_name')
     context = {
         'reviews': reviews,
         'rating_choices': rating_choices,
         'is_liked': is_liked,
-        'actor_is_liked': actor_is_liked
+        'actor_is_liked': actor_is_liked,
+        'lists': lists
     }
     return render(request, 'pages/result.html', context)
 

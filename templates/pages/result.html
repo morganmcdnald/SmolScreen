@@ -8,6 +8,70 @@
   <!-- Alerts -->
   {% include 'partials/_alerts.html' %}
   <div id="movie" class="well"></div>
+
+  <div id="listModal">
+    <div class="col-md-12">
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#exampleModalCenter">
+        Add To List
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {% if lists %}
+                <h5>Select Exisiting List:</h5>
+                {% for list in lists %}
+                <form action="{% url 'list' %}" method="POST" >
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <input type="hidden" name="list_name" value="{{ list.list_name }}" />
+                    <input type="hidden" name="owner_id" value="{{ user.id }}" />
+                    <input type="hidden" name="owner_username" value="{{ user.username }}" />
+                    <input type="hidden" name="title_id" id="title_id" />
+                    <input type="hidden" name="title_name" id="title_name" />
+                    <input type="hidden" name="title_type" id="title_type" />
+                    <input type="hidden" name="title_poster" id="title_poster" />
+                  </div>
+                  <input type="submit" value="{{ list.list_name }}" class="favouritesBtn">
+                </form>
+                {% endfor %}
+                <br>
+                <h5>Or Create a New List:</h5>
+              {% else %}
+                <h5>Create a New List:</h5>
+              {% endif %}
+              <form action="{% url 'list' %}" method="POST" >
+                {% csrf_token %}
+                <div class="form-group">
+                <label for="list_name">Name:</label>
+                <input type="text" name="list_name" class="form-control" required autocomplete="off">
+
+                <input type="hidden" name="owner_id" value="{{ user.id }}" />
+                <input type="hidden" name="owner_username" value="{{ user.username }}" />
+                <input type="hidden" name="title_id" id="title_id_new" />
+                <input type="hidden" name="title_name" id="title_name_new" />
+                <input type="hidden" name="title_type" id="title_type_new" />
+                <input type="hidden" name="title_poster" id="title_poster_new" />
+                </div>
+                <input type="submit" value="Create and Add" class="btn btn-primary btn-block">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
   <div class="col-md-2" id="likeBtn">
     {% if is_liked %}
     <form action="{% url 'unlike' %}" method="POST">
@@ -187,6 +251,15 @@
   document.getElementById("actor_id").value = titleId;
   document.getElementById("actor_name").value = title;
   document.getElementById("actor_picture").value = titlePoster;
+  document.getElementById("exampleModalLongTitle").innerHTML = 'Add ' + title + ' to List';
+  document.getElementById("title_id").value = titleId;
+  document.getElementById("title_name").value = title;
+  document.getElementById("title_type").value = movieType;
+  document.getElementById("title_poster").value = titlePoster;
+  document.getElementById("title_id_new").value = titleId;
+  document.getElementById("title_name_new").value = title;
+  document.getElementById("title_type_new").value = movieType;
+  document.getElementById("title_poster_new").value = titlePoster;
   if (movieType == 'person') {
     document.getElementById('reviews').innerHTML = "";
     document.getElementById('likeBtn').innerHTML = "";
