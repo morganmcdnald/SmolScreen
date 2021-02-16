@@ -12,9 +12,11 @@
   <div id="listModal">
     <div class="col-md-12">
       <!-- Button trigger modal -->
+      {% csrf_token %} {% if user.is_authenticated %}
       <button type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#exampleModalCenter">
         Add To List
       </button>
+      {% endif %}
 
       <!-- Modal -->
       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -31,7 +33,7 @@
                 <h5>Select Exisiting List:</h5>
                 {% for list in lists %}
                 <form action="{% url 'list' %}" method="POST" >
-                  {% csrf_token %}
+                  {% csrf_token %} {% if user.is_authenticated %}
                   <div class="form-group">
                     <input type="hidden" name="list_name" value="{{ list.list_name }}" />
                     <input type="hidden" name="owner_id" value="{{ user.id }}" />
@@ -42,6 +44,7 @@
                     <input type="hidden" name="title_poster" id="title_poster" />
                   </div>
                   <input type="submit" value="{{ list.list_name }}" class="favouritesBtn">
+                  {% endif %}
                 </form>
                 {% endfor %}
                 <br>
@@ -50,7 +53,7 @@
                 <h5>Create a New List:</h5>
               {% endif %}
               <form action="{% url 'list' %}" method="POST" >
-                {% csrf_token %}
+                {% csrf_token %} {% if user.is_authenticated %}
                 <div class="form-group">
                 <label for="list_name">Name:</label>
                 <input type="text" name="list_name" class="form-control" required autocomplete="off">
@@ -63,6 +66,7 @@
                 <input type="hidden" name="title_poster" id="title_poster_new" />
                 </div>
                 <input type="submit" value="Create and Add" class="btn btn-primary btn-block">
+                {% endif %}
               </form>
             </div>
           </div>
@@ -116,6 +120,7 @@
     {% if actor_is_liked %}
     <form action="{% url 'unlike_actor' %}" method="POST">
       {% csrf_token %} {% if user.is_authenticated %}
+      
       <input type="hidden" name="user_id" value="{{ user.id }}" />
       <input type="hidden" name="actor_id" id="actor_id"/>
       <input type="hidden" name="actor_name" id="actor_name" />
@@ -236,10 +241,10 @@
 </section>
 
 <script type="text/javascript">
-  let movieType = localStorage.getItem('type');
-  let title = localStorage.getItem('title');
-  let titleId = localStorage.getItem('movieId');
-  let titlePoster = localStorage.getItem('poster');
+  var movieType = localStorage.getItem('type');
+  var title = localStorage.getItem('title');
+  var titleId = localStorage.getItem('movieId');
+  var titlePoster = localStorage.getItem('poster');
   document.getElementById("media_id").value = titleId;
   document.getElementById("media_title").value = title;
   document.getElementById("media_type").value = movieType;
@@ -260,11 +265,13 @@
   document.getElementById("title_name_new").value = title;
   document.getElementById("title_type_new").value = movieType;
   document.getElementById("title_poster_new").value = titlePoster;
+  console.log(movieType);
   if (movieType == 'person') {
     document.getElementById('reviews').innerHTML = "";
     document.getElementById('likeBtn').innerHTML = "";
+    document.getElementById('listModal').innerHTML = "";
   }
-  if (movieType != 'person') {
+  if ((movieType == 'movie') || (movieType == 'tv')) {
     document.getElementById('ActorLikeBtn').innerHTML = "";
   }
 </script>

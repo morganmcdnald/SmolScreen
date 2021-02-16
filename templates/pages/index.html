@@ -94,6 +94,7 @@
                   <a class="favouritesBtn" href="{% url 'view_list' list.list_name %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ list.title_poster }}" alt="" /></a>
                   <div class="card-body-fav text-center">
                     <a class="favouritesBtn text-white" href="{% url 'view_list' list.list_name %}">{{ list.list_name }}</a>
+                    <p class="reviewTitleAcc">{{ list.owner_username }}</p>
                   </div>
                 </div>
               </div>
