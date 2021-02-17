@@ -10,7 +10,7 @@ from reviews.choices import rating_choices
 
 # Create your views here.
 def index(request):
-    lists = List.objects.distinct('list_name')[:8]
+    lists = List.objects.distinct('list_name').exclude(title_name='')[:8]
     reviews = Review.objects.distinct('media_title')[:8]
     context = {
         'lists': lists,

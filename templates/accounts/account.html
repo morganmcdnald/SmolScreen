@@ -149,26 +149,46 @@
 
           <h3 class="text-center mb-3">Your Favourite Actors</h3>
           {% if actors %}
-            <!-- Actors -->
-            <div class="actors-slider">
-              {% for actor in actors %}
-              <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card listing-preview">
-                  <script type="text/javascript">
-                    function resetValues{{actor.actor_id}}() {
-                      localStorage.setItem('movieId', "{{actor.actor_id}}");
-                      localStorage.setItem('title', "{{actor.actor_name}}");
-                      localStorage.setItem('type', "person");
-                    }
-                  </script>
-                  <a class="favouritesBtn" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ actor.actor_picture }}" alt="" /></a>
-                  <div class="card-body-fav text-center">
-                    <a class="favouritesBtn text-white" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}">{{ actor.actor_name }}</a>
+            {% if actors_count < 3 %}
+              <div class="row">
+                {% for actor in actors %}
+                  <div class="col-md-3">
+                    <script type="text/javascript">
+                      function resetValues{{actor.actor_id}}() {
+                        localStorage.setItem('movieId', "{{actor.actor_id}}");
+                        localStorage.setItem('title', "{{actor.actor_name}}");
+                        localStorage.setItem('type', "person");
+                      }
+                    </script>
+                    <div class="well text-center account-img">
+                      <a class="favouritesBtn" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}"><img src="https://image.tmdb.org/t/p/w342{{ actor.actor_picture }}"></a>
+                        <a class="favouritesBtn text-white" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}">{{ actor.actor_name }}</a>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <!-- Actors -->
+              <div class="actors-slider">
+                {% for actor in actors %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="card listing-preview">
+                    <script type="text/javascript">
+                      function resetValues{{actor.actor_id}}() {
+                        localStorage.setItem('movieId', "{{actor.actor_id}}");
+                        localStorage.setItem('title', "{{actor.actor_name}}");
+                        localStorage.setItem('type', "person");
+                      }
+                    </script>
+                    <a class="favouritesBtn" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ actor.actor_picture }}" alt="" /></a>
+                    <div class="card-body-fav text-center">
+                      <a class="favouritesBtn text-white" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}">{{ actor.actor_name }}</a>
+                    </div>
                   </div>
                 </div>
+                {% endfor %}
               </div>
-              {% endfor %}
-            </div>
+            {% endif %}
           {% else %}  
             <br>
             <p class="text-center"><strong>You have not liked any actors yet.</strong></p>

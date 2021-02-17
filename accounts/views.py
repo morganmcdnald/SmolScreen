@@ -71,6 +71,7 @@ def account(request):
     user_reviews = Review.objects.order_by('-review_date').filter(user_id=request.user.id)
     user_favourites = Favourite.objects.order_by('id').filter(user_id=request.user.id)
     user_actors = Actor.objects.order_by('id').filter(user_id=request.user.id)
+    actors_count = Actor.objects.order_by('id').filter(user_id=request.user.id).count()
     lists = List.objects.filter(owner_id=request.user.id).distinct('list_name')
     following = Follow.objects.order_by('created').filter(user_id=request.user.id)
     following_count = Follow.objects.order_by('created').filter(user_id=request.user.id).count()
@@ -80,6 +81,7 @@ def account(request):
         'reviews': user_reviews,
         'favourites': user_favourites,
         'actors': user_actors,
+        'actors_count': actors_count,
         'lists': lists,
         'following': following,
         'followers': followers,
