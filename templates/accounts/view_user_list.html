@@ -21,7 +21,11 @@
                 <div class="col-md-12 text-center">
                     <br>
                     {% with chosen_list.all|first as i %}
-                        <h3>{{ i.list_name }} by {{ i.owner_username }}</h3>
+                        {% if i.owner_id == user.id %}
+                        <h3>{{ i.list_name }} by <a href="{% url 'account' %}">{{ i.owner_username }}</a></h3>
+                        {% else %}
+                        <h3>{{ i.list_name }} by <a href="{% url 'profile' i.owner_id %}">{{ i.owner_username }}</a></h3>
+                        {% endif %}
                     {% endwith %}
                     <br>
                 </div>

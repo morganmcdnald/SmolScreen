@@ -525,7 +525,7 @@ function getHot() {
                 output += `
                 <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card listing-preview">
-                    <img class="card-img-top" src="https://image.tmdb.org/t/p/w342${movie.poster_path}" />
+                <a class="favouritesBtn" onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.title}', '${movie.poster_path}')"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342${movie.poster_path}" /></a>
                   <div class="card-body-fav text-center">
                     <a class="favouritesBtn" onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.title}', '${movie.poster_path}')">${movie.title}</a>
                   </div>
@@ -554,7 +554,7 @@ function getHotTV() {
                 output += `
                 <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card listing-preview">
-                    <img class="card-img-top" src="https://image.tmdb.org/t/p/w342${movie.poster_path}" />
+                <a class="favouritesBtn" onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}', '${movie.poster_path}')"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342${movie.poster_path}" /></a>
                   <div class="card-body-fav text-center">
                     <a class="favouritesBtn" onclick="movieSelected('${movie.id}', '${movie.media_type}', '${movie.name}', '${movie.poster_path}')">${movie.name}</a>
                   </div>
