@@ -69,20 +69,26 @@ def logout(request):
 
 def account(request):
     user_reviews = Review.objects.order_by('-review_date').filter(user_id=request.user.id)
+    reviews_count = Review.objects.order_by('-review_date').filter(user_id=request.user.id).count()
     user_favourites = Favourite.objects.order_by('id').filter(user_id=request.user.id)
+    favourites_count = Favourite.objects.order_by('id').filter(user_id=request.user.id).count()
     user_actors = Actor.objects.order_by('id').filter(user_id=request.user.id)
     actors_count = Actor.objects.order_by('id').filter(user_id=request.user.id).count()
-    lists = List.objects.filter(owner_id=request.user.id).distinct('list_name')
+    lists = List.objects.filter(owner_id=request.user.id).distinct('list_name').exclude(title_name='')
+    lists_count = List.objects.filter(owner_id=request.user.id).distinct('list_name').count()
     following = Follow.objects.order_by('created').filter(user_id=request.user.id)
     following_count = Follow.objects.order_by('created').filter(user_id=request.user.id).count()
     followers = Follow.objects.order_by('created').filter(following_user_id=request.user.id)
     followers_count = Follow.objects.order_by('created').filter(following_user_id=request.user.id).count()
     context = {
         'reviews': user_reviews,
+        'reviews_count': reviews_count,
         'favourites': user_favourites,
+        'favourites_count': favourites_count,
         'actors': user_actors,
         'actors_count': actors_count,
         'lists': lists,
+        'lists_count': lists_count,
         'following': following,
         'followers': followers,
         'following_count': following_count,
