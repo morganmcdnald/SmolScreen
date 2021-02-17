@@ -21,3 +21,17 @@ def review(request):
 
         messages.success(request, 'Your review was added successfully')
         return redirect('result')
+
+def delete_review(request):
+    if request.method == 'POST':
+        media_id = request.POST['media_id']
+        review_title = request.POST['review_title']
+        review_content = request.POST['review_content']
+        rating = request.POST['rating']
+        user_id = request.POST['user_id']
+        
+        item = Review.objects.get(media_id=media_id, review_title=review_title, review_content=review_content, rating=rating, user_id=user_id)
+        if request.user.id == item.user_id:
+            Review.objects.filter(media_id=media_id, review_title=review_title, review_content=review_content, rating=rating).delete()
+            messages.success(request, 'Your review was deleted successfully.')
+            return redirect('result')

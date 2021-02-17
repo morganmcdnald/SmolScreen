@@ -20,7 +20,7 @@ def index(request):
 
 def result(request):
     cookie = request.COOKIES['movieId']
-    reviews = Review.objects.order_by('-review_date').filter(media_id=cookie)[:3]
+    reviews = Review.objects.order_by('-review_date').filter(media_id=cookie)
     is_liked = Favourite.objects.filter(media_id=cookie, user_id=request.user.id).exists()
     actor_is_liked = Actor.objects.filter(user_id=request.user.id, actor_id=cookie).exists()
     lists = List.objects.filter(owner_id=request.user.id).distinct('list_name')
