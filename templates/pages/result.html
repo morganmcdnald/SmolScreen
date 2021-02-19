@@ -34,16 +34,24 @@
                 {% for list in lists %}
                 <form action="{% url 'list' %}" method="POST" >
                   {% csrf_token %} {% if user.is_authenticated %}
+                  <script type="text/javascript">
+                    function setValues{{list.id}}() {
+                      document.getElementById("title_id{{list.id}}").value = titleId;
+                      document.getElementById("title_name{{list.id}}").value = title;
+                      document.getElementById("title_type{{list.id}}").value = movieType;
+                      document.getElementById("title_poster{{list.id}}").value = titlePoster;
+                    }
+                  </script>
                   <div class="form-group">
                     <input type="hidden" name="list_name" value="{{ list.list_name }}" />
                     <input type="hidden" name="owner_id" value="{{ user.id }}" />
                     <input type="hidden" name="owner_username" value="{{ user.username }}" />
-                    <input type="hidden" name="title_id" id="title_id" />
-                    <input type="hidden" name="title_name" id="title_name" />
-                    <input type="hidden" name="title_type" id="title_type" />
-                    <input type="hidden" name="title_poster" id="title_poster" />
+                    <input type="hidden" name="title_id" id="title_id{{list.id}}" />
+                    <input type="hidden" name="title_name" id="title_name{{list.id}}" />
+                    <input type="hidden" name="title_type" id="title_type{{list.id}}" />
+                    <input type="hidden" name="title_poster" id="title_poster{{list.id}}" />
                   </div>
-                  <input type="submit" value="{{ list.list_name }}" class="favouritesBtn">
+                  <input onclick="setValues{{list.id}}()" type="submit" value="{{ list.list_name }}" class="favouritesBtn">
                   {% endif %}
                 </form>
                 {% endfor %}
@@ -263,6 +271,8 @@
   var title = localStorage.getItem('title');
   var titleId = localStorage.getItem('movieId');
   var titlePoster = localStorage.getItem('poster');
+  console.log(titleId);
+  console.log(title);
   document.getElementById("media_id").value = titleId;
   document.getElementById("media_title").value = title;
   document.getElementById("media_type").value = movieType;
@@ -283,7 +293,6 @@
   document.getElementById("title_name_new").value = title;
   document.getElementById("title_type_new").value = movieType;
   document.getElementById("title_poster_new").value = titlePoster;
-  console.log(movieType);
   if (movieType == 'person') {
     document.getElementById('reviews').innerHTML = "";
     document.getElementById('likeBtn').innerHTML = "";
