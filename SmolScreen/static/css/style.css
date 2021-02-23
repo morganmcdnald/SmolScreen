@@ -42,15 +42,20 @@ body {
 #movie img,
 #hot img,
 #hotTV img,
-#view-list img {
+#view-list img,
+#cast img {
   width: 100%;
 }
 
 #movies .col-md-3 .well,
 #hot .col-md-3 .well,
 #hotTV .col-md-3 .well,
-#view-list .col-md-3 .well {
+#view-list .col-md-3 .well,
+#cast .col-md-3 .well {
   min-height: 575px;
+}
+.cast {
+  cursor: pointer;
 }
 
 .account-img img {
@@ -187,4 +192,18 @@ body {
 .reviewTitleAcc {
   font-size: .95rem !important;
   color: rgb(163, 163, 163);
+}
+
+.resultBtns {
+  display: flex;
+  flex-direction: row;
+  width: 110%;
+}
+
+.headerBtns {
+  padding-top: 2rem;
+}
+
+.result-page {
+  padding-top: 3rem;
 }

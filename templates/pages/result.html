@@ -4,20 +4,116 @@
 {% block content %}
 <!-- Showcase -->
 
-<div class="container">
+<div class="container result-page">
   <!-- Alerts -->
   {% include 'partials/_alerts.html' %}
+
+  <div class="container">
+    <div class="headerBtns row ml-1">
+      <div class="header-left" id="left"></div>
+      <div class="ml-auto mr-3">
+        
+        <div class="resultBtns">
+          <!-- Button trigger modal -->
+          {% csrf_token %} {% if user.is_authenticated %}
+          <button type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#exampleModalCenter">
+            Add To List
+          </button>
+          {% endif %}
+
+          &nbsp;&nbsp;&nbsp;&nbsp;  
+
+          <!-- Add to Likes Button-->
+          <div class="likeBtn" id="likeBtn">
+            {% if is_liked %}
+            <form action="{% url 'unlike' %}" method="POST">
+              {% csrf_token %} {% if user.is_authenticated %}
+              <input type="hidden" name="user_id" value="{{ user.id }}" />
+              <input type="hidden" name="media_id" id="media_id"/>
+              <input type="hidden" name="media_title" id="media_title" />
+              <input type="hidden" name="media_type" id="media_type" />
+              <input type="hidden" name="media_poster" id="media_poster" />
+              <input type="hidden" name="username" value="{{ user.username }}" />
+          
+              <input
+                type="submit"
+                value="Unlike Title"
+                class="btn btn-block btn-info"
+              />
+              {% endif %}
+            </form>
+            {% else %}
+            <form action="{% url 'favourite' %}" method="POST">
+              {% csrf_token %} {% if user.is_authenticated %}
+              <input type="hidden" name="user_id" value="{{ user.id }}" />
+              <input type="hidden" name="media_id" id="media_id"/>
+              <input type="hidden" name="media_title" id="media_title" />
+              <input type="hidden" name="media_type" id="media_type" />
+              <input type="hidden" name="media_poster" id="media_poster" />
+              <input type="hidden" name="username" value="{{ user.username }}" />
+          
+              <input
+                type="submit"
+                value="Like Title"
+                class="btn btn-info"
+              />
+              {% endif %}
+            </form>
+            {% endif %}
+          </div>
+
+          <!-- Like Actor Button -->
+          <div id="ActorLikeBtn">
+            {% if actor_is_liked %}
+            <form action="{% url 'unlike_actor' %}" method="POST">
+              {% csrf_token %} {% if user.is_authenticated %}
+              
+              <input type="hidden" name="user_id" value="{{ user.id }}" />
+              <input type="hidden" name="actor_id" id="actor_id"/>
+              <input type="hidden" name="actor_name" id="actor_name" />
+              <input type="hidden" name="actor_picture" id="actor_picture" />
+              <input type="hidden" name="username" value="{{ user.username }}" />
+          
+              <input
+                type="submit"
+                value="Unlike Actor"
+                class="btn btn-block btn-info"
+              />
+              {% endif %}
+            </form>
+            {% else %}
+            <form action="{% url 'actor' %}" method="POST">
+              {% csrf_token %} {% if user.is_authenticated %}
+              <input type="hidden" name="user_id" value="{{ user.id }}" />
+              <input type="hidden" name="actor_id" id="actor_id"/>
+              <input type="hidden" name="actor_name" id="actor_name" />
+              <input type="hidden" name="actor_picture" id="actor_picture" />
+              <input type="hidden" name="username" value="{{ user.username }}" />
+          
+              <input
+                type="submit"
+                value="Like Actor"
+                class="btn btn-block btn-info"
+              />
+              {% endif %}
+            </form>
+            {% endif %}
+          </div>
+
+          &nbsp;&nbsp;&nbsp;&nbsp;
+
+          <!-- IMDB Button -->
+          <div class="imdb" id="imdb">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <div id="movie" class="well"></div>
 
   <div id="listModal">
     <div class="col-md-12">
-      <!-- Button trigger modal -->
-      {% csrf_token %} {% if user.is_authenticated %}
-      <button type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#exampleModalCenter">
-        Add To List
-      </button>
-      {% endif %}
-
       <!-- Modal -->
       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -83,85 +179,6 @@
     </div>
   </div>
   <br>
-
-  <div class="col-md-2" id="likeBtn">
-    {% if is_liked %}
-    <form action="{% url 'unlike' %}" method="POST">
-      {% csrf_token %} {% if user.is_authenticated %}
-      <input type="hidden" name="user_id" value="{{ user.id }}" />
-      <input type="hidden" name="media_id" id="media_id"/>
-      <input type="hidden" name="media_title" id="media_title" />
-      <input type="hidden" name="media_type" id="media_type" />
-      <input type="hidden" name="media_poster" id="media_poster" />
-      <input type="hidden" name="username" value="{{ user.username }}" />
-  
-      <input
-        type="submit"
-        value="Unlike Title"
-        class="btn btn-block btn-info"
-        style="margin-top: -7px;"
-      />
-      {% endif %}
-    </form>
-    {% else %}
-    <form action="{% url 'favourite' %}" method="POST">
-      {% csrf_token %} {% if user.is_authenticated %}
-      <input type="hidden" name="user_id" value="{{ user.id }}" />
-      <input type="hidden" name="media_id" id="media_id"/>
-      <input type="hidden" name="media_title" id="media_title" />
-      <input type="hidden" name="media_type" id="media_type" />
-      <input type="hidden" name="media_poster" id="media_poster" />
-      <input type="hidden" name="username" value="{{ user.username }}" />
-  
-      <input
-        type="submit"
-        value="Like Title"
-        class="btn btn-block btn-info"
-        style="margin-top: -7px;"
-      />
-      {% endif %}
-    </form>
-    {% endif %}
-  </div>
-
-  <div class="col-md-2" id="ActorLikeBtn">
-    {% if actor_is_liked %}
-    <form action="{% url 'unlike_actor' %}" method="POST">
-      {% csrf_token %} {% if user.is_authenticated %}
-      
-      <input type="hidden" name="user_id" value="{{ user.id }}" />
-      <input type="hidden" name="actor_id" id="actor_id"/>
-      <input type="hidden" name="actor_name" id="actor_name" />
-      <input type="hidden" name="actor_picture" id="actor_picture" />
-      <input type="hidden" name="username" value="{{ user.username }}" />
-  
-      <input
-        type="submit"
-        value="Unlike Actor"
-        class="btn btn-block btn-info"
-        style="margin-top: -7px;"
-      />
-      {% endif %}
-    </form>
-    {% else %}
-    <form action="{% url 'actor' %}" method="POST">
-      {% csrf_token %} {% if user.is_authenticated %}
-      <input type="hidden" name="user_id" value="{{ user.id }}" />
-      <input type="hidden" name="actor_id" id="actor_id"/>
-      <input type="hidden" name="actor_name" id="actor_name" />
-      <input type="hidden" name="actor_picture" id="actor_picture" />
-      <input type="hidden" name="username" value="{{ user.username }}" />
-  
-      <input
-        type="submit"
-        value="Like Actor"
-        class="btn btn-block btn-info"
-        style="margin-top: -7px;"
-      />
-      {% endif %}
-    </form>
-    {% endif %}
-  </div>
 </div>
 
 <section id="reviews" class="py-5">
@@ -271,8 +288,6 @@
   var title = localStorage.getItem('title');
   var titleId = localStorage.getItem('movieId');
   var titlePoster = localStorage.getItem('poster');
-  console.log(titleId);
-  console.log(title);
   document.getElementById("media_id").value = titleId;
   document.getElementById("media_title").value = title;
   document.getElementById("media_type").value = movieType;
@@ -293,13 +308,5 @@
   document.getElementById("title_name_new").value = title;
   document.getElementById("title_type_new").value = movieType;
   document.getElementById("title_poster_new").value = titlePoster;
-  if (movieType == 'person') {
-    document.getElementById('reviews').innerHTML = "";
-    document.getElementById('likeBtn').innerHTML = "";
-    document.getElementById('listModal').innerHTML = "";
-  }
-  if ((movieType == 'movie') || (movieType == 'tv')) {
-    document.getElementById('ActorLikeBtn').innerHTML = "";
-  }
 </script>
 {% endblock %}
