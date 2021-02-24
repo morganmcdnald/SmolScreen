@@ -652,12 +652,11 @@ function getResult() {
             if (actor.profile_path == null) {
                 output += `
                 <div class="col-md-3">
-                    <div class="well text-center">
-                        <img src="https://i.imgur.com/5E6Su16.png" alt="Default Profile Pic">
+                    <div class="cast well text-center">
+                        <a onclick="movieSelected('${actor.id}', 'person', '${actor.name}', 'https://i.imgur.com/5E6Su16.png')"><img src="https://i.imgur.com/5E6Su16.png" alt="Default Profile Pic"></a>
                         <br>
-                        <h4>${actor.name}</h4>
-                        <h6>${actor.character}</h6>
-                        <a onclick="movieSelected('${actor.id}', 'person', '${actor.name}', 'https://i.imgur.com/5E6Su16.png')" class="btn btn-primary" href="#">View Profile</a>
+                        <a onclick="movieSelected('${actor.id}', 'person', '${actor.name}', 'https://i.imgur.com/5E6Su16.png')"><h4>${actor.name}</h4></a>
+                        <a onclick="movieSelected('${actor.id}', 'person', '${actor.name}', 'https://i.imgur.com/5E6Su16.png')"><h6>${actor.character}</h6></a>
                         <br>
                         <br>
                     </div>
@@ -743,12 +742,11 @@ function getResult() {
             if (actor.profile_path == null) {
                 output += `
                 <div class="col-md-3">
-                    <div class="well text-center">
-                        <img src="https://i.imgur.com/5E6Su16.png" alt="Default Profile Pic">
+                    <div class="cast well text-center">
+                        <a onclick="movieSelected('${actor.id}', 'person', '${actor.name}', 'https://i.imgur.com/5E6Su16.png')"><img src="https://i.imgur.com/5E6Su16.png" alt="Default Profile Pic"></a>
                         <br>
-                        <h4>${actor.name}</h4>
-                        <h6>${actor.character}</h6>
-                        <a onclick="movieSelected('${actor.id}', 'person', '${actor.name}', 'https://i.imgur.com/5E6Su16.png')" class="btn btn-primary" href="#">View Profile</a>
+                        <a onclick="movieSelected('${actor.id}', 'person', '${actor.name}', 'https://i.imgur.com/5E6Su16.png')"><h4>${actor.name}</h4></a>
+                        <a onclick="movieSelected('${actor.id}', 'person', '${actor.name}', 'https://i.imgur.com/5E6Su16.png')"><h6>${actor.character}</h6></a>
                         <br>
                         <br>
                     </div>

@@ -265,15 +265,18 @@
             <textarea name="review_content" class="form-control" autocomplete="off"></textarea>
           </div>
 
-          <div class="form-group">
-            <select name="rating" class="form-control" id="type">
-              <option selected="true" disabled="disabled">
-                Rating
-              </option>
-              {% for key,value in rating_choices.items %}
-              <option value="{{ key }}">{{ value }}</option>
-              {% endfor %}
-            </select>
+          <div class="rating form-group">
+              <input id="star5" name="rating" type="radio" value="5" class="radio-btn hide" />
+              <label for="star5" >☆</label>
+              <input id="star4" name="rating" type="radio" value="4" class="radio-btn hide" />
+              <label for="star4" >☆</label>
+              <input id="star3" name="rating" type="radio" value="3" class="radio-btn hide" />
+              <label for="star3" >☆</label>
+              <input id="star2" name="rating" type="radio" value="2" class="radio-btn hide" />
+              <label for="star2" >☆</label>
+              <input id="star1" name="rating" type="radio" value="1" class="radio-btn hide" />
+              <label for="star1" >☆</label>
+              <div class="clear"></div>
           </div>
 
           <input
