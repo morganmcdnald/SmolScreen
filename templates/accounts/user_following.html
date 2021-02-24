@@ -5,76 +5,78 @@
 
 {% block content %}
 
-<div id="followers">
-  {% if selected_user %}
-    {% for u in selected_user %}
-      <section id="showcase-inner" class="py-5 text-white" style="background: url('{{ u.user.profile.header.url }}') no-repeat center center; background-size: 100vw;
-      position: relative;
-      overflow: hidden;
-      min-height: 200px;">
-        <div class="container">
-              <!-- Alerts -->
-          {% include 'partials/_alerts.html' %}
-          <div class="row">
-            <div class="col-md-2">
-              <img
-                class="profilePic"
-                src="{{ u.user.profile.image.url }}"
-                alt=""
-              />
-            </div>
-            <div class="col-md-10 account-header">
-              <div class="container">
-                <div style="display: inline-flex">
-                  <h4>{{u.user.username}} &nbsp;<span>Member Since {{ u.user.date_joined | date:"d F Y" }}</span></h4>
+<div class="account-page">
+  <div id="followers">
+    {% if selected_user %}
+      {% for u in selected_user %}
+        <section id="showcase-inner" class="py-5 text-white" style="background: url('{{ u.user.profile.header.url }}') no-repeat center center; background-size: 100vw;
+        position: relative;
+        overflow: hidden;
+        min-height: 200px;">
+          <div class="container">
+                <!-- Alerts -->
+            {% include 'partials/_alerts.html' %}
+            <div class="row">
+              <div class="col-md-2">
+                <img
+                  class="profilePic"
+                  src="{{ u.user.profile.image.url }}"
+                  alt=""
+                />
+              </div>
+              <div class="col-md-10 account-header">
+                <div class="container">
+                  <div style="display: inline-flex">
+                    <h4>{{u.user.username}} &nbsp;<span>Member Since {{ u.user.date_joined | date:"d F Y" }}</span></h4>
+                  </div>
+                  <p class="lead">
+                    {{ u.user.profile.bio }}
+                  </p>
+                  <p><a href="{% url 'view_user_followers' u.user.id %}" class="text-white followers-link">Followers: {{ followers_count }}</a> &nbsp;&nbsp;&nbsp; <a href="{% url 'view_user_following' u.user.id %}" class="text-white followers-link">Following: {{ following_count }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Last active {{ u.user.last_login | timesince }} ago</em></p>
                 </div>
-                <p class="lead">
-                  {{ u.user.profile.bio }}
-                </p>
-                <p><a href="{% url 'view_user_followers' u.user.id %}" class="text-white followers-link">Followers: {{ followers_count }}</a> &nbsp;&nbsp;&nbsp; <a href="{% url 'view_user_following' u.user.id %}" class="text-white followers-link">Following: {{ following_count }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Last active {{ u.user.last_login | timesince }} ago</em></p>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section id="dashboard" class="py-4">
-        <div class="container">
-            <a href="{% url 'profile' u.user.id %}" class="btn btn-dark mb-4">Back To Profile</a>
-          <div class="row">
-            <div class="col-md-12">
-                {% if following %}
-              <br>
-              <h3 class="text-center mb-3"> {{u.user.username}}'s Following</h3>
-              <br>
-              <br>
-                    {% for follow in following %}
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img src="{{ follow.following_picture }}" class="followersList" alt="">
-                        </div>
-                        <div class="col-md-8 follower-user">
-                            <h5>{{ follow.following_username }}</h5>
-                        </div>
-                        <div class="col-md-2 follower-btn">
-                            <a class="btn btn-outline-primary" href="{% url 'profile' follow.following_user_id %}">View Profile</a>
-                        </div>
-                    </div>
-                    <br>
-                    <br>
-                    {% endfor %}
-              {% else %}
-              <br>
-                <p><strong>{{u.user.username}} is not following anyone yet.</strong></p>
-              {% endif %}
+        </section>
+  
+        <section id="dashboard" class="py-4">
+          <div class="container">
+              <a href="{% url 'profile' u.user.id %}" class="btn btn-dark mb-4">Back To Profile</a>
+            <div class="row">
+              <div class="col-md-12">
+                  {% if following %}
+                <br>
+                <h3 class="text-center mb-3"> {{u.user.username}}'s Following</h3>
+                <br>
+                <br>
+                      {% for follow in following %}
+                      <div class="row">
+                          <div class="col-md-2">
+                              <img src="{{ follow.following_picture }}" class="followersList" alt="">
+                          </div>
+                          <div class="col-md-8 follower-user">
+                              <h5>{{ follow.following_username }}</h5>
+                          </div>
+                          <div class="col-md-2 follower-btn">
+                              <a class="btn btn-outline-primary" href="{% url 'profile' follow.following_user_id %}">View Profile</a>
+                          </div>
+                      </div>
+                      <br>
+                      <br>
+                      {% endfor %}
+                {% else %}
+                <br>
+                  <p><strong>{{u.user.username}} is not following anyone yet.</strong></p>
+                {% endif %}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    {% endfor %}
-  {% else %}
-    <h1>No User Info to Show</h1>
-  {% endif %}
+        </section>
+      {% endfor %}
+    {% else %}
+      <h1>No User Info to Show</h1>
+    {% endif %}
+  </div>
 </div>
 
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>

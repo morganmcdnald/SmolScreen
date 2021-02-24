@@ -5,111 +5,132 @@
 {% block title %} | Account {% endblock %}
 
 {% block content %}
-<div id="account">
-  {% if viewusers %}
-    {% for viewuser in viewusers %}
-      <section id="showcase-inner" class="py-5 text-white" style="background: url('{{ viewuser.user.profile.header.url }}') no-repeat center center; background-size: 100vw;
-      position: relative;
-      overflow: hidden;
-      min-height: 200px;">
-        <div class="container">
-              <!-- Alerts -->
-          {% include 'partials/_alerts.html' %}
-          <div class="row">
-            <div class="col-md-2">
-              <img
-                class="profilePic"
-                src="{{ viewuser.user.profile.image.url }}"
-                alt=""
-              />
-            </div>
-            <div class="col-md-10 account-header">
-              <div class="container">
-                <div style="display: inline-flex">
-                  <h4>{{viewuser.user.username}} &nbsp;<span>Member Since {{ viewuser.user.date_joined | date:"d F Y" }}</span></h4>
+<div class="account-page">
+  <div id="account">
+    {% if viewusers %}
+      {% for viewuser in viewusers %}
+        <section id="showcase-inner" class="py-5 text-white" style="background: url('{{ viewuser.user.profile.header.url }}') no-repeat center center; background-size: 100vw;
+        position: relative;
+        overflow: hidden;
+        min-height: 200px;">
+          <div class="container">
+                <!-- Alerts -->
+            {% include 'partials/_alerts.html' %}
+            <div class="row">
+              <div class="col-md-2">
+                <img
+                  class="profilePic"
+                  src="{{ viewuser.user.profile.image.url }}"
+                  alt=""
+                />
+              </div>
+              <div class="col-md-10 account-header">
+                <div class="container">
+                  <div style="display: inline-flex">
+                    <h4>{{viewuser.user.username}} &nbsp;<span>Member Since {{ viewuser.user.date_joined | date:"d F Y" }}</span></h4>
+                  </div>
+                  <p class="lead">
+                    {{ viewuser.user.profile.bio }}
+                  </p>
+                  <p><a href="{% url 'view_user_followers' viewuser.user.id %}" onclick="setCookie()" class="text-white followers-link">Followers: {{ followers_count }}</a> &nbsp;&nbsp;&nbsp; <a href="{% url 'view_user_following' viewuser.user.id %}" class="text-white followers-link">Following: {{ following_count }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Last active {{ viewuser.user.last_login | timesince }} ago</em></p>
+    
+                  {% if does_follow %}
+                  <div class="col-md-2">
+                    <form action="{% url 'unfollow' %}" method="POST">
+                      {% csrf_token %} {% if user.is_authenticated %}
+                      <input type="hidden" name="user_id" value="{{ user.id }}" />
+                      <input type="hidden" name="following_user_id" value="{{ viewuser.user.id }}"/>
+                      <input type="hidden" name="username" value="{{ user.username }}" />
+                      <input type="hidden" name="following_username" value="{{ viewuser.user.username }}" />
+                      <input type="hidden" name="picture" value="{{ user.profile.image.url }}" />
+                      <input type="hidden" name="following_picture" value="{{ viewuser.user.profile.image.url }}" />
+                  
+                      <input
+                        type="submit"
+                        value="Unfollow"
+                        class="btn btn-block btn-outline-primary"
+                        style="margin-top: -7px;"
+                      />
+                      {% endif %}
+                    </form>
+                  </div>
+                  {% else %}
+                  <div class="col-md-2">
+                    <form action="{% url 'follow' %}" method="POST">
+                      {% csrf_token %} {% if user.is_authenticated %}
+                      <input type="hidden" name="user_id" value="{{ user.id }}" />
+                      <input type="hidden" name="following_user_id" value="{{ viewuser.user.id }}"/>
+                      <input type="hidden" name="username" value="{{ user.username }}" />
+                      <input type="hidden" name="following_username" value="{{ viewuser.user.username }}" />
+                      <input type="hidden" name="picture" value="{{ user.profile.image.url }}" />
+                      <input type="hidden" name="following_picture" value="{{ viewuser.user.profile.image.url }}" />
+                  
+                      <input
+                        type="submit"
+                        value="Follow"
+                        class="btn btn-block btn-outline-primary"
+                        style="margin-top: -7px;"
+                      />
+                      {% endif %}
+                    </form>
+                  </div>
+                  {% endif %}
                 </div>
-                <p class="lead">
-                  {{ viewuser.user.profile.bio }}
-                </p>
-                <p><a href="{% url 'view_user_followers' viewuser.user.id %}" onclick="setCookie()" class="text-white followers-link">Followers: {{ followers_count }}</a> &nbsp;&nbsp;&nbsp; <a href="{% url 'view_user_following' viewuser.user.id %}" class="text-white followers-link">Following: {{ following_count }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Last active {{ viewuser.user.last_login | timesince }} ago</em></p>
-  
-                {% if does_follow %}
-                <div class="col-md-2">
-                  <form action="{% url 'unfollow' %}" method="POST">
-                    {% csrf_token %} {% if user.is_authenticated %}
-                    <input type="hidden" name="user_id" value="{{ user.id }}" />
-                    <input type="hidden" name="following_user_id" value="{{ viewuser.user.id }}"/>
-                    <input type="hidden" name="username" value="{{ user.username }}" />
-                    <input type="hidden" name="following_username" value="{{ viewuser.user.username }}" />
-                    <input type="hidden" name="picture" value="{{ user.profile.image.url }}" />
-                    <input type="hidden" name="following_picture" value="{{ viewuser.user.profile.image.url }}" />
-                
-                    <input
-                      type="submit"
-                      value="Unfollow"
-                      class="btn btn-block btn-outline-primary"
-                      style="margin-top: -7px;"
-                    />
-                    {% endif %}
-                  </form>
-                </div>
-                {% else %}
-                <div class="col-md-2">
-                  <form action="{% url 'follow' %}" method="POST">
-                    {% csrf_token %} {% if user.is_authenticated %}
-                    <input type="hidden" name="user_id" value="{{ user.id }}" />
-                    <input type="hidden" name="following_user_id" value="{{ viewuser.user.id }}"/>
-                    <input type="hidden" name="username" value="{{ user.username }}" />
-                    <input type="hidden" name="following_username" value="{{ viewuser.user.username }}" />
-                    <input type="hidden" name="picture" value="{{ user.profile.image.url }}" />
-                    <input type="hidden" name="following_picture" value="{{ viewuser.user.profile.image.url }}" />
-                
-                    <input
-                      type="submit"
-                      value="Follow"
-                      class="btn btn-block btn-outline-primary"
-                      style="margin-top: -7px;"
-                    />
-                    {% endif %}
-                  </form>
-                </div>
-                {% endif %}
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    {% endfor %}
-  {% else %}
-    <h1>No User Info to Show</h1>
-  {% endif %}
-
-  <!-- Breadcrumb -->
-  <section id="bc" class="mt-3">
-    <div class="container">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="{% url 'index' %}">Home</a>
-          </li>
-          <li class="breadcrumb-item active">Account</li>
-        </ol>
-      </nav>
-    </div>
-  </section>
-
-  <section id="dashboard" class="py-4">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          {% for viewuser in viewusers %}
-            <h3 class="text-center mb-3">{{ viewuser.user.username }}'s Favourites</h3>
-          {% endfor %}
-          {% if favourites %}
-            {% if favourites_count < 3 %}
-              <div class="row">
+        </section>
+      {% endfor %}
+    {% else %}
+      <h1>No User Info to Show</h1>
+    {% endif %}
+  
+    <!-- Breadcrumb -->
+    <section id="bc" class="mt-3">
+      <div class="container">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item active">Account</li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+  
+    <section id="dashboard" class="py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            {% for viewuser in viewusers %}
+              <h3 class="text-center mb-3">{{ viewuser.user.username }}'s Favourites</h3>
+            {% endfor %}
+            {% if favourites %}
+              {% if favourites_count < 3 %}
+                <div class="row">
+                  {% for favourite in favourites %}
+                    <div class="col-md-3">
+                      <script type="text/javascript">
+                        function resetValues{{favourite.media_id}}() {
+                          localStorage.setItem('movieId', "{{favourite.media_id}}");
+                          localStorage.setItem('title', "{{favourite.media_title}}");
+                          localStorage.setItem('type', "{{ favourite.media_type }}");
+                        }
+                      </script>
+                      <div class="well text-center account-img">
+                        <a class="favouritesBtn" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ favourite.media_poster }}" alt="" /></a>
+                        <a class="favouritesBtn text-white" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}">{{ favourite.media_title }}</a>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+              <!-- Favourites -->
+              <div class="favourites-slider">
                 {% for favourite in favourites %}
-                  <div class="col-md-3">
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="card listing-preview">
                     <script type="text/javascript">
                       function resetValues{{favourite.media_id}}() {
                         localStorage.setItem('movieId', "{{favourite.media_id}}");
@@ -117,54 +138,54 @@
                         localStorage.setItem('type', "{{ favourite.media_type }}");
                       }
                     </script>
-                    <div class="well text-center account-img">
-                      <a class="favouritesBtn" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ favourite.media_poster }}" alt="" /></a>
+                    <a class="favouritesBtn" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ favourite.media_poster }}" alt="" /></a>
+                    <div class="card-body-fav text-center">
+                      
                       <a class="favouritesBtn text-white" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}">{{ favourite.media_title }}</a>
                     </div>
                   </div>
+                </div>
                 {% endfor %}
               </div>
+              {% endif %}
             {% else %}
-            <!-- Favourites -->
-            <div class="favourites-slider">
-              {% for favourite in favourites %}
-              <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card listing-preview">
-                  <script type="text/javascript">
-                    function resetValues{{favourite.media_id}}() {
-                      localStorage.setItem('movieId', "{{favourite.media_id}}");
-                      localStorage.setItem('title', "{{favourite.media_title}}");
-                      localStorage.setItem('type', "{{ favourite.media_type }}");
-                    }
-                  </script>
-                  <a class="favouritesBtn" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ favourite.media_poster }}" alt="" /></a>
-                  <div class="card-body-fav text-center">
-                    
-                    <a class="favouritesBtn text-white" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}">{{ favourite.media_title }}</a>
-                  </div>
-                </div>
-              </div>
+              <br>
+              {% for viewuser in viewusers %}
+              <p class="text-center"><strong>{{ viewuser.user.username }} has not favourited any titles yet.</strong></p>
               {% endfor %}
-            </div>
             {% endif %}
-          {% else %}
+  
             <br>
+            <br>
+  
             {% for viewuser in viewusers %}
-            <p class="text-center"><strong>{{ viewuser.user.username }} has not favourited any titles yet.</strong></p>
+              <h3 class="text-center mb-3">{{ viewuser.user.username }}'s Lists</h3>
             {% endfor %}
-          {% endif %}
-
-          <br>
-          <br>
-
-          {% for viewuser in viewusers %}
-            <h3 class="text-center mb-3">{{ viewuser.user.username }}'s Lists</h3>
-          {% endfor %}
-          {% if lists %}
-            {% if lists_count < 3 %}
-              <div class="row">
+            {% if lists %}
+              {% if lists_count < 3 %}
+                <div class="row">
+                  {% for list in lists %}
+                    <div class="col-md-3">
+                      <script type="text/javascript">
+                        function resetValues{{list.id}}() {
+                          localStorage.setItem('movieId', "{{list.title_id}}");
+                          localStorage.setItem('title', "{{list.title_name}}");
+                          localStorage.setItem('type', "{{list.title_type}}");
+                        }
+                      </script>
+                      <div class="well text-center account-img">
+                        <a class="favouritesBtn" href="{% url 'view_user_list' list_name=list.list_name user_id=list.owner_id %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ list.title_poster }}" alt="" /></a>
+                        <a class="favouritesBtn text-white" href="{% url 'view_user_list' list_name=list.list_name user_id=list.owner_id %}">{{ list.list_name }}</a>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+              <!-- Lists -->
+              <div class="lists-slider">
                 {% for list in lists %}
-                  <div class="col-md-3">
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="card listing-preview">
                     <script type="text/javascript">
                       function resetValues{{list.id}}() {
                         localStorage.setItem('movieId', "{{list.title_id}}");
@@ -172,54 +193,55 @@
                         localStorage.setItem('type', "{{list.title_type}}");
                       }
                     </script>
-                    <div class="well text-center account-img">
-                      <a class="favouritesBtn" href="{% url 'view_user_list' list_name=list.list_name user_id=list.owner_id %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ list.title_poster }}" alt="" /></a>
+                    <a class="favouritesBtn" href="{% url 'view_user_list' list_name=list.list_name user_id=list.owner_id %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ list.title_poster }}" alt="" /></a>
+                    <div class="card-body-fav text-center">
+                      
                       <a class="favouritesBtn text-white" href="{% url 'view_user_list' list_name=list.list_name user_id=list.owner_id %}">{{ list.list_name }}</a>
                     </div>
                   </div>
+                </div>
                 {% endfor %}
               </div>
-            {% else %}
-            <!-- Lists -->
-            <div class="lists-slider">
-              {% for list in lists %}
-              <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card listing-preview">
-                  <script type="text/javascript">
-                    function resetValues{{list.id}}() {
-                      localStorage.setItem('movieId', "{{list.title_id}}");
-                      localStorage.setItem('title', "{{list.title_name}}");
-                      localStorage.setItem('type', "{{list.title_type}}");
-                    }
-                  </script>
-                  <a class="favouritesBtn" href="{% url 'view_user_list' list_name=list.list_name user_id=list.owner_id %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ list.title_poster }}" alt="" /></a>
-                  <div class="card-body-fav text-center">
-                    
-                    <a class="favouritesBtn text-white" href="{% url 'view_user_list' list_name=list.list_name user_id=list.owner_id %}">{{ list.list_name }}</a>
-                  </div>
-                </div>
-              </div>
+              {% endif %}
+            {% else %}  
+              <br>
+              {% for viewuser in viewusers %}
+              <p class="text-center"><strong>{{ viewuser.user.username }} has not created any lists yet.</strong></p>
               {% endfor %}
-            </div>
             {% endif %}
-          {% else %}  
+  
             <br>
+            <br>
+  
             {% for viewuser in viewusers %}
-            <p class="text-center"><strong>{{ viewuser.user.username }} has not created any lists yet.</strong></p>
+              <h3 class="text-center mb-3">{{ viewuser.user.username }}'s Reviews</h3>
             {% endfor %}
-          {% endif %}
-
-          <br>
-          <br>
-
-          {% for viewuser in viewusers %}
-            <h3 class="text-center mb-3">{{ viewuser.user.username }}'s Reviews</h3>
-          {% endfor %}
-          {% if reviews %}
-            {% if reviews_count < 3 %}
-              <div class="row">
+            {% if reviews %}
+              {% if reviews_count < 3 %}
+                <div class="row">
+                  {% for review in reviews %}
+                    <div class="col-md-3">
+                      <script type="text/javascript">
+                        function resetValues{{review.media_id}}() {
+                          localStorage.setItem('movieId', "{{review.media_id}}");
+                          localStorage.setItem('title', "{{review.media_title}}");
+                          localStorage.setItem('type', "{{ review.media_type }}");
+                        }
+                      </script>
+                      <div class="well text-center account-img">
+                        <a class="favouritesBtn" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ review.media_poster }}" alt="" /></a>
+                        <a class="favouritesBtn text-white" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}">{{ review.media_title }}</a>
+                        <p class="reviewTitleAcc">{{ review.review_title }}</p>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+              <!-- Reviews -->
+              <div class="reviews-slider">
                 {% for review in reviews %}
-                  <div class="col-md-3">
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="card listing-preview">
                     <script type="text/javascript">
                       function resetValues{{review.media_id}}() {
                         localStorage.setItem('movieId', "{{review.media_id}}");
@@ -227,55 +249,54 @@
                         localStorage.setItem('type', "{{ review.media_type }}");
                       }
                     </script>
-                    <div class="well text-center account-img">
-                      <a class="favouritesBtn" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ review.media_poster }}" alt="" /></a>
+                    <a class="favouritesBtn" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ review.media_poster }}" alt="" /></a>
+                    <div class="card-body-fav text-center">
                       <a class="favouritesBtn text-white" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}">{{ review.media_title }}</a>
                       <p class="reviewTitleAcc">{{ review.review_title }}</p>
                     </div>
                   </div>
+                </div>
                 {% endfor %}
               </div>
+              {% endif %}
             {% else %}
-            <!-- Reviews -->
-            <div class="reviews-slider">
-              {% for review in reviews %}
-              <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card listing-preview">
-                  <script type="text/javascript">
-                    function resetValues{{review.media_id}}() {
-                      localStorage.setItem('movieId', "{{review.media_id}}");
-                      localStorage.setItem('title', "{{review.media_title}}");
-                      localStorage.setItem('type', "{{ review.media_type }}");
-                    }
-                  </script>
-                  <a class="favouritesBtn" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ review.media_poster }}" alt="" /></a>
-                  <div class="card-body-fav text-center">
-                    <a class="favouritesBtn text-white" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}">{{ review.media_title }}</a>
-                    <p class="reviewTitleAcc">{{ review.review_title }}</p>
-                  </div>
-                </div>
-              </div>
+              <br>
+              {% for viewuser in viewusers %}
+              <p class="text-center"><strong>{{ viewuser.user.username }} has not reviewed any titles yet.</strong></p>
               {% endfor %}
-            </div>
             {% endif %}
-          {% else %}
+  
             <br>
+            <br>
+  
             {% for viewuser in viewusers %}
-            <p class="text-center"><strong>{{ viewuser.user.username }} has not reviewed any titles yet.</strong></p>
+              <h3 class="text-center mb-3">{{ viewuser.user.username }}'s Favourite Actors</h3>
             {% endfor %}
-          {% endif %}
-
-          <br>
-          <br>
-
-          {% for viewuser in viewusers %}
-            <h3 class="text-center mb-3">{{ viewuser.user.username }}'s Favourite Actors</h3>
-          {% endfor %}
-          {% if actors %}
-            {% if actors_count < 3 %}
-              <div class="row">
+            {% if actors %}
+              {% if actors_count < 3 %}
+                <div class="row">
+                  {% for actor in actors %}
+                    <div class="col-md-3">
+                      <script type="text/javascript">
+                        function resetValues{{actor.actor_id}}() {
+                          localStorage.setItem('movieId', "{{actor.actor_id}}");
+                          localStorage.setItem('title', "{{actor.actor_name}}");
+                          localStorage.setItem('type', "person");
+                        }
+                      </script>
+                      <div class="well text-center account-img">
+                        <a class="favouritesBtn" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ actor.actor_picture }}" alt="" /></a>
+                        <a class="favouritesBtn text-white" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}">{{ actor.actor_name }}</a>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+              <!-- Actors -->
+              <div class="actors-slider">
                 {% for actor in actors %}
-                  <div class="col-md-3">
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="card listing-preview">
                     <script type="text/javascript">
                       function resetValues{{actor.actor_id}}() {
                         localStorage.setItem('movieId', "{{actor.actor_id}}");
@@ -283,45 +304,26 @@
                         localStorage.setItem('type', "person");
                       }
                     </script>
-                    <div class="well text-center account-img">
-                      <a class="favouritesBtn" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ actor.actor_picture }}" alt="" /></a>
+                    <a class="favouritesBtn" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ actor.actor_picture }}" alt="" /></a>
+                    <div class="card-body-fav text-center">
                       <a class="favouritesBtn text-white" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}">{{ actor.actor_name }}</a>
                     </div>
                   </div>
+                </div>
                 {% endfor %}
               </div>
-            {% else %}
-            <!-- Actors -->
-            <div class="actors-slider">
-              {% for actor in actors %}
-              <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card listing-preview">
-                  <script type="text/javascript">
-                    function resetValues{{actor.actor_id}}() {
-                      localStorage.setItem('movieId', "{{actor.actor_id}}");
-                      localStorage.setItem('title', "{{actor.actor_name}}");
-                      localStorage.setItem('type', "person");
-                    }
-                  </script>
-                  <a class="favouritesBtn" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ actor.actor_picture }}" alt="" /></a>
-                  <div class="card-body-fav text-center">
-                    <a class="favouritesBtn text-white" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}">{{ actor.actor_name }}</a>
-                  </div>
-                </div>
-              </div>
+              {% endif %}
+            {% else %}  
+              <br>
+              {% for viewuser in viewusers %}
+              <p class="text-center"><strong>{{ viewuser.user.username }} has not liked any actors yet.</strong></p>
               {% endfor %}
-            </div>
             {% endif %}
-          {% else %}  
-            <br>
-            {% for viewuser in viewusers %}
-            <p class="text-center"><strong>{{ viewuser.user.username }} has not liked any actors yet.</strong></p>
-            {% endfor %}
-          {% endif %}
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </div>
 
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>

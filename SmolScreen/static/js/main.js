@@ -44,14 +44,12 @@ function getMovies() {
                 let movieName = movie.name;
                 console.log(movieName);
                 let newMovieName = movieName.replace(/[']+/g, '');
-                console.log(newMovieName);
                 output += `
                 <div class="col-md-3">
                     <div class="well text-center search-img">
-                        <img src="https://image.tmdb.org/t/p/w342${movie.poster_path}">
-                        <h5>${movie.name}</h5>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', '${movie.poster_path}')" href="#"><img src="https://image.tmdb.org/t/p/w342${movie.poster_path}"></a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', '${movie.poster_path}')" href="#"><h5>${movie.name}</h5></a>
                         <h6>TV Show</h6>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', '${movie.poster_path}')" class="btn btn-primary" href="#">Details</a>
                     </div>
                 </div>
             `;
@@ -60,14 +58,12 @@ function getMovies() {
                 let movieName = movie.title;
                 console.log(movieName);
                 let newMovieName = movieName.replace(/[']+/g, '');
-                console.log(newMovieName);
                 output += `
                 <div class="col-md-3">
                     <div class="well text-center search-img">
-                        <img src="https://image.tmdb.org/t/p/w185${movie.poster_path}">
-                        <h5>${movie.title}</h5>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', '${movie.poster_path}')" href="#"><img src="https://image.tmdb.org/t/p/w185${movie.poster_path}"></a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', '${movie.poster_path}')" href="#"><h5>${movie.title}</h5></a>
                         <h6>Movie</h6>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', '${movie.poster_path}')" class="btn btn-primary" href="#">Details</a>
                     </div>
                 </div>
             `;
@@ -81,10 +77,9 @@ function getMovies() {
                     output += `
                 <div class="col-md-3">
                     <div class="well text-center search-img">
-                        <img src="https://image.tmdb.org/t/p/w185${movie.profile_path}">
-                        <h5>${movie.name}</h5>
+                    <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', '${movie.profile_path}')" href="#"><img src="https://image.tmdb.org/t/p/w185${movie.profile_path}"></a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', '${movie.profile_path}')" href="#"><h5>${movie.name}</h5></a>
                         <h6>Actor</h6>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', '${movie.profile_path}')" class="btn btn-primary" href="#">Profile</a>
                     </div>
                 </div>
             `;
@@ -97,10 +92,9 @@ function getMovies() {
                     output += `
                 <div class="col-md-3">
                     <div class="well text-center search-img">
-                        <img src="https://i.imgur.com/5E6Su16.png">
-                        <h5>${movie.name}</h5>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', 'https://i.imgur.com/5E6Su16.png')" href="#"><img src="https://i.imgur.com/5E6Su16.png"></a>
+                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', 'https://i.imgur.com/5E6Su16.png')" href="#"><h5>${movie.name}</h5></a>
                         <h6>Actor</h6>
-                        <a onclick="movieSelected('${movie.id}', '${movie.media_type}', '${newMovieName}', 'https://i.imgur.com/5E6Su16.png')" class="btn btn-primary" href="#">Profile</a>
                     </div>
                 </div>
             `;
@@ -783,7 +777,7 @@ function getResult() {
         let output = "";
         let fullBio = response.data.biography;
         let partBio = fullBio.substr(0,1000);
-        let bioEnd = fullBio.substr(1001,fullBio.length);
+        let bioEnd = fullBio.substr(1000,fullBio.length);
         $.each(creditsPath, (index, credit) => {
             credits.push(credit);
         });
