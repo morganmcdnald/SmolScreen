@@ -19,7 +19,6 @@ def favourite(request):
         favourite = Favourite(media_title=media_title, media_id=media_id, media_type=media_type, media_poster=media_poster, username=username, user_id=user_id)
         favourite.save()
 
-        messages.success(request, 'Your like was added successfully.')
         return redirect('result')
 
 def unlike(request):
@@ -30,5 +29,4 @@ def unlike(request):
         item = Favourite.objects.get(media_id=media_id, user_id=request.user.id)
         if request.user.id == item.user_id:
             Favourite.objects.filter(media_id=media_id).delete()
-            messages.success(request, 'Your like was removed successfully.')
             return redirect('result')

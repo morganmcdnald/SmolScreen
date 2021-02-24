@@ -5,259 +5,261 @@
 {% block title %} | Account {%endblock %}
 
 {% block content %}
-<div id="account">
-  <section id="showcase-inner" class="py-5 text-white" style="background: url('{{ user.profile.header.url }}') no-repeat center center; background-size: 100vw;
-  position: relative;
-  overflow: hidden;
-  min-height: 200px;">
-    <div class="container">
-          <!-- Alerts -->
-      {% include 'partials/_alerts.html' %}
-      <div class="row">
-        <div class="col-md-2">
-          <img
-            class="profilePic"
-            src="{{ user.profile.image.url }}"
-            alt=""
-          />
-        </div>
-        <div class="col-md-10 account-header">
-          <div style="display: inline-flex">
-            <h4>{{user.username}} &nbsp;<span>Member Since {{ user.date_joined | date:"d F Y" }}</span></h4>
+<div class="account-page">
+  <div id="account">
+    <section id="showcase-inner" class="py-5 text-white" style="background: url('{{ user.profile.header.url }}') no-repeat center center; background-size: 100vw;
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;">
+      <div class="container">
+            <!-- Alerts -->
+        {% include 'partials/_alerts.html' %}
+        <div class="row">
+          <div class="col-md-2">
+            <img
+              class="profilePic"
+              src="{{ user.profile.image.url }}"
+              alt=""
+            />
           </div>
-          <p class="lead">
-            {{ user.profile.bio }}
-          </p>
-          <p><a href="{% url 'view_followers' %}" class="text-white followers-link">Followers: {{ followers_count }}</a> &nbsp;&nbsp;&nbsp; <a href="{% url 'view_following' %}" class="text-white followers-link">Following: {{ following_count }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Last active {{ user.last_login | timesince }} ago</em></p>
-          <div class="edit-details">
-            <a href="{% url 'editDetails' %}" class="text-white">Edit Details</a>
+          <div class="col-md-10 account-header">
+            <div style="display: inline-flex">
+              <h4>{{user.username}} &nbsp;<span>Member Since {{ user.date_joined | date:"d F Y" }}</span></h4>
+            </div>
+            <p class="lead">
+              {{ user.profile.bio }}
+            </p>
+            <p><a href="{% url 'view_followers' %}" class="text-white followers-link">Followers: {{ followers_count }}</a> &nbsp;&nbsp;&nbsp; <a href="{% url 'view_following' %}" class="text-white followers-link">Following: {{ following_count }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Last active {{ user.last_login | timesince }} ago</em></p>
+            <div class="edit-details">
+              <a href="{% url 'editDetails' %}" class="text-white">Edit Details</a>
+            </div>
+            <!-- add this to both following and followers display count for link to new page -->
           </div>
-          <!-- add this to both following and followers display count for link to new page -->
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Breadcrumb -->
-  <section id="bc" class="mt-3">
-    <div class="container">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="{% url 'index' %}">Home</a>
-          </li>
-          <li class="breadcrumb-item active">Account</li>
-        </ol>
-      </nav>
-    </div>
-  </section>
-
-  <section id="dashboard" class="py-4">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h3 class="text-center mb-3">Your Favourites</h3>
-          {% if favourites %}
-            {% if favourites_count < 3 %}
-              <div class="row">
-                {% for favourite in favourites %}
-                <div class="col-md-3">
-                  <script type="text/javascript">
-                    function resetValues{{favourite.media_id}}() {
-                      localStorage.setItem('movieId', "{{favourite.media_id}}");
-                      localStorage.setItem('title', "{{favourite.media_title}}");
-                      localStorage.setItem('type', "{{ favourite.media_type }}");
-                    }
-                  </script>
-                  <div class="well text-center account-img">
-                    <a class="favouritesBtn" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ favourite.media_poster }}" alt="" /></a>
-                    <a class="favouritesBtn text-white" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}">{{ favourite.media_title }}</a>
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-            {% else %}
-            <!-- Favourites -->
-            <div class="favourites-slider">
-              {% for favourite in favourites %}
-              <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card listing-preview">
-                  <script type="text/javascript">
-                    function resetValues{{favourite.media_id}}() {
-                      localStorage.setItem('movieId', "{{favourite.media_id}}");
-                      localStorage.setItem('title', "{{favourite.media_title}}");
-                      localStorage.setItem('type', "{{ favourite.media_type }}");
-                    }
-                  </script>
-                  <a class="favouritesBtn" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ favourite.media_poster }}" alt="" /></a>
-                  <div class="card-body-fav text-center">
-                    <a class="favouritesBtn text-white" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}">{{ favourite.media_title }}</a>
-                  </div>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-            {% endif %}
-          {% else %}
-            <br>
-            <p class="text-center"><strong>You have not favourited any titles yet.</strong></p>
-          {% endif %}
-
-          <br>
-          <br>
-        
-          <h3 class="text-center mb-3">Your Lists</h3>
-          {% if lists %}
-            {% if lists_count < 3 %}
-              <div class="row">
-                {% for list in lists %}
-                <div class="col-md-3">
-                  <script type="text/javascript">
-                    function resetValues{{list.id}}() {
-                      localStorage.setItem('movieId', "{{list.title_id}}");
-                      localStorage.setItem('title', "{{list.title_name}}");
-                      localStorage.setItem('type', "{{list.title_type}}");
-                    }
-                  </script>
-                  <div class="well text-center account-img">
-                    <a class="favouritesBtn" href="{% url 'view_list' list.list_name %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ list.title_poster }}" alt="" /></a>
-                    <a class="favouritesBtn text-white" href="{% url 'view_list' list.list_name %}">{{ list.list_name }}</a>
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-            {% else %}
-            <!-- Lists -->
-            <div class="lists-slider">
-              {% for list in lists %}
-              <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card listing-preview">
-                  <script type="text/javascript">
-                    function resetValues{{list.id}}() {
-                      localStorage.setItem('movieId', "{{list.title_id}}");
-                      localStorage.setItem('title', "{{list.title_name}}");
-                      localStorage.setItem('type', "{{list.title_type}}");
-                    }
-                  </script>
-                  <a class="favouritesBtn" href="{% url 'view_list' list.list_name %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ list.title_poster }}" alt="" /></a>
-                  <div class="card-body-fav text-center">
-                    <a class="favouritesBtn text-white" href="{% url 'view_list' list.list_name %}">{{ list.list_name }}</a>
-                  </div>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-            {% endif %}
-          {% else %}  
-            <br>
-            <p class="text-center"><strong>You have not created any lists yet.</strong></p>
-          {% endif %}
-
-          <br>
-          <br>
-
-          <h3 class="text-center mb-3">Your Reviews</h3>
-          {% if reviews %}
-          {% if reviews_count < 3 %}
-            <div class="row">
-              {% for review in reviews %}
-                <div class="col-md-3">
-                  <script type="text/javascript">
-                    function resetValues{{review.media_id}}() {
-                      localStorage.setItem('movieId', "{{review.media_id}}");
-                      localStorage.setItem('title', "{{review.media_title}}");
-                      localStorage.setItem('type', "{{ review.media_type }}");
-                    }
-                  </script>
-                  <div class="well text-center account-img">
-                    <a class="favouritesBtn" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ review.media_poster }}" alt="" /></a>
-                    <a class="favouritesBtn text-white" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}">{{ review.media_title }}</a>
-                    <p class="reviewTitleAcc">{{ review.review_title }}</p>
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
-          {% else %}
-            <!-- Reviews -->
-            <div class="reviews-slider">
-              {% for review in reviews %}
-              <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card listing-preview">
-                  <script type="text/javascript">
-                    function resetValues{{review.media_id}}() {
-                      localStorage.setItem('movieId', "{{review.media_id}}");
-                      localStorage.setItem('title', "{{review.media_title}}");
-                      localStorage.setItem('type', "{{ review.media_type }}");
-                    }
-                  </script>
-                  <a class="favouritesBtn" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ review.media_poster }}" alt="" /></a>
-                  <div class="card-body-fav text-center">
-                    <a class="favouritesBtn text-white" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}">{{ review.media_title }}</a>
-                    <p class="reviewTitleAcc">{{ review.review_title }}</p>
-                  </div>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-            {% endif %}
-          {% else %}
-            <br>
-            <p class="text-center"><strong>You have not reviewed any titles yet.</strong></p>
-            <br>
-          {% endif %}
-
-          <br>
-
-          <h3 class="text-center mb-3">Your Favourite Actors</h3>
-          {% if actors %}
-            {% if actors_count < 3 %}
-              <div class="row">
-                {% for actor in actors %}
+    </section>
+  
+    <!-- Breadcrumb -->
+    <section id="bc" class="mt-3">
+      <div class="container">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item active">Account</li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+  
+    <section id="dashboard" class="py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h3 class="text-center mb-3">Your Favourites</h3>
+            {% if favourites %}
+              {% if favourites_count < 3 %}
+                <div class="row">
+                  {% for favourite in favourites %}
                   <div class="col-md-3">
                     <script type="text/javascript">
-                      function resetValues{{actor.actor_id}}() {
-                        localStorage.setItem('movieId', "{{actor.actor_id}}");
-                        localStorage.setItem('title', "{{actor.actor_name}}");
-                        localStorage.setItem('type', "person");
+                      function resetValues{{favourite.media_id}}() {
+                        localStorage.setItem('movieId', "{{favourite.media_id}}");
+                        localStorage.setItem('title', "{{favourite.media_title}}");
+                        localStorage.setItem('type', "{{ favourite.media_type }}");
                       }
                     </script>
                     <div class="well text-center account-img">
-                      <a class="favouritesBtn" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}"><img src="https://image.tmdb.org/t/p/w342{{ actor.actor_picture }}"></a>
-                      <a class="favouritesBtn text-white" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}">{{ actor.actor_name }}</a>
+                      <a class="favouritesBtn" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ favourite.media_poster }}" alt="" /></a>
+                      <a class="favouritesBtn text-white" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}">{{ favourite.media_title }}</a>
                     </div>
                   </div>
-                {% endfor %}
-              </div>
-            {% else %}
-              <!-- Actors -->
-              <div class="actors-slider">
-                {% for actor in actors %}
+                  {% endfor %}
+                </div>
+              {% else %}
+              <!-- Favourites -->
+              <div class="favourites-slider">
+                {% for favourite in favourites %}
                 <div class="col-md-6 col-lg-4 mb-4">
                   <div class="card listing-preview">
                     <script type="text/javascript">
-                      function resetValues{{actor.actor_id}}() {
-                        localStorage.setItem('movieId', "{{actor.actor_id}}");
-                        localStorage.setItem('title', "{{actor.actor_name}}");
-                        localStorage.setItem('type', "person");
+                      function resetValues{{favourite.media_id}}() {
+                        localStorage.setItem('movieId', "{{favourite.media_id}}");
+                        localStorage.setItem('title', "{{favourite.media_title}}");
+                        localStorage.setItem('type', "{{ favourite.media_type }}");
                       }
                     </script>
-                    <a class="favouritesBtn" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ actor.actor_picture }}" alt="" /></a>
+                    <a class="favouritesBtn" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ favourite.media_poster }}" alt="" /></a>
                     <div class="card-body-fav text-center">
-                      <a class="favouritesBtn text-white" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}">{{ actor.actor_name }}</a>
+                      <a class="favouritesBtn text-white" onclick="resetValues{{favourite.media_id}}();movieSelected('{{favourite.media_id}}', '{{favourite.media_type}}', '{{favourite.media_title}}', '{{favourite.media_poster}}');" href="{% url 'result' %}">{{ favourite.media_title }}</a>
                     </div>
                   </div>
                 </div>
                 {% endfor %}
               </div>
+              {% endif %}
+            {% else %}
+              <br>
+              <p class="text-center"><strong>You have not favourited any titles yet.</strong></p>
             {% endif %}
-          {% else %}  
+  
             <br>
-            <p class="text-center"><strong>You have not liked any actors yet.</strong></p>
-          {% endif %}
+            <br>
+          
+            <h3 class="text-center mb-3">Your Lists</h3>
+            {% if lists %}
+              {% if lists_count < 3 %}
+                <div class="row">
+                  {% for list in lists %}
+                  <div class="col-md-3">
+                    <script type="text/javascript">
+                      function resetValues{{list.id}}() {
+                        localStorage.setItem('movieId', "{{list.title_id}}");
+                        localStorage.setItem('title', "{{list.title_name}}");
+                        localStorage.setItem('type', "{{list.title_type}}");
+                      }
+                    </script>
+                    <div class="well text-center account-img">
+                      <a class="favouritesBtn" href="{% url 'view_list' list.list_name %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ list.title_poster }}" alt="" /></a>
+                      <a class="favouritesBtn text-white" href="{% url 'view_list' list.list_name %}">{{ list.list_name }}</a>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+              <!-- Lists -->
+              <div class="lists-slider">
+                {% for list in lists %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="card listing-preview">
+                    <script type="text/javascript">
+                      function resetValues{{list.id}}() {
+                        localStorage.setItem('movieId', "{{list.title_id}}");
+                        localStorage.setItem('title', "{{list.title_name}}");
+                        localStorage.setItem('type', "{{list.title_type}}");
+                      }
+                    </script>
+                    <a class="favouritesBtn" href="{% url 'view_list' list.list_name %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ list.title_poster }}" alt="" /></a>
+                    <div class="card-body-fav text-center">
+                      <a class="favouritesBtn text-white" href="{% url 'view_list' list.list_name %}">{{ list.list_name }}</a>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+              {% endif %}
+            {% else %}  
+              <br>
+              <p class="text-center"><strong>You have not created any lists yet.</strong></p>
+            {% endif %}
+  
+            <br>
+            <br>
+  
+            <h3 class="text-center mb-3">Your Reviews</h3>
+            {% if reviews %}
+            {% if reviews_count < 3 %}
+              <div class="row">
+                {% for review in reviews %}
+                  <div class="col-md-3">
+                    <script type="text/javascript">
+                      function resetValues{{review.media_id}}() {
+                        localStorage.setItem('movieId', "{{review.media_id}}");
+                        localStorage.setItem('title', "{{review.media_title}}");
+                        localStorage.setItem('type', "{{ review.media_type }}");
+                      }
+                    </script>
+                    <div class="well text-center account-img">
+                      <a class="favouritesBtn" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ review.media_poster }}" alt="" /></a>
+                      <a class="favouritesBtn text-white" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}">{{ review.media_title }}</a>
+                      <p class="reviewTitleAcc">{{ review.review_title }}</p>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <!-- Reviews -->
+              <div class="reviews-slider">
+                {% for review in reviews %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="card listing-preview">
+                    <script type="text/javascript">
+                      function resetValues{{review.media_id}}() {
+                        localStorage.setItem('movieId', "{{review.media_id}}");
+                        localStorage.setItem('title', "{{review.media_title}}");
+                        localStorage.setItem('type', "{{ review.media_type }}");
+                      }
+                    </script>
+                    <a class="favouritesBtn" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ review.media_poster }}" alt="" /></a>
+                    <div class="card-body-fav text-center">
+                      <a class="favouritesBtn text-white" onclick="resetValues{{review.media_id}}();movieSelected('{{review.media_id}}', '{{review.media_type}}', '{{review.media_title}}', '{{review.media_poster}}');" href="{% url 'result' %}">{{ review.media_title }}</a>
+                      <p class="reviewTitleAcc">{{ review.review_title }}</p>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+              {% endif %}
+            {% else %}
+              <br>
+              <p class="text-center"><strong>You have not reviewed any titles yet.</strong></p>
+              <br>
+            {% endif %}
+  
+            <br>
+  
+            <h3 class="text-center mb-3">Your Favourite Actors</h3>
+            {% if actors %}
+              {% if actors_count < 3 %}
+                <div class="row">
+                  {% for actor in actors %}
+                    <div class="col-md-3">
+                      <script type="text/javascript">
+                        function resetValues{{actor.actor_id}}() {
+                          localStorage.setItem('movieId', "{{actor.actor_id}}");
+                          localStorage.setItem('title', "{{actor.actor_name}}");
+                          localStorage.setItem('type', "person");
+                        }
+                      </script>
+                      <div class="well text-center account-img">
+                        <a class="favouritesBtn" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}"><img src="https://image.tmdb.org/t/p/w342{{ actor.actor_picture }}"></a>
+                        <a class="favouritesBtn text-white" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}">{{ actor.actor_name }}</a>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <!-- Actors -->
+                <div class="actors-slider">
+                  {% for actor in actors %}
+                  <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card listing-preview">
+                      <script type="text/javascript">
+                        function resetValues{{actor.actor_id}}() {
+                          localStorage.setItem('movieId', "{{actor.actor_id}}");
+                          localStorage.setItem('title', "{{actor.actor_name}}");
+                          localStorage.setItem('type', "person");
+                        }
+                      </script>
+                      <a class="favouritesBtn" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}"><img class="card-img-top" src="https://image.tmdb.org/t/p/w342{{ actor.actor_picture }}" alt="" /></a>
+                      <div class="card-body-fav text-center">
+                        <a class="favouritesBtn text-white" onclick="resetValues{{actor.actor_id}}();movieSelected('{{actor.actor_id}}', 'person', '{{actor.actor_name}}', '{{actor.actor_picture}}');" href="{% url 'result' %}">{{ actor.actor_name }}</a>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% else %}  
+              <br>
+              <p class="text-center"><strong>You have not liked any actors yet.</strong></p>
+            {% endif %}
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </div>
 
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>

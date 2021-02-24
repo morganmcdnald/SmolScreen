@@ -185,8 +185,31 @@ body {
   color: #6ab7eb;
 }
 
-.favouritesBtn:hover {
+.favBtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all .3s;
+  color: #6ab7eb;
+  font-size: 1.6rem;
+}
+
+.backBtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all .3s;
+  color: #6ab7eb;
+  font-size: 1.2rem;
+}
+
+.favouritesBtn:hover, .favBtn:hover, .backBtn:hover {
   text-decoration: none;
+  color: #3f9edd;
+}
+
+#more {
+  display: none;
 }
 
 .reviewTitleAcc {
@@ -204,6 +227,6 @@ body {
   padding-top: 2rem;
 }
 
-.result-page {
+.result-page, .account-page {
   padding-top: 3rem;
 }

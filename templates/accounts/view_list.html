@@ -8,22 +8,15 @@
 <!-- Search Results -->
 <section id="results">
     <div class="container">
-        <div id="view-list" class="row">
-            <div class="row">
-                <div class="col-md-12">
-                    <br>
-                    <a href="{% url 'account' %}" class="btn btn-secondary">Back to Account</a>
-                </div>  
+        <div class="headerBtns row ml-1">
+            <div class="header-left">
+                <a href="{% url 'account' %}" class="btn btn-secondary">Back to Account</a>
             </div>
-
-            <br>
             {% if chosen_list %}
-                <div class="col-md-12 text-center">
-                    <br>
-                    {% with chosen_list.all|first as i %}
-                        <h3>{{ i.list_name }} by {{ i.owner_username }}</h3>
-
-                        {% if i.list_name != 'Watchlist' %}
+            {% with chosen_list.all|first as i %}
+            <div class="ml-auto mr-3">
+                <div class="deleteBtn">
+                    {% if i.list_name != 'Watchlist' %}
                             <form action="{% url 'delete_list' %}" method="POST">
                                 {% csrf_token %} {% if user.is_authenticated %}
 
@@ -34,10 +27,18 @@
                                 type="submit"
                                 class="favouritesBtn"
                                 style="margin-top: -7px;"
-                                ><i class="fas fa-trash-alt"></i></button>
+                                ><i class="fas fa-trash-alt"></i> Delete List</button>
                                 {% endif %}
                             </form>
                         {% endif %}
+                </div>
+            </div>
+        </div>
+        <div id="view-list" class="row">
+            <br>
+                <div class="col-md-12 text-center">
+                    <br>
+                        <h3>{{ i.list_name }} by {{ i.owner_username }}</h3>
                       {% endwith %}
                     <br>
                 </div>

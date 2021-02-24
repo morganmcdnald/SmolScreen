@@ -14,12 +14,14 @@
       <div class="ml-auto mr-3">
         
         <div class="resultBtns">
-          <!-- Button trigger modal -->
-          {% csrf_token %} {% if user.is_authenticated %}
-          <button type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#exampleModalCenter">
-            Add To List
-          </button>
-          {% endif %}
+          <div id="listButton">
+            <!-- Button trigger modal -->
+            {% csrf_token %} {% if user.is_authenticated %}
+            <button type="button" class="favBtn" style="margin-top: -4px;" data-toggle="modal" data-target="#exampleModalCenter">
+              <i class="fas fa-plus" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Add To List"></i>
+            </button>
+            {% endif %}
+          </div>
 
           &nbsp;&nbsp;&nbsp;&nbsp;  
 
@@ -35,11 +37,13 @@
               <input type="hidden" name="media_poster" id="media_poster" />
               <input type="hidden" name="username" value="{{ user.username }}" />
           
-              <input
-                type="submit"
-                value="Unlike Title"
-                class="btn btn-block btn-info"
-              />
+              <button
+                  type="submit"
+                  class="favBtn"
+                  style="margin-top: -4px;"
+                  class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Unlike">
+                  <i class="fas fa-heart"></i>
+              </button>
               {% endif %}
             </form>
             {% else %}
@@ -52,11 +56,13 @@
               <input type="hidden" name="media_poster" id="media_poster" />
               <input type="hidden" name="username" value="{{ user.username }}" />
           
-              <input
-                type="submit"
-                value="Like Title"
-                class="btn btn-info"
-              />
+              <button
+                  type="submit"
+                  class="favBtn"
+                  style="margin-top: -4px;"
+                  class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Like">
+                  <i class="far fa-heart"></i>
+              </button>
               {% endif %}
             </form>
             {% endif %}
@@ -74,11 +80,12 @@
               <input type="hidden" name="actor_picture" id="actor_picture" />
               <input type="hidden" name="username" value="{{ user.username }}" />
           
-              <input
-                type="submit"
-                value="Unlike Actor"
-                class="btn btn-block btn-info"
-              />
+              <button
+                  type="submit"
+                  class="favBtn"
+                  class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Unlike">
+                  <i class="fas fa-heart"></i>
+              </button>
               {% endif %}
             </form>
             {% else %}
@@ -90,11 +97,12 @@
               <input type="hidden" name="actor_picture" id="actor_picture" />
               <input type="hidden" name="username" value="{{ user.username }}" />
           
-              <input
-                type="submit"
-                value="Like Actor"
-                class="btn btn-block btn-info"
-              />
+              <button
+                  type="submit"
+                  class="favBtn"
+                  class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Like">
+                  <i class="far fa-heart"></i>
+              </button>
               {% endif %}
             </form>
             {% endif %}
@@ -103,8 +111,7 @@
           &nbsp;&nbsp;&nbsp;&nbsp;
 
           <!-- IMDB Button -->
-          <div class="imdb" id="imdb">
-          </div>
+          <div class="imdb" id="imdb"></div>
         </div>
       </div>
     </div>

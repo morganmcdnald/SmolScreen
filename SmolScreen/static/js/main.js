@@ -10,6 +10,7 @@ $(document).ready(() => {
         document.getElementById('reviews').innerHTML = "";
         document.getElementById('likeBtn').innerHTML = "";
         document.getElementById('listModal').innerHTML = "";
+        document.getElementById('listButton').innerHTML = "";
     }
     if ((movieType == 'movie') || (movieType == 'tv')) {
         document.getElementById('ActorLikeBtn').innerHTML = "";
@@ -609,10 +610,10 @@ function getResult() {
             actors.push(" " + actor.name);
         });
         if (lastSearched == "") {
-            left_output = `<a href="/" class="btn btn-secondary">Back to Home</a>`;
+            left_output = `<a href="/" class="backBtn"><i class="fas fa-long-arrow-alt-left"></i> Back to Home</a>`;
         }
         else {
-            left_output = `<a onclick="movieSearched('${lastSearched}')" class="btn btn-secondary">Back to Search</a>`;
+            left_output = `<a onclick="movieSearched('${lastSearched}')" class="backBtn"><i class="fas fa-long-arrow-alt-left"></i> Back to Search</a>`;
         }
         imdb_output = `<a href="https://imdb.com/title/${movie.imdb_id}" target="_blank" class="btn btn-primary text-white">View on IMDB</a>`;
         output += `
@@ -698,10 +699,10 @@ function getResult() {
             actors.push(" " + actor.name);
         });
         if (lastSearched == "") {
-            left_output = `<a href="/" class="btn btn-secondary">Back to Home</a>`;
+            left_output = `<a href="/" class="backBtn"><i class="fas fa-long-arrow-alt-left"></i> Back to Home</a>`;
         }
         else {
-            left_output = `<a onclick="movieSearched('${lastSearched}')" class="btn btn-secondary">Back to Search</a>`;
+            left_output = `<a onclick="movieSearched('${lastSearched}')" class="backBtn"><i class="fas fa-long-arrow-alt-left"></i> Back to Search</a>`;
         }
         imdb_output = `<a href="https://imdb.com/title/${movie.external_ids.imdb_id}" target="_blank" class="btn btn-primary text-white">View on IMDB</a>`;
         output += `
@@ -780,66 +781,124 @@ function getResult() {
         let creditsPath = response.data.combined_credits.cast;
         let credits = [];
         let output = "";
+        let fullBio = response.data.biography;
+        let partBio = fullBio.substr(0,1000);
+        let bioEnd = fullBio.substr(1001,fullBio.length);
         $.each(creditsPath, (index, credit) => {
             credits.push(credit);
         });
         var sortedCredits = credits.sort((a, b) => b.vote_count - a.vote_count);
         console.log(sortedCredits);
         if (lastSearched == "") {
-            left_output = `<a href="/" class="btn btn-secondary">Back to Home</a>`;
+            left_output = `<a href="/" class="backBtn"><i class="fas fa-long-arrow-alt-left"></i> Back to Home</a>`;
         }
         else {
-            left_output = `<a onclick="movieSearched('${lastSearched}')" class="btn btn-secondary">Back to Search</a>`;
+            left_output = `<a onclick="movieSearched('${lastSearched}')" class="backBtn"><i class="fas fa-long-arrow-alt-left"></i> Back to Search</a>`;
         }
         imdb_output = `<a href="https://imdb.com/name/${movie.imdb_id}" target="_blank" class="btn btn-primary text-white">View on IMDB</a>`;
-        if (movie.profile_path == null) {
-            output += `
-            <div class="row">
-                <div class="col-md-4">
-                    <br>
-                    <img src="https://i.imgur.com/5E6Su16.png" class="thumbnail">
+        if (fullBio.length > 1000) {
+            if (movie.profile_path == null) {
+                output += `
+                <div class="row">
+                    <div class="col-md-4">
+                        <br>
+                        <img src="https://i.imgur.com/5E6Su16.png" class="thumbnail">
+                    </div>
+                    <div class="col-md-8">
+                        <br>
+                        <h2>${movie.name}</h2>
+                        <br>
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>Birthday:</strong> ${movie.birthday}</li>
+                            <li class="list-group-item"><strong>Birth Place:</strong> ${movie.place_of_birth}</li>
+                            <li class="list-group-item"><strong>Biography:</strong> ${partBio}<span id="dots">...</span><span id="more">${bioEnd}</span></li>
+                        </ul>
+                        <button onclick="readMore()" id="readMoreBtn" class="favouritesBtn">Read More</button>
+                    </div>
                 </div>
-                <div class="col-md-8">
-                    <br>
-                    <h2>${movie.name}</h2>
-                    <br>
-                    <ul class="list-group">
-                        <li class="list-group-item"><strong>Birthday:</strong> ${movie.birthday}</li>
-                        <li class="list-group-item"><strong>Birth Place:</strong> ${movie.place_of_birth}</li>
-                        <li class="list-group-item"><strong>Biography:</strong> ${movie.biography}</li>
-                    </ul>
+                <br>
+                <br>
+                <h3 class="text-center mb-3">Top Rated Credits</h3>
+                <div class="row">
+            `;
+            }
+            else if (movie.profile_path != null) {
+                output += `
+                <div class="row">
+                    <div class="col-md-4">
+                        <br>
+                        <img src="https://image.tmdb.org/t/p/w342${movie.profile_path}" class="thumbnail">
+                    </div>
+                    <div class="col-md-8">
+                        <br>
+                        <h2>${movie.name}</h2>
+                        <br>
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>Birthday:</strong> ${movie.birthday}</li>
+                            <li class="list-group-item"><strong>Birth Place:</strong> ${movie.place_of_birth}</li>
+                            <li class="list-group-item"><strong>Biography:</strong> ${partBio}<span id="dots">...</span><span id="more">${bioEnd}</span></li>
+                        </ul>
+                        <button onclick="readMore()" id="readMoreBtn" class="favouritesBtn">Read More</button>
+                    </div>
                 </div>
-            </div>
-            <br>
-            <br>
-            <h3 class="text-center mb-3">Top Rated Credits</h3>
-            <div class="row">
-        `;
+                <br>
+                <br>
+                <h3 class="text-center mb-3">Top Rated Credits</h3>
+                <div class="row">
+            `;
+            }
         }
-        else if (movie.profile_path != null) {
-            output += `
-            <div class="row">
-                <div class="col-md-4">
-                    <br>
-                    <img src="https://image.tmdb.org/t/p/w342${movie.profile_path}" class="thumbnail">
+        else {
+            if (movie.profile_path == null) {
+                output += `
+                <div class="row">
+                    <div class="col-md-4">
+                        <br>
+                        <img src="https://i.imgur.com/5E6Su16.png" class="thumbnail">
+                    </div>
+                    <div class="col-md-8">
+                        <br>
+                        <h2>${movie.name}</h2>
+                        <br>
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>Birthday:</strong> ${movie.birthday}</li>
+                            <li class="list-group-item"><strong>Birth Place:</strong> ${movie.place_of_birth}</li>
+                            <li class="list-group-item"><strong>Biography:</strong> ${fullBio}</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-md-8">
-                    <br>
-                    <h2>${movie.name}</h2>
-                    <br>
-                    <ul class="list-group">
-                        <li class="list-group-item"><strong>Birthday:</strong> ${movie.birthday}</li>
-                        <li class="list-group-item"><strong>Birth Place:</strong> ${movie.place_of_birth}</li>
-                        <li class="list-group-item"><strong>Biography:</strong> ${movie.biography}</li>
-                    </ul>
+                <br>
+                <br>
+                <h3 class="text-center mb-3">Top Rated Credits</h3>
+                <div class="row">
+            `;
+            }
+            else if (movie.profile_path != null) {
+                output += `
+                <div class="row">
+                    <div class="col-md-4">
+                        <br>
+                        <img src="https://image.tmdb.org/t/p/w342${movie.profile_path}" class="thumbnail">
+                    </div>
+                    <div class="col-md-8">
+                        <br>
+                        <h2>${movie.name}</h2>
+                        <br>
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>Birthday:</strong> ${movie.birthday}</li>
+                            <li class="list-group-item"><strong>Birth Place:</strong> ${movie.place_of_birth}</li>
+                            <li class="list-group-item"><strong>Biography:</strong> ${fullBio}</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <br>
-            <br>
-            <h3 class="text-center mb-3">Top Rated Credits</h3>
-            <div class="row">
-        `;
+                <br>
+                <br>
+                <h3 class="text-center mb-3">Top Rated Credits</h3>
+                <div class="row">
+            `;
+            }
         }
+        
 
         $.each(sortedCredits.slice(0,8), (index, credit) => {
             if ((credit.media_type == 'movie') && (credit.poster_path != null)) {
@@ -880,5 +939,21 @@ function getResult() {
         .catch((err) => {
             console.log(err);
         });
+    }
+  }
+
+  function readMore() {
+    var dots = document.getElementById("dots");
+    var moreText = document.getElementById("more");
+    var btnText = document.getElementById("readMoreBtn");
+  
+    if (dots.style.display === "none") {
+      dots.style.display = "inline";
+      btnText.innerHTML = "Read more";
+      moreText.style.display = "none";
+    } else {
+      dots.style.display = "none";
+      btnText.innerHTML = "Read less";
+      moreText.style.display = "inline";
     }
   }

@@ -18,7 +18,6 @@ def actor(request):
         actor = Actor(actor_name=actor_name, actor_id=actor_id, actor_picture=actor_picture, username=username, user_id=user_id)
         actor.save()
 
-        messages.success(request, 'Your like was added successfully!')
         return redirect('result')
 
 def unlike_actor(request):
@@ -29,5 +28,4 @@ def unlike_actor(request):
         item = Actor.objects.get(actor_id=actor_id, user_id=request.user.id)
         if request.user.id == item.user_id:
             Actor.objects.filter(actor_id=actor_id).delete()
-            messages.success(request, 'Your like was removed successfully.')
             return redirect('result')
