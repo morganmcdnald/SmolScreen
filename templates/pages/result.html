@@ -204,7 +204,18 @@
           <div class="row">
             <div class="col-md-12" style="display: inline-flex;">
               {% if review.user_id == user.id %}
-              <h4>{{ review.review_title }}</h4> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em><a href="{% url 'account' %}">{{ review.username }}</a> | {{ review.review_date | timesince }} ago &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ review.rating }} / 5</em> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {% if review.user_id == user.id %}
+              <h4>{{ review.review_title }}</h4> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em><a href="{% url 'account' %}">{{ review.username }}</a> | {{ review.review_date | timesince }} ago &nbsp;&nbsp;&nbsp; </em>
+                {% if review.rating == 1 %}
+                <label for="star5" style="color: #FFD700;" >★</label><label for="star5" >☆</label><label for="star5" >☆</label><label for="star5" >☆</label><label for="star5" >☆</label>
+                {% elif review.rating == 2 %}
+                <label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" >☆</label><label for="star5" >☆</label><label for="star5" >☆</label>
+                {% elif review.rating == 3 %}
+                <label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" >☆</label><label for="star5" >☆</label>
+                {% elif review.rating == 4 %}
+                <label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" >☆</label>
+                {% elif review.rating == 5 %}
+                <label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label>
+                {% endif %} &nbsp;&nbsp;&nbsp; {% if review.user_id == user.id %}
               <form action="{% url 'delete_review' %}" method="POST">
                 {% csrf_token %} {% if user.is_authenticated %}
                 
