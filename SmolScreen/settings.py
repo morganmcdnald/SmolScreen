@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.humanize'
+    'django.contrib.humanize',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -148,3 +149,12 @@ MESSAGE_TAGS = {
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+#S3 BUCKETS CONFIG
+AWS_ACCESS_KEY_ID = config('AKIARQBAWRP6TSUXPKZO')
+AWS_SECRET_ACCESS_KEY = config('LMaGFgRh6IS52phn2Inw')
+AWS_STORAGE_BUCKET_NAME = config('smolscreen-bucket')
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
