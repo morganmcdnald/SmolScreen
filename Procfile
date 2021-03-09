@@ -1,0 +1,1 @@
+web: gunicorn SmolScreen.wsgi --log-file -
