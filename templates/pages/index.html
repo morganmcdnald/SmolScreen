@@ -7,23 +7,24 @@
 {% block content %}
 <!-- Showcase -->
 <section id="showcase">
-      <div class="container text-center">
-          <!-- Alerts -->
-          {% include 'partials/_alerts.html' %}
-          <div class="search-box">
-            <br>
-            <br>
-            <br>
-            <br>
-            <h1>Keep Track of TV and Film</h1>
-            <h4>Favourite Movies? Reommendations? Challenges?</h4>
-            <br>
-            <form id="searchForm">
-                <input type="text" class="form-control" id="searchText" placeholder="Search..." autocomplete="off">
-            </form>
-          </div>
-      </div>
 </section>
+
+<div class="container text-center">
+  <!-- Alerts -->
+  {% include 'partials/_alerts.html' %}
+  <div id="search-box" class="search-box">
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1>Keep Track of TV and Film</h1>
+    <h4>Favourite Movies? Reommendations? Challenges?</h4>
+    <br>
+    <form id="searchForm">
+        <input type="text" class="form-control" id="searchText" placeholder="Search..." autocomplete="off">
+    </form>
+  </div>
+</div>
 
 <section id="whats-hot">
     <div class="container text-center">

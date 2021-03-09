@@ -18,15 +18,76 @@ body {
 }
 
 #showcase {
-  background: url(img/eo17.png) no-repeat top center;
+  /* background: url(../img/hero.png) no-repeat top center; */
+  background: linear-gradient(to bottom, rgba(245, 246, 252, 0), rgb(27, 27, 27)),
+    url(../img/hero.png);
   background-size: cover;
   min-height: 50rem;
   color: #fff;
+  opacity: .5;
 }
 
 .search-box {
-  margin-top: 30rem;
   text-transform: uppercase;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 25%;
+  right: 25%;
+  text-align: center;
+  margin-top: -17.5rem;
+}
+
+@media screen and (max-width: 2700px) {
+  .search-box {
+    left: 20%;
+    right: 20%;
+  }
+}
+
+@media screen and (max-width: 2200px) {
+  .search-box {
+    left: 15%;
+    right: 15%;
+  }
+}
+
+@media screen and (max-width: 1850px) {
+  .search-box {
+    left: 10%;
+    right: 10%;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .search-box {
+    left: 5%;
+    right: 5%;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  #showcase {
+    min-height: 30rem;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  #whats-hot {
+    margin-top: 15%;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  #whats-hot {
+    margin-top: 30%;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  #whats-hot {
+    margin-top: 60%;
+  }
 }
 
 .btn-home {

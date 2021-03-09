@@ -235,7 +235,18 @@
               </form>
               {% endif %}
               {% else %}
-              <h4>{{ review.review_title }}</h4> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em><a href="{% url 'profile' review.user_id %}">{{ review.username }}</a> | {{ review.review_date | timesince }} ago &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ review.rating }} / 5</em>
+              <h4>{{ review.review_title }}</h4> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em><a href="{% url 'profile' review.user_id %}">{{ review.username }}</a> | {{ review.review_date | timesince }} ago &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </em>
+              {% if review.rating == 1 %}
+                <label for="star5" style="color: #FFD700;" >★</label><label for="star5" >☆</label><label for="star5" >☆</label><label for="star5" >☆</label><label for="star5" >☆</label>
+                {% elif review.rating == 2 %}
+                <label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" >☆</label><label for="star5" >☆</label><label for="star5" >☆</label>
+                {% elif review.rating == 3 %}
+                <label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" >☆</label><label for="star5" >☆</label>
+                {% elif review.rating == 4 %}
+                <label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" >☆</label>
+                {% elif review.rating == 5 %}
+                <label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label><label for="star5" style="color: #FFD700;" >★</label>
+                {% endif %}
               {% endif %}
             </div>
             <br />
