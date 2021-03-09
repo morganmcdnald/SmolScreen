@@ -1,0 +1,347 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700&display=swap");
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+.navbar-brand {
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.navbar-brand span {
+  font-weight: 300;
+}
+
+.text-blue {
+  color: #6ab7eb !important;
+}
+
+#showcase {
+  /* background: url(../img/hero.png) no-repeat top center; */
+  background: linear-gradient(to bottom, rgba(245, 246, 252, 0), rgb(27, 27, 27)),
+    url(../img/hero.png);
+  background-size: cover;
+  min-height: 50rem;
+  color: #fff;
+  opacity: .5;
+}
+
+.search-box {
+  text-transform: uppercase;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 25%;
+  right: 25%;
+  text-align: center;
+  margin-top: -17.5rem;
+}
+
+@media screen and (max-width: 2700px) {
+  .search-box {
+    left: 20%;
+    right: 20%;
+  }
+}
+
+@media screen and (max-width: 2200px) {
+  .search-box {
+    left: 15%;
+    right: 15%;
+  }
+}
+
+@media screen and (max-width: 1850px) {
+  .search-box {
+    left: 10%;
+    right: 10%;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .search-box {
+    left: 5%;
+    right: 5%;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  #showcase {
+    min-height: 30rem;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  #whats-hot {
+    margin-top: 15%;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  #whats-hot {
+    margin-top: 30%;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  #whats-hot {
+    margin-top: 60%;
+  }
+}
+
+.btn-home {
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 1.25rem;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+}
+
+#movies img,
+#movie img,
+#hot img,
+#hotTV img,
+#view-list img,
+#cast img {
+  width: 100%;
+}
+
+#movies .col-md-3 .well,
+#hot .col-md-3 .well,
+#hotTV .col-md-3 .well,
+#view-list .col-md-3 .well,
+#cast .col-md-3 .well {
+  min-height: 575px;
+}
+.cast {
+  cursor: pointer;
+}
+
+.account-img img {
+  width: 100%;
+  min-height: 200px;
+}
+
+#whats-hot {
+  text-transform: uppercase;
+}
+
+.dark-bg {
+  background-color: #1b1b1b !important;
+}
+
+.tagline {
+  color: #616161 !important;
+  margin-top: -0.5rem;
+}
+
+.search-img h5 {
+  padding-top: 1rem !important;
+}
+
+.search-img h6 {
+  color: #616161 !important;
+}
+
+#results {
+  min-height: 100vh !important;
+}
+
+#whats-hot a {
+  margin-top: 0.75rem !important;
+}
+
+#login {
+  min-height: 60vh;
+}
+
+.login-content {
+  margin-top: 25vh !important;
+}
+
+.reg-content {
+  padding-top: 15vh !important;
+  padding-bottom: 20vh !important;
+}
+
+#account {
+  min-height: 100vh !important;
+}
+
+#showcase-inner {
+  background: no-repeat center center;
+  background-size: 100vw;
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+}
+
+#showcase-inner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 100%;
+  width: 100%;
+  background: rgba(7, 75, 107, 0.7);
+}
+
+.profilePic {
+    max-width: 135px;
+    border-radius: 100px;
+}
+
+.followersList {
+  max-width: 75px;
+  border-radius: 100px;
+}
+
+.follower-user, .follower-btn {
+  margin: auto !important;
+}
+
+.reviewPic {
+  max-width: 100px;
+}
+
+
+#showcase-inner h4 {
+    font-size: 2.25rem;
+}
+
+#showcase-inner span {
+    font-size: 1rem !important;
+}
+
+#showcase-inner p {
+    font-size: .85rem;
+}
+
+.tooltip .tooltiptext {
+  width: 120px;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+.account-header a {
+  transition: all .3s;
+  font-size: .9rem;
+  text-decoration: none;
+}
+
+.edit-details a:hover {
+  font-size: 1rem;
+  color: rgb(217, 244, 252) !important;
+  text-decoration: none;
+}
+
+.favouritesBtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all .3s;
+  color: #6ab7eb;
+}
+
+.favBtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all .3s;
+  color: #6ab7eb;
+  font-size: 1.6rem;
+}
+
+.backBtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all .3s;
+  color: #6ab7eb;
+  font-size: 1.2rem;
+}
+
+.favouritesBtn:hover, .favBtn:hover, .backBtn:hover {
+  text-decoration: none;
+  color: #3f9edd;
+}
+
+#more {
+  display: none;
+}
+
+.reviewTitleAcc {
+  font-size: .95rem !important;
+  color: rgb(163, 163, 163);
+}
+
+.resultBtns {
+  display: flex;
+  flex-direction: row;
+  width: 110%;
+}
+
+.headerBtns {
+  padding-top: 2rem;
+}
+
+.result-page, .account-page {
+  padding-top: 3rem;
+}
+
+.account-page {
+  min-height: 100vh;
+}
+
+.txt-center {
+  text-align: center;
+}
+.hide {
+  display: none;
+}
+
+.clear {
+  float: none;
+  clear: both;
+}
+
+.rating {
+    width: 200px;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: center;
+    position: relative;
+    margin-left: -2rem;
+}
+
+.rating > label {
+    float: right;
+    display: inline;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    width: 2rem;
+    cursor: pointer;
+    color: rgb(226, 226, 226);
+    font-size: 28px;
+vertical-align: middle;
+}
+
+.rating > label:hover,
+.rating > label:hover ~ label,
+.rating > input.radio-btn:checked ~ label {
+    color: transparent;
+}
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > input.radio-btn:checked ~ label:before,
+.rating > input.radio-btn:checked ~ label:before {
+    content: "\2605";
+    position: absolute;
+    left: 0;
+    color: #FFD700;
+}
