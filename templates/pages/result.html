@@ -165,9 +165,17 @@
               {% endif %}
               <form action="{% url 'list' %}" method="POST" >
                 {% csrf_token %} {% if user.is_authenticated %}
+                <script type="text/javascript">
+                  function setValues() {
+                    document.getElementById("title_id_new").value = titleId;
+                    document.getElementById("title_name_new").value = title;
+                    document.getElementById("title_type_new").value = movieType;
+                    document.getElementById("title_poster_new").value = titlePoster;
+                  }
+                </script>
                 <div class="form-group">
                 <label for="list_name">Name:</label>
-                <input type="text" name="list_name" class="form-control" required autocomplete="off">
+                <input type="text" onclick="setValues()" name="list_name" class="form-control" required autocomplete="off">
 
                 <input type="hidden" name="owner_id" value="{{ user.id }}" />
                 <input type="hidden" name="owner_username" value="{{ user.username }}" />
